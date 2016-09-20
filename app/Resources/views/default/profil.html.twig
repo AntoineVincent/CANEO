@@ -13,29 +13,37 @@
 				<div class="col-md-12">
 					<h5 class="infos-title-prl">Informations du profil :</h5> 
 				</div>
-				<div class="col-md-6">
-					Nom : 
+				<div class="col-md-12">
+					<div class="col-md-6">
+						Nom : 
+					</div>
+					<div class="col-md-6">
+						{{ user.nom }}
+					</div>
 				</div>
-				<div class="col-md-6">
-					{{ user.nom }}
+				<div class="col-md-12">
+					<div class="col-md-6">
+						Telephone : 
+					</div>
+					<div class="col-md-6">
+						{{ user.telephone }}
+					</div>
 				</div>
-				<div class="col-md-6">
-					Telephone : 
+				<div class="col-md-12">
+					<div class="col-md-6">
+						Email : 
+					</div>
+					<div class="col-md-6">
+						{{ user.email }}
+					</div>
 				</div>
-				<div class="col-md-6">
-					{{ user.telephone }}
-				</div>
-				<div class="col-md-6">
-					Email : 
-				</div>
-				<div class="col-md-6">
-					{{ user.email }}
-				</div>
-				<div class="col-md-6">
-					Email Bis : 
-				</div>
-				<div class="col-md-6">
-					{{ user.mailbis }}
+				<div class="col-md-12">
+					<div class="col-md-6">
+						Email Bis : 
+					</div>
+					<div class="col-md-6">
+						{{ user.mailbis }}
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -78,21 +86,17 @@
 					<tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th>Produit 1</th>
-						<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
-						<th>Voir</th>
-					<tr>
-					<tr>
-						<th>Produit 2</th>
-						<th>Non</th>
-						<th>Voir</th>
-					<tr>
-					<tr>
-						<th>Produit 3</th>
-						<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
-						<th>Voir</th>
-					<tr>
+					{% for favori in favoris %}
+						<tr>
+							<th>{{ favori.nom }}</th>
+							{% if favori.enchere == 'oui' %}
+								<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
+							{% else %}
+								<th>Non</th>
+							{% endif %}
+							<th>Voir</th>
+						<tr>
+					{% endfor %}
 				</tbody>
 			</table>
 

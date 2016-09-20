@@ -6,6 +6,10 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+        <!-- FONT FAMILY -->
+        <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet"> 
+         <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet"> 
+
         <!-- CSS CALL -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
@@ -42,9 +46,15 @@
                     <li>
                         <a href="{{ path('profil', { 'iduser': user.id }) }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a>
                     </li>
+                    <li>
+                        <a href="{{ path('show_product') }}"><span class="glyphicon glyphicon-th-list"></span> Liste des Produits</a>
+                    </li>
                     {% if user.type == "admin" %}
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-plus"></span> Ajoutez un membre</a>
+                            <a href="{{ path('new_user') }}"><span class="glyphicon glyphicon-plus"></span> Ajoutez un membre</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('new_product') }}"><span class="glyphicon glyphicon-floppy-open"></span> Ajoutez un produit</a>
                         </li>
                     {% endif %}
                     {% if user.type == "acheteur" %}
@@ -60,7 +70,7 @@
                             <a href="#"><span class="glyphicon glyphicon-envelope"></span> Faire une suggestion</a>
                         </li>
                     {% endif %}
-                    <li>
+                    <li class="testtttt">
                         <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Se déconnecter</a>
                     </li>
                 </ul>

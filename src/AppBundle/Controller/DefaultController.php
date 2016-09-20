@@ -25,11 +25,30 @@ class DefaultController extends Controller
 
     public function profilAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        // replace this example code with whatever you need
+        
+        $favoris = $em->getRepository('ProductBundle:Favoris')->findByIdacheteur($user->getId());
+        foreach($favoris as $favori) {
+            $product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
+
+            $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
+            if($enchere != NULL) {
+                $enchere = "oui";
+            }
+            else {
+                $enchere = "non";
+            }
+            $tabproduct [] = array(
+                'nom' => $product->getNom(),
+                'enchere' => $enchere,
+            );
+        }
+
         return $this->render('default/profil.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'user' => $user,
+            'favoris' => $tabproduct,
         ));
     }
 

@@ -18,5 +18,13 @@ profil:
     defaults: {_controller: AppBundle:Default:profil}
 
 new_user:
-    path:    /new/member
+    path:    /user/new
     defaults: {_controller: AppBundle:Default:newUser}
+
+new_product:
+    path:    /product/new
+    defaults: {_controller: ProductBundle:Product:newProduct}
+
+show_product:
+    path:    /product/show
+    defaults: {_controller: ProductBundle:Product:listProduct}
