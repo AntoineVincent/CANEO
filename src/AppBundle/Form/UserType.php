@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace AppBundle\Form;
 
 use FOS\UserBundle\Util\LegacyFormHelper;
 use OrthoBundle\Repository\CategorieUtilisateursRepository;
@@ -21,8 +21,6 @@ class UserType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -43,13 +41,13 @@ class UserType extends AbstractType
                 )
             ))
             ->add('cpfactu', 'text', array(
-                'label' => 'Code Postal',
+                'label' => 'Code Postal de facturation : ',
                 'attr' => array(
                     'placeholder' => 'Code Postal'
                 )
             ))
             ->add('villefactu', 'text', array(
-                'label' => 'Ville',
+                'label' => 'Ville de facturation : ',
                 'attr' => array(
                     'placeholder' => 'Ville'
                 )
@@ -61,10 +59,16 @@ class UserType extends AbstractType
                 )
             ))
             ->add('cplivraison', 'number', array(
-                'label' => 'Code Postal : '
+                'label' => 'Code Postal de livraison : ',
+                'attr' => array(
+                    'placeholder' => 'Code Postal'
+                )
             ))
             ->add('villelivraison', 'text', array(
-                'label' => 'Ville : '
+                'label' => 'Ville de livraison : ',
+                'attr' => array(
+                    'placeholder' => 'Ville'
+                )
             ))
             ->add('telephone', 'text', array(
                 'label' => 'Téléphone : ',
@@ -78,14 +82,12 @@ class UserType extends AbstractType
             ))
             ->add('mailbis',EmailType::class, array(
                 'required' => false,
-                'attr'=> array(
-                    'placeholder' => 'mail'
-                )
+                'label' => 'E-mail secondaire : '
             ))
             ->add('infos', 'textarea', array(
                 'label' => 'Infos Complémentaires : ',
                 'attr' => array(
-                    'placeholder' => 'Indiquer ici les infos complémentaires pouvant être utile'
+                    'placeholder' => 'Indiquer ici les infos complémentaires.'
                 )
             ))
             ->add('type', ChoiceType::class, array(
@@ -93,14 +95,17 @@ class UserType extends AbstractType
                     'fournisseur' => 'fournisseur',
                     'acheteur' => 'acheteur',
                 ),
-                'label' => 'Type d\'Utilisateur',
-                'placeholder' => '',
+                'label' => 'Type d Utilisateur : ',
+                'placeholder' => 'Selectionner...',
                 'empty_data'  => null
             ))
             ->add('logo', FileType::class, array(
-                'label' => 'Logo (jpg file)',
-                'required' => false
-            ))
+                'label' => 'Logo : ',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'Selectionnez un fichier'
+                )
+            ));
     }
 
     /**

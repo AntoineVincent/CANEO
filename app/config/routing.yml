@@ -16,3 +16,7 @@ dashboard:
 profil:
     path:    /profil/{iduser}
     defaults: {_controller: AppBundle:Default:profil}
+
+new_user:
+    path:    /new/member
+    defaults: {_controller: AppBundle:Default:newUser}

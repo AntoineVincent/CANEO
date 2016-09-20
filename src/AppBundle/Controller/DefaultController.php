@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 
 class DefaultController extends Controller
 {
@@ -27,6 +29,35 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('default/profil.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'user' => $user,
+        ));
+    }
+
+    public function newUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        $member = new User();
+        $form = $this->createForm('AppBundle\Form\UserType', $member);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $logo = $member->getLogo();
+
+            $logoName = md5(uniqid()).'.'.$logo->guessExtension();
+            $logoDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/logo';
+            $logo->move($logoDir, $logoName);
+
+            $member->setLogo($logoName);
+
+            $em->persist($member);
+            $em->flush();
+        }
+
+        return $this->render('default/addmember.html.twig', array(
+            'form' => $form->createView(),
             'user' => $user,
         ));
     }

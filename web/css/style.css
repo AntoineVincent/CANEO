@@ -43,7 +43,7 @@ html {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    background-color: #cccccc !important;
+    background-color: rgba(204,204,204,0.5) !important;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -152,4 +152,26 @@ html {
 }
 .dash-title {
     text-align: center;
+}
+.form-subtitle {
+    text-align: center;
+    text-decoration: underline;
+}
+.form-title {
+    text-align: center;
+    text-decoration: underline;
+}
+.form-add-member {
+    margin-top: 15px;
+    padding: 0;
+}
+.card-form-member {
+    background-color: rgba(204,204,204,0.4);
+    margin: 3px 0 3px 0;
+    border-radius: 5px;
+    width: 49%;
+    padding: 5px;
+}
+.left-card {
+    margin-right: 5px;
 }
