@@ -1,0 +1,83 @@
+<?php
+
+namespace DealBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Encheres
+ *
+ * @ORM\Table(name="encheres")
+ * @ORM\Entity(repositoryClass="DealBundle\Repository\EncheresRepository")
+ */
+class Encheres
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idproduit", type="integer", nullable=true)
+     */
+    private $idproduit;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idfournisseur", type="integer", nullable=true)
+     */
+    private $idfournisseur;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prix", type="float", nullable=true)
+     */
+    private $prix;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="totalcommande", type="integer", nullable=true)
+     */
+    private $totalcommande;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="moisFin", type="integer", nullable=true)
+     */
+    private $moisFin;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="jourFin", type="integer", nullable=true)
+     */
+    private $jourFin;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="anneeFin", type="integer", nullable=true)
+     */
+    private $anneeFin;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

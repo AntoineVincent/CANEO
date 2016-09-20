@@ -13,9 +13,21 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
+        return $this->render('default/dashboard.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'user' => $user,
+        ));
+    }
+
+    public function profilAction(Request $request)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        // replace this example code with whatever you need
+        return $this->render('default/profil.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'user' => $user,
         ));
     }
 }

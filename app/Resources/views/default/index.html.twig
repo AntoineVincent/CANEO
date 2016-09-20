@@ -1,5 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	{% else %}
+		<div class="col-md-12">
+			<h1 class="main-title">Bienvenue sur OrthoDeal !</h1>
+		</div>
+	{% endif %}
 
+	<div class="col-md-12">
+		<div class="col-md-4"></div>
+		<form action="{{ path("user_login_check") }}" method="post">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+			<div class="col-md-4 logform">
+				<div class="col-md-12">
+					<h2 class="log-title">Connexion</h2>
+					<hr>
+				</div>
+				<div class="col-md-12 logfield">
+					<div class="col-md-5">
+						<label>Pseudo</label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="username" name="_username" value="" required="required" placeholder="Pseudo">
+					</div>
+				</div>
+				<div class="col-md-12 logfield">
+					<div class="col-md-5">
+						<label>Mot de passe</label>
+					</div>
+					<div class="col-md-6">
+						<input type="password" id="password" name="_password" required="required" placeholder="Mot de Passe">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-1"></div>
+					<div class="col-md-7">
+						<label for="remember_me"><span>Se souvenir de moi :</span></label>
+					</div>
+					<div class="col-md-1">
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+					</div>
+				</div>
+				<div class="col-md-12 logfield">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<input type="submit" id="_submit" name="_submit" value="Envoyer">
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+			</div>
+		</form>
+		<div class="col-md-4"></div>
 {% endblock %}

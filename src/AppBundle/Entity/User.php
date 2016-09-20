@@ -42,6 +42,54 @@ class User extends BaseUser
      * @ORM\Column(name="mailbis", type="string", length=255, nullable=true)
      */
     public $mailbis;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     */
+    public $logo;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="infos", type="string", length=255, nullable=true)
+     */
+    public $infos;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
+     */
+    public $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
+     */
+    public $telephone;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cpfactu", type="integer", nullable=true)
+     */
+    public $cpfactu;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="villefactu", type="string", length=255, nullable=true)
+     */
+    public $villefactu;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cplivraison", type="integer", nullable=true)
+     */
+    public $cplivraison;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="villelivraison", type="string", length=255, nullable=true)
+     */
+    public $villelivraison;
 
 
     public function __construct()
@@ -140,5 +188,189 @@ class User extends BaseUser
     public function getMailbis()
     {
         return $this->mailbis;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     * @return User
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string 
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set infos
+     *
+     * @param string $infos
+     * @return User
+     */
+    public function setInfos($infos)
+    {
+        $this->infos = $infos;
+
+        return $this;
+    }
+
+    /**
+     * Get infos
+     *
+     * @return string 
+     */
+    public function getInfos()
+    {
+        return $this->infos;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return User
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set telephone
+     *
+     * @param string $telephone
+     * @return User
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * Get telephone
+     *
+     * @return string 
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * Set cpfactu
+     *
+     * @param integer $cpfactu
+     * @return User
+     */
+    public function setCpfactu($cpfactu)
+    {
+        $this->cpfactu = $cpfactu;
+
+        return $this;
+    }
+
+    /**
+     * Get cpfactu
+     *
+     * @return integer 
+     */
+    public function getCpfactu()
+    {
+        return $this->cpfactu;
+    }
+
+    /**
+     * Set villefactu
+     *
+     * @param string $villefactu
+     * @return User
+     */
+    public function setVillefactu($villefactu)
+    {
+        $this->villefactu = $villefactu;
+
+        return $this;
+    }
+
+    /**
+     * Get villefactu
+     *
+     * @return string 
+     */
+    public function getVillefactu()
+    {
+        return $this->villefactu;
+    }
+
+    /**
+     * Set cplivraison
+     *
+     * @param integer $cplivraison
+     * @return User
+     */
+    public function setCplivraison($cplivraison)
+    {
+        $this->cplivraison = $cplivraison;
+
+        return $this;
+    }
+
+    /**
+     * Get cplivraison
+     *
+     * @return integer 
+     */
+    public function getCplivraison()
+    {
+        return $this->cplivraison;
+    }
+
+    /**
+     * Set villelivraison
+     *
+     * @param string $villelivraison
+     * @return User
+     */
+    public function setVillelivraison($villelivraison)
+    {
+        $this->villelivraison = $villelivraison;
+
+        return $this;
+    }
+
+    /**
+     * Get villelivraison
+     *
+     * @return string 
+     */
+    public function getVillelivraison()
+    {
+        return $this->villelivraison;
     }
 }

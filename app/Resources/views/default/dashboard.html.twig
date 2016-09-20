@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="dash-title">Enchere Bientot Terminé</h3>
+		</div>
+		<div class="col-md-12">
+			<table id="table">
+				<thead>
+					<tr>
+		       			<th class="mytable">Nom Du Produit</th>
+		       			<th class="mytable">Prix unitaire</th>
+		       			<th class="mytable">Nombre de commandes Total</th>
+		       			<th class="mytable">Nombre de commandes Par vous</th>
+		       			<th class="mytable">Temps Restant</th>
+		       			<th class="mytable">Passer Commande</th>
+		   			</tr>
+				</thead>
+				<tbody>
+					<tr>
+		       			<th class="mytable">Produit 1</th>
+		       			<th class="mytable">1€20</th>
+		       			<th class="mytable">200</th>
+		       			<th class="mytable">100</th>
+		       			<th class="mytable">01h:47min:3s</th>
+		       			<th class="mytable"><input type="number" name="ench"></th>
+		   			</tr>
+		   			<tr>
+		       			<th class="mytable">Produit 2</th>
+		       			<th class="mytable">7€</th>
+		       			<th class="mytable">100</th>
+		       			<th class="mytable">0</th>
+		       			<th class="mytable">03h:32min:31s</th>
+		       			<th class="mytable"><input type="number" name="ench"></th>
+		   			</tr>
+		   			<tr>
+		       			<th class="mytable">Produit 3</th>
+		       			<th class="mytable">4,50€</th>
+		       			<th class="mytable">60000</th>
+		       			<th class="mytable">4000</th>
+		       			<th class="mytable">04h:58min:34s</th>
+		       			<th class="mytable"><input type="number" name="ench"></th>
+		   			</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		$(document).ready( function () {
+    		$('#table').DataTable();
+		} );
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="dash-title">Nouvelles Enchères</h3>
+		</div>
+		<div class="col-md-12">
+			<table id="table2" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+		       			<th >Nom Du Produit</th>
+		       			<th >Prix unitaire</th>
+		       			<th >Nombre de commandes Total</th>
+		       			<th >Nombre de commandes Par vous</th>
+		       			<th >Temps Restant</th>
+		       			<th >Passer Commande</th>
+		   			</tr>
+				</thead>
+				<tbody>
+					<tr>
+		       			<th >Produit 1</th>
+		       			<th >1€20</th>
+		       			<th >200</th>
+		       			<th >100</th>
+		       			<th >01h:47min:3s</th>
+		       			<th ><input type="number" name="ench"></th>
+		   			</tr>
+		   			<tr>
+		       			<th >Produit 2</th>
+		       			<th >7€</th>
+		       			<th >100</th>
+		       			<th >0</th>
+		       			<th >03h:32min:31s</th>
+		       			<th ><input type="number" name="ench"></th>
+		   			</tr>
+		   			<tr>
+		       			<th >Produit 3</th>
+		       			<th >4,50€</th>
+		       			<th >60000</th>
+		       			<th >4000</th>
+		       			<th >04h:58min:34s</th>
+		       			<th ><input type="number" name="ench"></th>
+		   			</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		$(document).ready( function () {
+    		$('#table2').DataTable();
+		} );
+	</script>
+{% endblock %}

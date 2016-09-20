@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+		<h3>Profil de {{ user.username }}</h3>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-12 profil-card">
+			<div class="col-md-4">
+				<p>Pseudo : {{ user.username }}</p>
+				<p>Email : {{ user.email }}</p>
+				<p>Email Bis : {{ user.mailbis }}</p>
+			</div>
+			<div class="col-md-4">
+				<p>Type : {{ user.type }}</p>
+				<p>Adresse de facturation : {{ user.adressefactu }}</p>
+				<p>Adresse de livraison : {{ user.adresselivraison }}</p>
+			</div>
+			<p>Logo : <img></p>
+			<div class="col-md-12 infos">
+				<p>Infos : Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... </p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

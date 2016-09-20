@@ -1,6 +1,18 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+user_login:
+    path:    /
+    defaults: { _controller: AppBundle:Security:login }
+
+user_login_check:
+    path:    /user/login/check
+    defaults: { _controller: AppBundle:Security:check }
+
+dashboard:
+    path:    /dashboard
+    defaults: {_controller: AppBundle:Default:index}
+
+profil:
+    path:    /profil/{iduser}
+    defaults: {_controller: AppBundle:Default:profil}

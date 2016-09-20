@@ -43,7 +43,7 @@ html {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    background-color: rgba(0,0,0,0.7) !important;
+    background-color: #cccccc !important;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -69,12 +69,12 @@ html {
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #735555;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #fff;
+    color: #735555;
     background: rgba(255,255,255,0.2);
 }
 
@@ -90,11 +90,11 @@ html {
 }
 
 .sidebar-nav > .sidebar-brand a {
-    color: #999999;
+    color: #735555;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
+    color: #735555;
     background: none;
 }
 
@@ -124,4 +124,32 @@ html {
         position: relative;
         margin-right: 0;
     }
+}
+.logform {
+	background-color: #59ABE3;
+	border-radius:5px;
+	margin-top: 40px;
+	padding: 0 30px 30px 30px;
+}
+.logfield {
+	margin: 10px;
+}
+.log-title {
+	text-align:center;
+	margin-bottom: 15px;
+}
+.main-title{
+	text-align:center;
+}
+.profil-card {
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+.infos {
+    margin-top: 20px;
+}
+.dash-title {
+    text-align: center;
 }

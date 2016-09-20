@@ -9,13 +9,19 @@
         <!-- CSS CALL -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.jqueryui.min.css">
 
         <!-- JAVASCRIPT CALL -->
         <script type="text/javascript" src="{{ asset('js/jquery.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}" ></script>
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.jqueryui.min.js"></script>
     </head>
     <body>
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <!-- Fixed navbar -->
           <div id="wrapper">
 
@@ -23,31 +29,41 @@
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
-                        <a href="#">
+                        <a href="{{ path('dashboard') }}">
                             OrthoDeal
                         </a>
                     </li>
                     <li>
-                        <a href="#">Dashboard</a>
+                        <a href="{{ path('dashboard') }}">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#">Mon Profil</a>
+                        <a href="{{ path('profil', { 'iduser': user.id }) }}">Mon Profil</a>
                     </li>
+                    {% if user.type == "admin" %}
+                        <li>
+                            <a href="#">Ajoutez un membre</a>
+                        </li>
+                    {% endif %}
+                    {% if user.type == "acheteur" %}
+                        <li>
+                            <a href="#">Mes enchères en cours</a>
+                        </li>
+                        <li>
+                            <a href="#">Mes favoris</a>
+                        </li>
+                    {% endif %}
+                    {% if user.type == "fournisseur" %}
+                        <li>
+                            <a href="#">Faire une suggestion</a>
+                        </li>
+                    {% endif %}
                     <li>
-                        <a href="#">Mes enchères en cours</a>
-                    </li>
-                    <li>
-                        <a href="#">Mes favoris</a>
-                    </li>
-                    <li>
-                        <a href="#">Faire une suggestion</a>
-                    </li>
-                    <li>
-                        <a href="#">Deconexion</a>
+                        <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
                     </li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
+        {% endif %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

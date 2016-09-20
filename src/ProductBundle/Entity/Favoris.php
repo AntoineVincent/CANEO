@@ -1,0 +1,94 @@
+<?php
+
+namespace ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Favoris
+ *
+ * @ORM\Table(name="favoris")
+ * @ORM\Entity(repositoryClass="ProductBundle\Repository\FavorisRepository")
+ */
+class Favoris
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idproduit", type="integer", nullable=true)
+     */
+    private $idproduit;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idacheteur", type="integer", nullable=true)
+     */
+    private $idacheteur;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set idproduit
+     *
+     * @param integer $idproduit
+     * @return Favoris
+     */
+    public function setIdproduit($idproduit)
+    {
+        $this->idproduit = $idproduit;
+
+        return $this;
+    }
+
+    /**
+     * Get idproduit
+     *
+     * @return integer 
+     */
+    public function getIdproduit()
+    {
+        return $this->idproduit;
+    }
+
+    /**
+     * Set idacheteur
+     *
+     * @param integer $idacheteur
+     * @return Favoris
+     */
+    public function setIdacheteur($idacheteur)
+    {
+        $this->idacheteur = $idacheteur;
+
+        return $this;
+    }
+
+    /**
+     * Get idacheteur
+     *
+     * @return integer 
+     */
+    public function getIdacheteur()
+    {
+        return $this->idacheteur;
+    }
+}
