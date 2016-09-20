@@ -23,73 +23,73 @@ class User extends BaseUser
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
-    public $type;
+    private $type;
     /**
      * @var string
      *
      * @ORM\Column(name="adresselivraison", type="string", length=255, nullable=true)
      */
-    public $adresselivraison;
+    private $adresselivraison;
     /**
      * @var string
      *
      * @ORM\Column(name="adressefactu", type="string", length=255, nullable=true)
      */
-    public $adressefactu;
+    private $adressefactu;
     /**
      * @var string
      *
      * @ORM\Column(name="mailbis", type="string", length=255, nullable=true)
      */
-    public $mailbis;
+    private $mailbis;
     /**
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=255, nullable=true)
      */
-    public $logo;
+    private $logo;
     /**
      * @var string
      *
      * @ORM\Column(name="infos", type="string", length=255, nullable=true)
      */
-    public $infos;
+    private $infos;
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
-    public $nom;
+    private $nom;
     /**
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
-    public $telephone;
+    private $telephone;
     /**
      * @var int
      *
      * @ORM\Column(name="cpfactu", type="integer", nullable=true)
      */
-    public $cpfactu;
+    private $cpfactu;
     /**
      * @var string
      *
      * @ORM\Column(name="villefactu", type="string", length=255, nullable=true)
      */
-    public $villefactu;
+    private $villefactu;
     /**
      * @var int
      *
      * @ORM\Column(name="cplivraison", type="integer", nullable=true)
      */
-    public $cplivraison;
+    private $cplivraison;
     /**
      * @var string
      *
      * @ORM\Column(name="villelivraison", type="string", length=255, nullable=true)
      */
-    public $villelivraison;
+    private $villelivraison;
 
 
     public function __construct()

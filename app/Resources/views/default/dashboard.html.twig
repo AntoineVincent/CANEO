@@ -11,8 +11,7 @@
 					<tr>
 		       			<th class="mytable">Nom Du Produit</th>
 		       			<th class="mytable">Prix unitaire</th>
-		       			<th class="mytable">Nombre de commandes Total</th>
-		       			<th class="mytable">Nombre de commandes Par vous</th>
+		       			<th class="mytable">Votre commande</th>
 		       			<th class="mytable">Temps Restant</th>
 		       			<th class="mytable">Passer Commande</th>
 		   			</tr>
@@ -22,24 +21,21 @@
 		       			<th class="mytable">Produit 1</th>
 		       			<th class="mytable">1€20</th>
 		       			<th class="mytable">200</th>
-		       			<th class="mytable">100</th>
-		       			<th class="mytable">01h:47min:3s</th>
+		       			<th class="mytable" id="defaultCountdown2"></th>
 		       			<th class="mytable"><input type="number" name="ench"></th>
 		   			</tr>
 		   			<tr>
 		       			<th class="mytable">Produit 2</th>
 		       			<th class="mytable">7€</th>
 		       			<th class="mytable">100</th>
-		       			<th class="mytable">0</th>
-		       			<th class="mytable">03h:32min:31s</th>
+		       			<th class="mytable" id="defaultCountdown3"></th>
 		       			<th class="mytable"><input type="number" name="ench"></th>
 		   			</tr>
 		   			<tr>
 		       			<th class="mytable">Produit 3</th>
 		       			<th class="mytable">4,50€</th>
 		       			<th class="mytable">60000</th>
-		       			<th class="mytable">4000</th>
-		       			<th class="mytable">04h:58min:34s</th>
+		       			<th class="mytable" id="defaultCountdown"></th>
 		       			<th class="mytable"><input type="number" name="ench"></th>
 		   			</tr>
 				</tbody>
@@ -51,6 +47,21 @@
     		$('#table').DataTable();
 		} );
 	</script>
+		<script type="text/javascript">
+
+			var currentdate = new Date();
+			var dd = currentdate.getDate();
+			var mm = currentdate.getMonth(); //January is 0!
+			var yyyy = currentdate.getFullYear();
+
+			var datefin = new Date(yyyy, mm, dd+2);
+			var datefin2 = new Date(yyyy, mm, dd+1);
+			var datefin3 = new Date(yyyy, mm, dd+3);
+
+			$('#defaultCountdown').countdown({until: datefin, format: 'dHMS'}); 
+			$('#defaultCountdown2').countdown({until: datefin2, format: 'dHMS'}); 
+			$('#defaultCountdown3').countdown({until: datefin3, format: 'dHMS'}); 
+		</script>
 
 	<div class="col-md-12">
 		<div class="col-md-12">

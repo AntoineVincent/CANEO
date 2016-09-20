@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.jqueryui.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.countdown.css') }}"> 
 
         <!-- JAVASCRIPT CALL -->
         <script type="text/javascript" src="{{ asset('js/jquery.js') }}" ></script>
@@ -19,6 +20,8 @@
         <script type="text/javascript" src="{{ asset('js/script.js') }}" ></script>
         <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.jqueryui.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.plugin.js') }}"></script> 
+        <script type="text/javascript" src="{{ asset('js/jquery.countdown.js') }}"></script>
     </head>
     <body>
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -34,31 +37,31 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('dashboard') }}">Dashboard</a>
+                        <a href="{{ path('dashboard') }}"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ path('profil', { 'iduser': user.id }) }}">Mon Profil</a>
+                        <a href="{{ path('profil', { 'iduser': user.id }) }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a>
                     </li>
                     {% if user.type == "admin" %}
                         <li>
-                            <a href="#">Ajoutez un membre</a>
+                            <a href="#"><span class="glyphicon glyphicon-plus"></span> Ajoutez un membre</a>
                         </li>
                     {% endif %}
                     {% if user.type == "acheteur" %}
                         <li>
-                            <a href="#">Mes enchères en cours</a>
+                            <a href="#"><span class="glyphicon glyphicon-euro"></span> Mes enchères en cours</a>
                         </li>
                         <li>
-                            <a href="#">Mes favoris</a>
+                            <a href="#"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
                         </li>
                     {% endif %}
                     {% if user.type == "fournisseur" %}
                         <li>
-                            <a href="#">Faire une suggestion</a>
+                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Faire une suggestion</a>
                         </li>
                     {% endif %}
                     <li>
-                        <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
+                        <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Se déconnecter</a>
                     </li>
                 </ul>
             </div>

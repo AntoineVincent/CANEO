@@ -175,3 +175,20 @@ html {
 .left-card {
     margin-right: 5px;
 }
+.logo-user {
+    height: 120px;
+    width: 120px;
+}
+.infos-title-prl {
+    text-align: center;
+    font-size: 17px;
+}
+.prl-wlcme {
+    text-align: center;
+}
+.glyphicon-star {
+    color: orange;
+}
+.glyphicon-remove {
+    color: red;
+}

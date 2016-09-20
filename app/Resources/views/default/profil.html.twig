@@ -2,24 +2,105 @@
 
 {% block body %}
 	<div class="col-md-12">
-		<h3>Profil de {{ user.username }}</h3>
+		<h3 class="prl-wlcme">Bienvenue sur votre profil {{ user.username }}</h3>
 	</div>
 	<div class="col-md-12">
 		<div class="col-md-12 profil-card">
-			<div class="col-md-4">
-				<p>Pseudo : {{ user.username }}</p>
-				<p>Email : {{ user.email }}</p>
-				<p>Email Bis : {{ user.mailbis }}</p>
+			<div class="col-md-2">
+				<p><img class="logo-user" src="{{ asset('uploads/logo/' ~ user.logo) }}" /></p>
 			</div>
 			<div class="col-md-4">
-				<p>Type : {{ user.type }}</p>
-				<p>Adresse de facturation : {{ user.adressefactu }}</p>
-				<p>Adresse de livraison : {{ user.adresselivraison }}</p>
+				<div class="col-md-12">
+					<h5 class="infos-title-prl">Informations du profil :</h5> 
+				</div>
+				<div class="col-md-6">
+					Nom : 
+				</div>
+				<div class="col-md-6">
+					{{ user.nom }}
+				</div>
+				<div class="col-md-6">
+					Telephone : 
+				</div>
+				<div class="col-md-6">
+					{{ user.telephone }}
+				</div>
+				<div class="col-md-6">
+					Email : 
+				</div>
+				<div class="col-md-6">
+					{{ user.email }}
+				</div>
+				<div class="col-md-6">
+					Email Bis : 
+				</div>
+				<div class="col-md-6">
+					{{ user.mailbis }}
+				</div>
 			</div>
-			<p>Logo : <img></p>
-			<div class="col-md-12 infos">
-				<p>Infos : Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... Lorem Ipsum ... </p>
+			<div class="col-md-6">
+				<div class="col-md-12">
+					<h5 class="infos-title-prl">Coordonées :</h5> 
+				</div>
+				<div class="col-md-6">
+					Type : 
+				</div>
+				<div class="col-md-6">
+					{{ user.type }}
+				</div>
+				<div class="col-md-6">
+					Adresse de facturation : 
+				</div>
+				<div class="col-md-6">
+					{{ user.adressefactu }}<br>
+					{{ user.cpfactu }}, {{ user.villefactu }}
+				</div>
+				<div class="col-md-6">
+					Adresse de livraison : 
+				</div>
+				<div class="col-md-6">
+					{{ user.adresselivraison }}<br>
+					{{ user.cplivraison }}, {{ user.villelivraison }}
+				</div>
 			</div>
+				<p>Infos Complémentaire : {{ user.infos }}</p>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-5 profil-card">
+			<h3>Les produits que je suis :</h3>
+			<table id="table">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Enchere en cours</th>
+						<th>Page produit</th>
+					<tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Produit 1</th>
+						<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
+						<th>Voir</th>
+					<tr>
+					<tr>
+						<th>Produit 2</th>
+						<th>Non</th>
+						<th>Voir</th>
+					<tr>
+					<tr>
+						<th>Produit 3</th>
+						<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
+						<th>Voir</th>
+					<tr>
+				</tbody>
+			</table>
+
+			<script>
+				$(document).ready( function () {
+		    		$('#table').DataTable();
+				} );
+			</script>
 		</div>
 	</div>
 {% endblock %}
