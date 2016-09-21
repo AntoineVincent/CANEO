@@ -51,6 +51,9 @@
                     </li>
                     {% if user.type == "admin" %}
                         <li>
+                            <a href="{{ path('show_user') }}"><span class="glyphicon glyphicon-th-list"></span> Liste des membres</a>
+                        </li>
+                        <li>
                             <a href="{{ path('new_user') }}"><span class="glyphicon glyphicon-plus"></span> Ajoutez un membre</a>
                         </li>
                         <li>

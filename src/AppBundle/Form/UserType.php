@@ -85,9 +85,9 @@ class UserType extends AbstractType
                 'label' => 'E-mail secondaire : '
             ))
             ->add('infos', 'textarea', array(
-                'label' => 'Infos Complémentaires : ',
+                'label' => 'CGV (si nouveau membre est un fournisseur) : ',
                 'attr' => array(
-                    'placeholder' => 'Indiquer ici les infos complémentaires.'
+                    'placeholder' => 'Indiquer ici conditions générales de vente.'
                 )
             ))
             ->add('type', ChoiceType::class, array(

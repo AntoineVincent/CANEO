@@ -158,27 +158,4 @@ class Produit
     {
         return $this->photo;
     }
-
-    /**
-     * Set description
-     *
-     * @param text $description
-     * @return Produit
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 }

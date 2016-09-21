@@ -18,6 +18,12 @@ class ProductType extends AbstractType
                     'placeholder' => 'Nom du produit'
                 )
             ))
+            ->add('description', 'textarea', array(
+                'label' => 'Description du produit : ',
+                'attr' => array(
+                    'placeholder' => 'Veuillez indiquer une description pour ce produit.'
+                )
+            ))
             ->add('prixminimal', 'number', array(
                 'label' => 'Prix maximum à l\'unité au démarrage des enchères : ',
                 'attr' => array(

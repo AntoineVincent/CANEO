@@ -21,6 +21,10 @@ new_user:
     path:    /user/new
     defaults: {_controller: AppBundle:Default:newUser}
 
+show_user:
+    path:    /user/list
+    defaults: {_controller: AppBundle:Default:listUser}
+
 new_product:
     path:    /product/new
     defaults: {_controller: ProductBundle:Product:newProduct}

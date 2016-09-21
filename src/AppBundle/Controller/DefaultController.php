@@ -23,12 +23,16 @@ class DefaultController extends Controller
         ));
     }
 
-    public function profilAction(Request $request)
+    public function profilAction(Request $request, $iduser)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        $favoris = $em->getRepository('ProductBundle:Favoris')->findByIdacheteur($user->getId());
+        $member = $em->getRepository('AppBundle:User')->findOneById($iduser);
+
+        $tabproduct = [];
+
+        $favoris = $em->getRepository('ProductBundle:Favoris')->findByIdacheteur($member->getId());
         foreach($favoris as $favori) {
             $product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
 
@@ -49,6 +53,7 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'user' => $user,
             'favoris' => $tabproduct,
+            'member' => $member,
         ));
     }
 
@@ -77,6 +82,18 @@ class DefaultController extends Controller
 
         return $this->render('default/addmember.html.twig', array(
             'form' => $form->createView(),
+            'user' => $user,
+        ));
+    }
+    public function listUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        $members = $em->getRepository('AppBundle:User')->findAll();
+
+        return $this->render('user/show_user.html.twig', array(
+            'members' => $members,
             'user' => $user,
         ));
     }

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="form-title">Liste des Utilisateurs enregistrer</h3>
+			<table id="table">
+				<thead>
+					<tr>
+						<th>Pseudo</th>
+						<th>Nom</th>
+						<th>Type</th>
+						<th>Profil</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for member in members %}
+						<tr>
+							<th>{{ member.username }}</th>
+							<th>{{ member.nom }}</th>
+							<th>{{ member.type }}</th>
+							<th><a href="{{ path('profil', { 'iduser': member.id }) }}">Fiche membre</a></th>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<script>
+				$(document).ready( function () {
+		    		$('#table').DataTable();
+				} );
+			</script>
+		</div>
+	</div>
+
+{% endblock %}

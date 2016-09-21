@@ -2,12 +2,16 @@
 
 {% block body %}
 	<div class="col-md-12">
-		<h3 class="prl-wlcme">Bienvenue sur votre profil {{ user.username }}</h3>
+		{% if user.id == member.id %}
+			<h3 class="prl-wlcme">Bienvenue sur votre profil {{ member.username }}</h3>
+		{% else %}
+			<h3 class="prl-wlcme">Bienvenue sur le profil de {{ member.username }}</h3>
+		{% endif %}
 	</div>
 	<div class="col-md-12">
 		<div class="col-md-12 profil-card">
 			<div class="col-md-2">
-				<p><img class="logo-user" src="{{ asset('uploads/logo/' ~ user.logo) }}" /></p>
+				<p><img class="logo-user" src="{{ asset('uploads/logo/' ~ member.logo) }}" /></p>
 			</div>
 			<div class="col-md-4">
 				<div class="col-md-12">
@@ -18,7 +22,7 @@
 						Nom : 
 					</div>
 					<div class="col-md-6">
-						{{ user.nom }}
+						{{ member.nom }}
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -26,7 +30,7 @@
 						Telephone : 
 					</div>
 					<div class="col-md-6">
-						{{ user.telephone }}
+						{{ member.telephone }}
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -34,7 +38,7 @@
 						Email : 
 					</div>
 					<div class="col-md-6">
-						{{ user.email }}
+						{{ member.email }}
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -42,7 +46,7 @@
 						Email Bis : 
 					</div>
 					<div class="col-md-6">
-						{{ user.mailbis }}
+						{{ member.mailbis }}
 					</div>
 				</div>
 			</div>
@@ -54,57 +58,65 @@
 					Type : 
 				</div>
 				<div class="col-md-6">
-					{{ user.type }}
+					{{ member.type }}
 				</div>
 				<div class="col-md-6">
 					Adresse de facturation : 
 				</div>
 				<div class="col-md-6">
-					{{ user.adressefactu }}<br>
-					{{ user.cpfactu }}, {{ user.villefactu }}
+					{{ member.adressefactu }}<br>
+					{{ member.cpfactu }}, {{ member.villefactu }}
 				</div>
 				<div class="col-md-6">
 					Adresse de livraison : 
 				</div>
 				<div class="col-md-6">
-					{{ user.adresselivraison }}<br>
-					{{ user.cplivraison }}, {{ user.villelivraison }}
+					{{ member.adresselivraison }}<br>
+					{{ member.cplivraison }}, {{ member.villelivraison }}
 				</div>
 			</div>
-				<p>Infos Complémentaire : {{ user.infos }}</p>
+				{% if member.type == "fournisseur" %}
+					<p>Condition Générale de vente de ce fournisseur : {{ member.infos }}</p>
+				{% endif %}
 		</div>
 	</div>
 	<div class="col-md-12">
-		<div class="col-md-5 profil-card">
-			<h3>Les produits que je suis :</h3>
-			<table id="table">
-				<thead>
-					<tr>
-						<th>Nom</th>
-						<th>Enchere en cours</th>
-						<th>Page produit</th>
-					<tr>
-				</thead>
-				<tbody>
-					{% for favori in favoris %}
+		{% if favoris != NULL %}
+			<div class="col-md-5 profil-card">
+				{% if user.id == member.id %}
+					<h3>Les produits que je suis :</h3>
+				{% else %}
+					<h3>Les produits que {{ member.username }} suis :</h3>
+				{% endif %}
+				<table id="table">
+					<thead>
 						<tr>
-							<th>{{ favori.nom }}</th>
-							{% if favori.enchere == 'oui' %}
-								<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
-							{% else %}
-								<th>Non</th>
-							{% endif %}
-							<th>Voir</th>
+							<th>Nom</th>
+							<th>Enchere en cours</th>
+							<th>Page produit</th>
 						<tr>
-					{% endfor %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% for favori in favoris %}
+							<tr>
+								<th>{{ favori.nom }}</th>
+								{% if favori.enchere == 'oui' %}
+									<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
+								{% else %}
+									<th>Non</th>
+								{% endif %}
+								<th>Voir</th>
+							<tr>
+						{% endfor %}
+					</tbody>
+				</table>
 
-			<script>
-				$(document).ready( function () {
-		    		$('#table').DataTable();
-				} );
-			</script>
-		</div>
+				<script>
+					$(document).ready( function () {
+		    			$('#table').DataTable();
+					} );
+				</script>
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}
