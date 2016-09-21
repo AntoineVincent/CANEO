@@ -13,6 +13,7 @@ dashboard:
     path:    /dashboard
     defaults: {_controller: AppBundle:Default:index}
 
+# ------- User Route -------
 profil:
     path:    /profil/{iduser}
     defaults: {_controller: AppBundle:Default:profil}
@@ -25,6 +26,7 @@ show_user:
     path:    /user/list
     defaults: {_controller: AppBundle:Default:listUser}
 
+# ------ Product Route -------
 new_product:
     path:    /product/new
     defaults: {_controller: ProductBundle:Product:newProduct}
@@ -32,3 +34,7 @@ new_product:
 show_product:
     path:    /product/show
     defaults: {_controller: ProductBundle:Product:listProduct}
+
+fiche_product:
+    path:    /product/fiche/{idproduct}
+    defaults: {_controller: ProductBundle:Product:ficheProduct}

@@ -41,32 +41,33 @@ class ProductController extends Controller
 
     public function listProductAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         $products = $em->getRepository('ProductBundle:Produit')->findAll();
 
         foreach($products as $product) {
-        	$favoris = $em->getRepository('ProductBundle:Favoris')->findBy(array(
-        		'idproduit' => $product->getId(),
-        		'idacheteur' => $user->getId()
-        	));
-        	if($favoris != NULL) {
-        		$favoris = "oui";
-        	}
-        	else {
-        		$favoris = "non";
-        	}
+            $favoris = $em->getRepository('ProductBundle:Favoris')->findBy(array(
+                'idproduit' => $product->getId(),
+                'idacheteur' => $user->getId()
+            ));
+            if($favoris != NULL) {
+                $favoris = "oui";
+            }
+            else {
+                $favoris = "non";
+            }
 
-        	$enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
-        	if($enchere != NULL) {
-        		$enchere = "oui";
-        	}
-        	else {
-        		$enchere = "non";
-        	}
+            $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
+            if($enchere != NULL) {
+                $enchere = "oui";
+            }
+            else {
+                $enchere = "non";
+            }
 
-        	$tabproducts[] = array(
+            $tabproducts[] = array(
+                'id' => $product->getId(),
                 'nom' => $product->getNom(),
                 'prixminimal' => $product->getPrixminimal(),
                 'commandemaximal' => $product->getCommandemaximal(),
@@ -76,8 +77,34 @@ class ProductController extends Controller
         }
 
         return $this->render('produits/show_products.html.twig', array(
-        	'products' => $tabproducts,
-        	'user' => $user,
+            'products' => $tabproducts,
+            'user' => $user,
+        ));
+    }
+    public function ficheProductAction(Request $request, $idproduct)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $product = $em->getRepository('ProductBundle:Produit')->findOneById($idproduct);
+
+        $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
+
+        if($enchere != NULL) {
+            $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
+
+            return $this->render('produits/fiche_product.html.twig', array(
+                'product' => $product,
+                'user' => $user,
+                'enchere' => $enchere,
+                'fournisseur' => $fournisseur,
+            ));
+        }
+
+        return $this->render('produits/fiche_product.html.twig', array(
+            'product' => $product,
+            'user' => $user,
+            'enchere' => $enchere,
         ));
     }
 }

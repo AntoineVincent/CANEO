@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+		<h3 class="form-title"> Fiche du Produit n° {{ product.id }}</h3>
+	</div>
+	<div class="col-md-12 card-form">
+		<div class="col-md-3">
+			<img src="{{ asset('uploads/products/' ~ product.photo) }}" class="product-pict">
+		</div>
+		<div class="col-md-9">
+			<div class="col-md-12">
+				<div class="col-md-3">
+					<p><strong>Nom du produit :</strong></p> 
+				</div>
+				<div class="col-md-9">
+					<p>{{ product.nom }}</p>
+				</div>
+				<div class="col-md-3">
+					<p><strong>Description produit :</strong></p> 
+				</div>
+				<div class="col-md-9">
+					<p>{{ product.description }}</p>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<h3 class="form-title">Infos Vente : </h3><br>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<p>ACHETEUR : Un acheteur doit passez une commande minimal de
+					<strong>{{ product.commandemaximal }}</strong> pièces/unités</p>
+				</div>
+				<div class="col-md-12">
+					<p>FOURNISSEUR : Le prix de départ maximum pour ce produit est de 
+					<strong>{{ product.prixminimal }}€</strong></p>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<h3 class="form-title">Etat Actuel : </h3>
+				</div>
+				{% if enchere == NULL %}
+					<p>Actuellement il n'y a PAS de vente en cours sur ce produit.</p>
+
+					<p>Lors de la dernière vente ce produit fût vendu x,xx€ unité.</p>
+				{% else %}
+					<h4>Actuellement une vente est en cours : </h4>
+					<p>Le prix de vente est de {{ enchere.prix }}€ l'unité</p>
+					<hr>
+					{% if user.type == "fournisseur" %}
+						<p>° Et il vous reste xx j, xx h, xx min et xx s pour baissez le prix et devenir fournisseur de cette vente.</p>
+					{% elseif user.type == "acheteur" %}
+						<p>° Et il vous reste xx j, xx h, xx min et xx s pour passez des commandes.</p>
+					{% else %}
+						<p>° Actuellement le fournisseur de cette vente est : {{ fournisseur.username }}</p>
+						<p>° Le nombre de commande total s'élève à {{ enchere.totalcommande }}</p>
+						<p>° Il reste xx j, xx h, xx min et xx s avant la fin de la vente</p>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -13,7 +13,7 @@
 						{% if user.type == 'fournisseur' or user.type == 'admin' %}
 							<th>Prix Maximal de Depart</th>
 						{% endif %}
-						{% if user.type == 'acheteur' or user.type == 'admin' %}
+						{% if user.type == 'acheteur' %}
 							<th>Commande Minimal</th>
 							<th>Favoris : </th>
 						{% endif %}
@@ -25,22 +25,22 @@
 						<tr>
 							<th>{{ product.nom }}</th>
 							{% if product.enchere == "oui" %}
-								<th>Enchere en cours</th>
+								<th>Une vente est en cours</th>
 							{% else %}
-								<th>Aucune enchere en cours</th>
+								<th>Aucune vente en cours</th>
 							{% endif %}
 							{% if user.type == 'fournisseur' or user.type == 'admin' %}
-								<th>{{ product.prixminimal }}</th>
+								<th>ce produit ne peut pas dépasser : {{ product.prixminimal }}€/unité</th>
 							{% endif %}
-							{% if user.type == 'acheteur' or user.type == 'admin' %}	
+							{% if user.type == 'acheteur' %}	
 								<th>{{ product.commandemaximal }}</th>
+								{% if product.favoris == "oui" %}
+									<th style="text-align:center;"><span class="glyphicon glyphicon-star"></span></th>
+								{% else %}
+									<th style="text-align:center;"><span class="glyphicon glyphicon-star-empty"></span></th>
+								{% endif %}
 							{% endif %}
-							{% if product.favoris == "oui" %}
-								<th style="text-align:center;"><span class="glyphicon glyphicon-star"></span></th>
-							{% else %}
-								<th style="text-align:center;"><span class="glyphicon glyphicon-star-empty"></span></th>
-							{% endif %}
-							<th>Fiche </th>
+							<th><a href="{{ path('fiche_product', { 'idproduct': product.id }) }}">Fiche produit</a></th>
 						</tr>
 					{% endfor %}
 				</tbody>
