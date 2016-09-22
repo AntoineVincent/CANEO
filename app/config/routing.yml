@@ -44,6 +44,10 @@ all_enchere:
     path:    /enchere/all
     defaults: {_controller: DealBundle:Enchere:allEnchere}
 
+my_enchere:
+    path:    /enchere/user
+    defaults: {_controller: DealBundle:Enchere:myEnchere}
+
 fiche_enchere:
     path:    /enchere/fiche/{idenchere}
     defaults: {_controller: DealBundle:Enchere:ficheEnchere}

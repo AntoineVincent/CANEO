@@ -59,20 +59,22 @@
 					<div class="col-md-12">
 						<p>Actuellement, au total il y a {{ enchere.totalCommande }} unités en commande.</p>
 					</div>
-					<div class="col-md-12">
-						<p>Pour {{ enchere.nbreAcheteur }} point(s) de livraison.  </p>
-					</div>
+					{% if enchere.totalCommande != 0 %}
+						<div class="col-md-12">
+							<p>Pour {{ enchere.nbreAcheteur }} point(s) de livraison.  </p>
+						</div>
+					{% endif %}
 				{% elseif user.type == "acheteur" %}
 					{% if enchere.commandeUser == "Pas de commandes" %}
 						<div class="col-md-9">
-							<p>Vous n'avez passer aucune commande pour cette vente.</p>
+							<p>Vous n'avez passé aucune commande pour cette vente.</p>
 						</div>
 					{% else %}
 						<div class="col-md-3">
 							<p>Vous avez commandé </p>
 						</div>
 						<div class="col-md-9">
-							<p> {{ enchere.commandeUser }} pour le moment.</p>
+							<p> {{ enchere.commandeUser }}unité au total.</p>
 						</div>
 					{% endif %}
 				{% endif %}
