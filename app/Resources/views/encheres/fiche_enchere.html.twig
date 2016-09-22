@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% for enchere in tabenchere %}
+		<div class="col-md-12">
+			<h3 class="form-title"> Vente N° {{ enchere.id }}</h3>
+		</div>
+		<div class="col-md-12 card-form">
+			<div class="col-md-3">
+				<img src="{{ asset('uploads/products/' ~ enchere.photoProduit) }}" class="product-pict">
+			</div>
+			<div class="col-md-9">
+				<div class="col-md-12">
+					<h4 class="form-title"> Produit : </h4>
+				</div>
+				<div class="col-md-3">
+					<p>Nom du Produit : </p>
+				</div>
+				<div class="col-md-9">
+					<p>{{ enchere.produit }}</p>
+				</div>
+				<div class="col-md-3">	
+					<p>Description du Produit : </p> 
+				</div>
+				<div class="col-md-9">
+					<p>{{ enchere.descProduit }}</p>
+				</div>
+				<div class="col-md-12">
+					<h4 class="form-title"> Infos Fournisseur actuel : </h4>
+				</div>
+				{% if user.id == enchere.idFournisseur %}
+					<div class="col-md-12">
+						<p> Vous êtes le fournisseur de cette vente.</p>
+					</div>
+				{% else %}
+					<div class="col-md-3">
+						<p>Fournisseur actuel: </p>
+					</div>
+					<div class="col-md-9">
+						<p><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab">	</p>
+					</div>
+				{% endif %}
+				<div class="col-md-3">	
+					<p>CGV du fournisseur : </p> 
+				</div>
+				<div class="col-md-9">
+					<p>{{ enchere.cgv }}</p>
+				</div>
+				<div class="col-md-12">
+					<h4 class="form-title"> Etat de la Vente : </h4>
+				</div>
+				<div class="col-md-3">
+					<p>Prix unitaire actuel : </p>
+				</div>
+				<div class="col-md-9">
+					<p>{{ enchere.prix }}€</p>
+				</div>
+				{% if user.type == "fournisseur" %}
+					<div class="col-md-12">
+						<p>Actuellement, au total il y a {{ enchere.totalCommande }} unités en commande.</p>
+					</div>
+					<div class="col-md-12">
+						<p>Pour {{ enchere.nbreAcheteur }} point(s) de livraison.  </p>
+					</div>
+				{% elseif user.type == "acheteur" %}
+					{% if enchere.commandeUser == "Pas de commandes" %}
+						<div class="col-md-9">
+							<p>Vous n'avez passer aucune commande pour cette vente.</p>
+						</div>
+					{% else %}
+						<div class="col-md-3">
+							<p>Vous avez commandé </p>
+						</div>
+						<div class="col-md-9">
+							<p> {{ enchere.commandeUser }} pour le moment.</p>
+						</div>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-md-12 card-form">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="col-md-12">
+					<p> Il reste xx d, xx h, xx min, xx s</p>
+				</div>
+				{% if user.type == "acheteur" %}
+					<div class="col-md-12">
+						<a class="btn btn-primary" href="">Passez une commandes</a>
+					</div>
+				{% elseif user.type == "fournisseur" %}
+				    {% if user.id != enchere.idFournisseur %}
+						<div class="col-md-12">
+							<a class="btn btn-primary" href="">Faire une meilleur offre</a>
+						</div>
+					{% endif %}	
+				{% endif %}
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+    {% endfor %}
+{% endblock %}

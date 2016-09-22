@@ -31,10 +31,10 @@
 								<th>{{ enchere.totalCommande }}</th>
 							{% endif %}
 							{% if user.type == "acheteur" %}
-								<th>Vos Commandes pour cette vente</th>
+								<th>{{ enchere.commandeUser }}</th>
 							{% endif %}
 							<th>XX d, XX h, XX min, XXs</th>
-							<th> <a href="">Fiche</a></th>
+							<th> <a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">Fiche</a></th>
 						</tr>
 					{% endfor %}
 				</tbody>

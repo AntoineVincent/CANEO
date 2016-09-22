@@ -43,3 +43,7 @@ fiche_product:
 all_enchere:
     path:    /enchere/all
     defaults: {_controller: DealBundle:Enchere:allEnchere}
+
+fiche_enchere:
+    path:    /enchere/fiche/{idenchere}
+    defaults: {_controller: DealBundle:Enchere:ficheEnchere}
