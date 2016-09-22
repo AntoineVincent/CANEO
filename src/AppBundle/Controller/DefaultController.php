@@ -14,10 +14,19 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
-    {
+    {   
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        // replace this example code with whatever you need
+        
+        $allmembers = $em->getRepository('AppBundle:User')->findAll();
+        foreach($allmembers as $member) {
+            $number = count($em->getRepository('AppBundle:Infos')->findByIduser($member->getId()));
+
+            $member->setNotifs($number);
+            $em->persist($member);
+            $em->flush();
+        }
+
         return $this->render('default/dashboard.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'user' => $user,

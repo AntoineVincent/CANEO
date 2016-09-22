@@ -55,6 +55,12 @@ class Produit
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", length=255)
+     */
+    private $etat;
 
 
     /**
@@ -157,5 +163,28 @@ class Produit
     public function getPhoto()
     {
         return $this->photo;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     * @return Produit
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

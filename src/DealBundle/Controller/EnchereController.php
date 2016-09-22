@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DealBundle\Entity\Encheres;
+use DealBundle\Form\EnchereType;
 
 class EnchereController extends Controller
 {
@@ -136,6 +137,46 @@ class EnchereController extends Controller
         return $this->render('encheres/fiche_enchere.html.twig', array(
             'user' => $user,
             'tabenchere' => $tabenchere,
+        ));
+    }
+
+    public function newEnchereAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $enchere = new Encheres();
+        $form = $this->createForm('DealBundle\Form\EnchereType', $enchere);
+        $form->handleRequest($request);
+
+        $produits = $em->getRepository('ProductBundle:Produit')->findByEtat('non');
+
+        $idprod = $request->request->get('prod');
+        $idfournisseur = $request->request->get('fourni');
+        $prixMax = $request->request->get('prix');
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $enchere->setIdproduit($idprod);
+            $enchere->setIdfournisseur($idfournisseur);
+            $enchere->setPrix($prixMax);
+
+            $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
+            $prodSelected->setEtat('oui');
+
+            // recupere la string date;
+            // $date = $enchere->getFulldate()->format('d/m/Y');
+
+            $em->persist($enchere);
+            $em->flush();
+            $em->persist($prodSelected);
+            $em->flush();
+        }
+
+        return $this->render('encheres/new_enchere.html.twig', array(
+            'user' => $user,
+            'produits' => $produits,
+            'form' => $form->createView(),
         ));
     }
 

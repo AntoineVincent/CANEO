@@ -28,6 +28,7 @@ class ProductController extends Controller
             $photo->move($photoDir, $photoName);
 
             $product->setPhoto($photoName);
+            $product->setEtat('non');
 
             $em->persist($product);
             $em->flush();

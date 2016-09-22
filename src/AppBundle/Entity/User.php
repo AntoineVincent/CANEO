@@ -90,6 +90,12 @@ class User extends BaseUser
      * @ORM\Column(name="villelivraison", type="string", length=255, nullable=true)
      */
     private $villelivraison;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="notifs", type="integer", nullable=true)
+     */
+    private $notifs;
 
 
     public function __construct()
@@ -372,5 +378,28 @@ class User extends BaseUser
     public function getVillelivraison()
     {
         return $this->villelivraison;
+    }
+
+    /**
+     * Set notifs
+     *
+     * @param integer $notifs
+     * @return User
+     */
+    public function setNotifs($notifs)
+    {
+        $this->notifs = $notifs;
+
+        return $this;
+    }
+
+    /**
+     * Get notifs
+     *
+     * @return integer 
+     */
+    public function getNotifs()
+    {
+        return $this->notifs;
     }
 }

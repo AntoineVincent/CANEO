@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+		Produit : <select name="prod"><br>
+			<option></option>
+			{% for produit in produits %}
+				<option value="{{ produit.id }}">{{ produit.nom }}</option>
+			{% endfor %}
+		</select>
+		fourni : <input type="number" name="fourni"><br>
+		prix : <input type="number" name="prix"><br>
+		date : {{ form_widget(form.fulldate) }}
+		<input type="submit" name="submit">
+	{{ form_end(form) }}
+
+{% endblock %}

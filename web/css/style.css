@@ -209,6 +209,9 @@ html {
 .glyphicon-floppy-open {
     color: blue;
 }
+.glyphicon-modal-window {
+    color: grey;
+}
 .card-form {
     background-color: rgba(204,204,204,0.4);
     margin: 3px 0 3px 0;

@@ -70,6 +70,13 @@ class Encheres
      */
     private $anneeFin;
 
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="fulldate", type="date", nullable=true)
+     */
+    private $fulldate;
+
 
     /**
      * Get id
@@ -240,5 +247,28 @@ class Encheres
     public function getAnneeFin()
     {
         return $this->anneeFin;
+    }
+
+    /**
+     * Set fulldate
+     *
+     * @param \DateTime $fulldate
+     * @return Encheres
+     */
+    public function setFulldate($fulldate)
+    {
+        $this->fulldate = $fulldate;
+
+        return $this;
+    }
+
+    /**
+     * Get fulldate
+     *
+     * @return \DateTime 
+     */
+    public function getFulldate()
+    {
+        return $this->fulldate;
     }
 }

@@ -52,6 +52,10 @@ fiche_enchere:
     path:    /enchere/fiche/{idenchere}
     defaults: {_controller: DealBundle:Enchere:ficheEnchere}
 
+new_enchere:
+    path:    /enchere/new
+    defaults: {_controller: DealBundle:Enchere:newEnchere}
+
 # ------ Commands Route -------
 commande:
     path:    /command/{idenchere}

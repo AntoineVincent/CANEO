@@ -40,6 +40,15 @@
                             OrthoDeal
                         </a>
                     </li>
+                    {% if user.type == "fournisseur" or user.type == "acheteur" %}
+                        <li>
+                            {% if user.notifs != 0 %}
+                                <a href="#"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge">{{ user.notifs }}</span></a>
+                            {% else %}
+                                <a href="#"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge"></span></a>
+                            {% endif %}
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="{{ path('dashboard') }}"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
                     </li>
@@ -58,6 +67,9 @@
                         </li>
                         <li>
                             <a href="{{ path('new_product') }}"><span class="glyphicon glyphicon-floppy-open"></span> Ajoutez un produit</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('new_enchere') }}"><span class="glyphicon glyphicon-modal-window"></span> Lancer une enchère</a>
                         </li>
                         <li>
                             <a href="{{ path('all_enchere') }}"><span class="glyphicon glyphicon-euro"></span> Ventes en cours</a>
@@ -83,7 +95,7 @@
                     {% endif %}
                     {% if user.type == "fournisseur" %}
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Faire une suggestion</a>
+                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Faire une demande d'enchère</a>
                         </li>
                     {% endif %}
                     <li class="testtttt">
