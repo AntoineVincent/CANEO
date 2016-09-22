@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="form-title">Passez une commande pour la vente n°{{ enchere.id }}</h3>
+		</div>
+		<div class="col-md-12 card-form">
+			<div class="col-md-12">
+		        {% for label, flashes in app.session.flashbag.all %}
+		            {% for flash in flashes %}
+		                <div class="alert alert-{{ label }}">
+		                    {{ flash }}
+		                </div>
+		            {% endfor %}
+		        {% endfor %}
+		    </div>
+			<div class="col-md-12">
+				{% if cmd != NULL %}
+					<h5>Vous avez déjà commander {{ cmd.nbredecommande }} unités.</h5>
+				{% else %}
+					<h5>Vous n'avez encore commandé aucun produit sur cette vente.</h5>
+				{% endif %}
+			</div>
+			<div class="col-md-5">
+				<div class="col-md-12">
+					<p class="form-title">Quel quantité du produit voulez vous commander ?</p>
+				</div> 
+				<form action="{{ path('commande', { 'idenchere': enchere.id }) }}" method="post">
+					<div class="col-md-12">
+						<input type="number" name="quantite" id="quantite" placeholder="Quantité"><br>
+						<p>(Vous pouvez commandé au minimum {{ product.commandemaximal }})</p>
+					</div>
+					<div class="col-md-12">
+						<input type="submit" name="submit" class="btn btn-primary" value="Passez la commande">
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-7">
+				<div class="col-md-12">
+					<p class="form-title">Rappel sur le produit</p>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-4">
+						<p>Nom : </p>
+					</div>
+					<div class="col-md-8">
+						{{ product.nom }}
+					</div>
+				</div>
+				<div class="col-md-12">	
+					<div class="col-md-4">
+						<p>Description : </p>
+					</div>
+					<div class="col-md-8">
+						{{ product.description }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

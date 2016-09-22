@@ -39,7 +39,7 @@ fiche_product:
     path:    /product/fiche/{idproduct}
     defaults: {_controller: ProductBundle:Product:ficheProduct}
 
-# ------ Product Route -------
+# ------ Encheres Route -------
 all_enchere:
     path:    /enchere/all
     defaults: {_controller: DealBundle:Enchere:allEnchere}
@@ -51,3 +51,8 @@ my_enchere:
 fiche_enchere:
     path:    /enchere/fiche/{idenchere}
     defaults: {_controller: DealBundle:Enchere:ficheEnchere}
+
+# ------ Commands Route -------
+commande:
+    path:    /command/{idenchere}
+    defaults: {_controller: DealBundle:Command:newCmd}

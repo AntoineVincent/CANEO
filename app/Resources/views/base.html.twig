@@ -59,20 +59,23 @@
                         <li>
                             <a href="{{ path('new_product') }}"><span class="glyphicon glyphicon-floppy-open"></span> Ajoutez un produit</a>
                         </li>
+                        <li>
+                            <a href="{{ path('all_enchere') }}"><span class="glyphicon glyphicon-euro"></span> Ventes en cours</a>
+                        </li>
                     {% endif %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-euro"></span> Ventes <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('all_enchere') }}"> Toutes les Ventes</a></li>
-                            <li><a href="#"> 
+                    {% if user.type != "admin" %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-euro"></span> Ventes <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('all_enchere') }}"> Toutes les Ventes</a></li> 
                                 {% if user.type == "fournisseur" %}
-                                    Mes Ventes en cours
-                                {% else %}
-                                    Mes Achats en cours
+                                    <li><a href="{{ path('my_enchere') }}"> Mes Ventes en cours</a></li>
+                                {% elseif user.type == "acheteur" %}
+                                    <li><a href="{{ path('my_enchere') }}"> Mes Achats en cours</a></li>
                                 {% endif %}
-                            </a></li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                     {% if user.type == "acheteur" %}
                         <li>
                             <a href="#"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
