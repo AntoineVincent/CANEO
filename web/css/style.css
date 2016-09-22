@@ -127,7 +127,6 @@ html {
     }
 }
 .logform {
-	background-color: #59ABE3;
 	border-radius:5px;
 	margin-top: 40px;
 	padding: 0 30px 30px 30px;
@@ -232,4 +231,11 @@ th {
     height: 240px;
     width: 240px;
     border: solid silver 1px;
+}
+.dropdown-menu {
+    background-color: rgba(204,204,204,1);
+}
+.logo-pict-tab {
+    height: 50px;
+    width: 50px;
 }

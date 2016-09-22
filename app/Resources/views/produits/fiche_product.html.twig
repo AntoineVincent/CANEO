@@ -52,7 +52,11 @@
 					<p>Le prix de vente est de {{ enchere.prix }}€ l'unité</p>
 					<hr>
 					{% if user.type == "fournisseur" %}
-						<p>° Et il vous reste xx j, xx h, xx min et xx s pour baissez le prix et devenir fournisseur de cette vente.</p>
+						{% if user.username == fournisseur.username %}
+							<p>° Il reste xx j, xx h, xx min et xx s à cette enchère. Vous êtes actuellement le fournisseur pour cette enchère.</p>
+						{% else %}
+							<p>° Il vous reste xx j, xx h, xx min et xx s pour baissez le prix et devenir fournisseur de cette vente.</p>
+						{% endif %}
 					{% elseif user.type == "acheteur" %}
 						<p>° Et il vous reste xx j, xx h, xx min et xx s pour passez des commandes.</p>
 					{% else %}

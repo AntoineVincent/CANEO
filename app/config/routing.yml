@@ -38,3 +38,8 @@ show_product:
 fiche_product:
     path:    /product/fiche/{idproduct}
     defaults: {_controller: ProductBundle:Product:ficheProduct}
+
+# ------ Product Route -------
+all_enchere:
+    path:    /enchere/all
+    defaults: {_controller: DealBundle:Enchere:allEnchere}

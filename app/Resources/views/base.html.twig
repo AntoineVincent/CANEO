@@ -60,10 +60,14 @@
                             <a href="{{ path('new_product') }}"><span class="glyphicon glyphicon-floppy-open"></span> Ajoutez un produit</a>
                         </li>
                     {% endif %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-euro"></span> Enchères <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('all_enchere') }}"> Toutes les enchères</a></li>
+                            <li><a href="#"> Mes enchères en cours</a></li>
+                        </ul>
+                    </li>
                     {% if user.type == "acheteur" %}
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-euro"></span> Mes enchères en cours</a>
-                        </li>
                         <li>
                             <a href="#"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
                         </li>

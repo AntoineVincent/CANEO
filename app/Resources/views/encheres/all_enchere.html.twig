@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="form-title">Liste des Ventes en cours</h3>
+			<table id="table">
+				<thead>
+					<tr>
+						<th>Nom du Produit</th>
+						<th>Prix actuel</th>
+						<th>Fournisseur</th>
+						{% if user.type == "fournisseur" %}
+							<th>Total de commandes actuel</th>
+						{% endif %}
+						{% if user.type == "acheteur" %}
+							<th>Vos Commandes pour cette vente</th>
+						{% endif %}
+						<th>Temps restant </th>
+						<th>Voir l'enchère </th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for enchere in tabenchere %}
+						<tr>
+							<th>{{ enchere.produit }}</th>
+							<th>{{ enchere.prix }} €</th>
+							<th><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
+							{% if user.type == "fournisseur" %}
+								<th>{{ enchere.totalCommande }}</th>
+							{% endif %}
+							{% if user.type == "acheteur" %}
+								<th>Vos Commandes pour cette vente</th>
+							{% endif %}
+							<th>XX d, XX h, XX min, XXs</th>
+							<th> <a href="">Fiche</a></th>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<script>
+				$(document).ready( function () {
+		    		$('#table').DataTable();
+				} );
+			</script>
+		</div>
+	</div>
+
+{% endblock %}
