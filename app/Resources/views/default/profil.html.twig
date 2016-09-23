@@ -104,12 +104,12 @@
 						{% for favori in favoris %}
 							<tr>
 								<th>{{ favori.nom }}</th>
-								{% if favori.enchere == 'oui' %}
-									<th>Oui <span class="glyphicon glyphicon-zoom-in"></span></th>
+								{% if favori.idenchere != "non" %}
+									<th>Une vente est en cours <a href="{{ path('fiche_enchere', { 'idenchere': favori.idenchere }) }}"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
 								{% else %}
-									<th>Non</th>
+									<th>Aucune vente en cours</th>
 								{% endif %}
-								<th>Voir</th>
+								<th><a href="{{ path('fiche_product', { 'idproduct': favori.id }) }}">Fiche produit</a></th>
 							<tr>
 						{% endfor %}
 					</tbody>

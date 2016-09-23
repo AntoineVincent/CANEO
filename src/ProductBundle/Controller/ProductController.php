@@ -32,6 +32,11 @@ class ProductController extends Controller
 
             $em->persist($product);
             $em->flush();
+
+            $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'Le Produit à été créé avec succès !')
+            ;
         }
 
         return $this->render('produits/new_product.html.twig', array(
@@ -60,11 +65,11 @@ class ProductController extends Controller
             }
 
             $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
-            if($enchere != NULL) {
-                $enchere = "oui";
+            if($enchere != NULL){
+                $idenchere = $enchere->getId();
             }
             else {
-                $enchere = "non";
+                $idenchere = "non";
             }
 
             $tabproducts[] = array(
@@ -74,6 +79,7 @@ class ProductController extends Controller
                 'commandemaximal' => $product->getCommandemaximal(),
                 'favoris' => $favoris,
                 'enchere' => $enchere,
+                'idenchere' => $idenchere,
             );
         }
 

@@ -5,6 +5,15 @@
 		<h3 class="form-title">Ajouter un nouveau Produit : </h3>
 	</div>
 	<div class="col-md-12">
+		<div class="col-md-12">
+		    {% for label, flashes in app.session.flashbag.all %}
+		        {% for flash in flashes %}
+		            <div class="alert alert-{{ label }}">
+		                {{ flash }}
+		            </div>
+		        {% endfor %}
+		    {% endfor %}
+		</div>
 		<div class="col-md-12 form-add-member">
 			{{ form_start(form) }}
 				<div class="col-md-12 card-form">

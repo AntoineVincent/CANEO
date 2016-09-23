@@ -56,6 +56,10 @@ new_enchere:
     path:    /enchere/new
     defaults: {_controller: DealBundle:Enchere:newEnchere}
 
+enchere_up:
+    path:    /enchere/up/{idenchere}
+    defaults: {_controller: DealBundle:Enchere:enchereUp}
+
 # ------ Commands Route -------
 commande:
     path:    /command/{idenchere}

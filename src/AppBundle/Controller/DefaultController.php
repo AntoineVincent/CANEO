@@ -50,15 +50,17 @@ class DefaultController extends Controller
             $product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
 
             $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
-            if($enchere != NULL) {
-                $enchere = "oui";
+            if($enchere != NULL){
+                $idenchere = $enchere->getId();
             }
             else {
-                $enchere = "non";
+                $idenchere = "non";
             }
             $tabproduct [] = array(
                 'nom' => $product->getNom(),
                 'enchere' => $enchere,
+                'idenchere' => $idenchere,
+                'id' => $product->getId(),
             );
         }
 
@@ -88,9 +90,15 @@ class DefaultController extends Controller
             $logo->move($logoDir, $logoName);
 
             $member->setLogo($logoName);
+            $member->setEnabled(1);
 
             $em->persist($member);
             $em->flush();
+
+            $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'L\'Utilisateur à été créé avec succès !')
+            ;
         }
 
         return $this->render('default/addmember.html.twig', array(

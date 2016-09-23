@@ -225,5 +225,76 @@ class EnchereController extends Controller
             'form' => $form->createView(),
         ));
     }
+    public function enchereUpAction(Request $request, $idenchere) 
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
+        $enchere = $em->getRepository('DealBundle:Encheres')->findOneById($idenchere);
+        $oldfourni = $enchere->getIdfournisseur();
+        $oldprice = $enchere->getPrix();
+
+        $idprod = $enchere->getIdproduit();
+        $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
+
+        $newPrice = $request->request->get('newprice');
+        $datenotif = $request->request->get('datenotif');
+
+        if($newPrice != NULL) {
+            if($newPrice >= $enchere->getPrix()) {
+                $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'Le nouveau prix n\'est pas inférieur à l\'ancien, veuillez rentrer un prix valide !')
+                ;
+
+                return $this->redirectToRoute('fiche_enchere', array('idenchere' => $idenchere));
+            }
+            else {
+                $enchere->setPrix($newPrice);
+                $enchere->setIdfournisseur($user->getId());
+
+                $em->persist($enchere);
+                $em->flush();
+
+                $notif = new Infos();
+                $notif->setIduser($oldfourni);
+                $notif->setIdenchere($enchere->getId());
+                $notif->setMessage("Vous n'êtes plus le fournisseur de la vente n°".$enchere->getId()." le nouveau prix est de ".$enchere->getPrix()."€ au lieu de ".$oldprice."€ . Vous pouvez acceder à la vente :");
+                $notif->setEtat("unread");
+                $notif->setCreatedAt($datenotif);
+                $em->persist($notif);
+                $em->flush();
+
+                $favProd = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($idprod);
+                if($favProd != NULL) {
+                    foreach($favProd as $fav) {
+                        $user = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
+
+                        $notif = new Infos();
+                            $notif->setIduser($user->getId());
+                            $notif->setIdenchere($enchere->getId());
+                            $notif->setMessage("La vente n°".$enchere->getId()." a changé de fournisseur, l'ancien prix de ".$oldprice."€ n'est plus valable, desormais il sera de ".$enchere->getPrix()."€ . Vous pouvez acceder à la vente ");
+                            $notif->setEtat("unread");
+                            $notif->setCreatedAt($datenotif);
+                            $em->persist($notif);
+                            $em->flush();
+                    }
+                }
+
+                $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Le Nouveau Prix à été enregistré, vous êtes desormais le fournisseur de cette vente !')
+                ;
+
+                return $this->redirectToRoute('fiche_enchere', array('idenchere' => $idenchere));
+            }
+
+        }
+
+        return $this->render('encheres/enchere_up.html.twig', array(
+            'user' => $user,
+            'idenchere' => $idenchere,
+            'enchere' => $enchere,
+        ));
+    }
 }

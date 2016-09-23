@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% if enchere.idfournisseur == user.id %}
+		<h1 class="form-title">Vous êtes déjà le fournisseur de cette vente ! On ne triche pas !</h1>
+	{% else %}
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<h3 class="form-title">Donnez votre prix pour la vente n°{{ enchere.id }}</h3>
+			</div>
+			<div class="col-md-12 card-form">
+				<div class="col-md-12">
+			        {% for label, flashes in app.session.flashbag.all %}
+			            {% for flash in flashes %}
+			                <div class="alert alert-{{ label }}">
+			                    {{ flash }}
+			                </div>
+			            {% endfor %}
+			        {% endfor %}
+			    </div>
+				<div class="col-md-5">
+					<div class="col-md-12">
+						<p class="form-title">Quel prix voulez vous appliquer ?</p>
+					</div> 
+					<form action="{{ path('enchere_up', { 'idenchere': enchere.id }) }}" method="post">
+						<div class="col-md-12">
+							<input type="number" name="newprice" id="newprice" placeholder="Nouveau prix" step="any"><br>
+							<p>Le prix actuel est de {{ enchere.prix }}€, indiquez une valeur inférieure.</p>
+						</div>
+						<div class="col-md-12">
+							<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
+							<input type="submit" name="submit" class="btn btn-primary" value="Changer le prix">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}

@@ -24,8 +24,8 @@
 					{% for product in products %}
 						<tr>
 							<th>{{ product.nom }}</th>
-							{% if product.enchere == "oui" %}
-								<th>Une vente est en cours</th>
+							{% if product.idenchere != "non" %}
+								<th>Une vente est en cours <a href="{{ path('fiche_enchere', { 'idenchere': product.idenchere }) }}"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
 							{% else %}
 								<th>Aucune vente en cours</th>
 							{% endif %}

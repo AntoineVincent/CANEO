@@ -6,6 +6,13 @@
 			<h3 class="form-title"> Vente N° {{ enchere.id }}</h3>
 		</div>
 		<div class="col-md-12 card-form">
+			{% for label, flashes in app.session.flashbag.all %}
+		        {% for flash in flashes %}
+		            <div class="alert alert-{{ label }}">
+		                {{ flash }}
+		            </div>
+		        {% endfor %}
+		    {% endfor %}
 			<div class="col-md-3">
 				<img src="{{ asset('uploads/products/' ~ enchere.photoProduit) }}" class="product-pict">
 			</div>
@@ -93,7 +100,7 @@
 				{% elseif user.type == "fournisseur" %}
 				    {% if user.id != enchere.idFournisseur %}
 						<div class="col-md-12">
-							<a class="btn btn-primary" href="">Faire une meilleur offre</a>
+							<a class="btn btn-primary" href="{{ path('enchere_up', { 'idenchere': enchere.id }) }}">Faire une meilleur offre</a>
 						</div>
 					{% endif %}	
 				{% endif %}
