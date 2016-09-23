@@ -70,3 +70,7 @@ notifs_show:
 favoris_show:
     path:    /favoris
     defaults: {_controller: ProductBundle:Default:showFavoris}
+
+favoris_action:
+    path:    /ajax/favoris
+    defaults: {_controller: ProductBundle:Default:addDeleteFav}

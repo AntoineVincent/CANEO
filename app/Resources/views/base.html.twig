@@ -90,7 +90,7 @@
                     {% endif %}
                     {% if user.type == "acheteur" %}
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
+                            <a href="{{ path('favoris_show') }}"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
                         </li>
                     {% endif %}
                     {% if user.type == "fournisseur" %}

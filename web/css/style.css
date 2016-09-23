@@ -212,6 +212,12 @@ html {
 .glyphicon-modal-window {
     color: grey;
 }
+.glyphicon-star {
+    cursor: pointer;
+}
+.glyphicon-star-empty {
+    cursor: pointer;
+}
 .card-form {
     background-color: rgba(204,204,204,0.4);
     margin: 3px 0 3px 0;
