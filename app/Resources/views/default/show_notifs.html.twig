@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-12">
+		<h3 class="form-title">Notifications : </h3>
+	</div>
+	<div class="col-md-12">
+		{% for notif in notifs|reverse %}
+			<div class="col-md-12 notifs-card">
+				<p>Reçu le : {{ notif.createdAt }}</p><br>
+				<p>{{ notif.message }} : <a href="{{ path('fiche_enchere', { 'idenchere': notif.idenchere }) }}">ici</a></p>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}

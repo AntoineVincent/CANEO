@@ -60,3 +60,13 @@ new_enchere:
 commande:
     path:    /command/{idenchere}
     defaults: {_controller: DealBundle:Command:newCmd}
+
+# ------ Show Notifications ------
+notifs_show:
+    path:    /notifs
+    defaults: {_controller: AppBundle:Default:showNotif}
+
+# ------ Favoris ------
+favoris_show:
+    path:    /favoris
+    defaults: {_controller: ProductBundle:Default:showFavoris}

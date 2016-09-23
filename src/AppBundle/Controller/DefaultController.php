@@ -20,7 +20,10 @@ class DefaultController extends Controller
         
         $allmembers = $em->getRepository('AppBundle:User')->findAll();
         foreach($allmembers as $member) {
-            $number = count($em->getRepository('AppBundle:Infos')->findByIduser($member->getId()));
+            $number = count($em->getRepository('AppBundle:Infos')->findBy(array(
+                'iduser' => $member->getId(),
+                'etat' => 'unread',
+            )));
 
             $member->setNotifs($number);
             $em->persist($member);
@@ -105,6 +108,33 @@ class DefaultController extends Controller
         return $this->render('user/show_user.html.twig', array(
             'members' => $members,
             'user' => $user,
+        ));
+    }
+
+    public function showNotifAction(Request $request)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        $notifs = $em->getRepository('AppBundle:Infos')->findByIduser($user->getId());
+        foreach($notifs as $notif) {
+            $notif->setEtat("read");
+
+            $em->persist($notif);
+            $em->flush();
+        }
+        $number = count($em->getRepository('AppBundle:Infos')->findBy(array(
+            'iduser'=> $user->getId(),
+            'etat' => 'unread',
+        )));
+
+        $user->setNotifs($number);
+        $em->persist($user);
+        $em->flush();
+
+        return $this->render('default/show_notifs.html.twig', array(
+            'user' => $user,
+            'notifs' => $notifs,
         ));
     }
 }

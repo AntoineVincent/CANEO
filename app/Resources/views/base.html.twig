@@ -43,9 +43,9 @@
                     {% if user.type == "fournisseur" or user.type == "acheteur" %}
                         <li>
                             {% if user.notifs != 0 %}
-                                <a href="#"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge">{{ user.notifs }}</span></a>
+                                <a href="{{ path('notifs_show') }}"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge">{{ user.notifs }}</span></a>
                             {% else %}
-                                <a href="#"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge"></span></a>
+                                <a href="{{ path('notifs_show') }}"><span class="glyphicon glyphicon-asterisk"></span> Notifications <span class="badge"></span></a>
                             {% endif %}
                         </li>
                     {% endif %}

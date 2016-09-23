@@ -1,18 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-	{{ form_start(form) }}
-		Produit : <select name="prod"><br>
-			<option></option>
-			{% for produit in produits %}
-				<option value="{{ produit.id }}">{{ produit.nom }}</option>
-			{% endfor %}
-		</select>
-		fourni : <input type="number" name="fourni"><br>
-		prix : <input type="number" name="prix"><br>
-		date : {{ form_widget(form.fulldate) }}
-		<input type="submit" name="submit">
-	{{ form_end(form) }}
+	<div class="col-md-12">
+		<h3 class="form-title">Démarrer une nouvelles vente</h3>
+	</div>
+	<div class="col-md-12 card-form">
+		{{ form_start(form) }}
+			<div class="col-md-6">
+				<div class="col-md-12">
+					<h4 class="form-title">Infos Produit </h4>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-5">
+						<label>Produit : </label>
+					</div>
+					<div class="col-md-7">
+						<select name="prod"><br>
+							<option></option>
+							{% for produit in produits %}
+								<option value="{{ produit.id }}">{{ produit.nom }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-md-5">
+						<label>Prix de départ de la vente : </label>
+					</div>
+					<div class="col-md-7">
+						<input type="number" name="prix" placeholder="format XX.XX" step="any">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-12">
+					<h4 class="form-title">Fournisseur et Date de fin</h4>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-5">
+						<label>ID fournisseur : </label>
+					</div>
+					<div class="col-md-7">
+						<input type="number" name="fourni" id="fourni">
+					</div>
+					<div class="col-md-5">
+						<label>Date de fin de vente : </label>
+					</div>
+					<div class="col-md-7">
+						{{ form_widget(form.fulldate) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
+					<input type="submit" name="submit" value="Lancez l'enchère" class="btn btn-primary">
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+		{{ form_end(form) }}	
+	</div>
 
 {% endblock %}

@@ -379,4 +379,27 @@ class User extends BaseUser
     {
         return $this->villelivraison;
     }
+
+    /**
+     * Set notifs
+     *
+     * @param integer $notifs
+     * @return User
+     */
+    public function setNotifs($notifs)
+    {
+        $this->notifs = $notifs;
+
+        return $this;
+    }
+
+    /**
+     * Get notifs
+     *
+     * @return integer 
+     */
+    public function getNotifs()
+    {
+        return $this->notifs;
+    }
 }

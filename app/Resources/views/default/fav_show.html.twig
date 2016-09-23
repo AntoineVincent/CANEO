@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h3 class="form-title">Liste des Favoris : </h3>
+			<table id="table">
+				<thead>
+					<tr>
+						<th>Nom du Produit</th>
+						<th>Etat</th>
+						<th>Commande Minimal</th>
+						<th>Favoris : </th>
+						<th>Voir Fiche</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for product in products %}
+						<tr>
+							<th>{{ product.nom }}</th>
+							{% if product.enchere %}
+								<th>Une vente est en cours <a href="{{ path('fiche_enchere', { 'idenchere': product.idenchere }) }}"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
+							{% else %}
+								<th>Aucune vente en cours</th>
+							{% endif %}
+							<th>{{ product.commandemaximal }}</th>
+							<th style="text-align:center;"><span class="glyphicon glyphicon-star"></span></th>
+							<th><a href="{{ path('fiche_product', { 'idproduct': product.id }) }}">Fiche produit</a></th>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<script>
+				$(document).ready( function () {
+		    		$('#table').DataTable();
+				} );
+			</script>
+		</div>
+	</div>
+
+{% endblock %}

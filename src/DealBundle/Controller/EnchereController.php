@@ -5,6 +5,7 @@ namespace DealBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Infos;
 use DealBundle\Entity\Encheres;
 use DealBundle\Form\EnchereType;
 
@@ -154,6 +155,7 @@ class EnchereController extends Controller
         $idprod = $request->request->get('prod');
         $idfournisseur = $request->request->get('fourni');
         $prixMax = $request->request->get('prix');
+        $datenotif = $request->request->get('datenotif');
 
         if($form->isSubmitted() && $form->isValid()) {
 
@@ -171,6 +173,50 @@ class EnchereController extends Controller
             $em->flush();
             $em->persist($prodSelected);
             $em->flush();
+
+            $allUser = $em->getRepository('AppBundle:User')->findAll();
+            foreach($allUser as $oneUser) {
+                if($oneUser->getType() == "fournisseur") {
+                    if($oneUser->getId() == $enchere->getIdfournisseur()){
+                        $notif = new Infos();
+                        $notif->setIduser($oneUser->getId());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Félicitations, la vente pour le produit : ".$prodSelected->getNom()." à bien démarré, vous en êtes le fournisseur de départ.");
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
+                    }
+                    else {
+                        $notif = new Infos();
+                        $notif->setIduser($oneUser->getId());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Une nouvelle vente à démarré pour le produit : ".$prodSelected->getNom()." vous pouvez y acceder");
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
+                    }
+                }
+                elseif($oneUser->getType() == "acheteur") {
+                    $notif = new Infos();
+                    $notif->setIduser($oneUser->getId());
+                    $notif->setIdenchere($enchere->getId());
+                    $notif->setMessage("Une nouvelle vente à démarré pour le produit : ".$prodSelected->getNom()." vous pouvez y acceder");
+                    $notif->setEtat("unread");
+                    $notif->setCreatedAt($datenotif);
+
+                    $em->persist($notif);
+                    $em->flush();
+                }
+                else {
+
+                }
+            }
+
+            return $this->redirectToRoute('fiche_enchere', array('idenchere' => $enchere->getId()));
         }
 
         return $this->render('encheres/new_enchere.html.twig', array(
