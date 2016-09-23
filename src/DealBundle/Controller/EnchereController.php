@@ -259,7 +259,7 @@ class EnchereController extends Controller
                 $notif = new Infos();
                 $notif->setIduser($oldfourni);
                 $notif->setIdenchere($enchere->getId());
-                $notif->setMessage("Vous n'êtes plus le fournisseur de la vente n°".$enchere->getId()." le nouveau prix est de ".$enchere->getPrix()."€ au lieu de ".$oldprice."€ . Vous pouvez acceder à la vente :");
+                $notif->setMessage("Vous n'êtes plus le fournisseur de la vente n°".$enchere->getId()." le nouveau prix est de ".$enchere->getPrix()."€ au lieu de ".$oldprice."€ . Vous pouvez acceder à la vente ");
                 $notif->setEtat("unread");
                 $notif->setCreatedAt($datenotif);
                 $em->persist($notif);
