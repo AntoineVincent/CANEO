@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use AppBundle\Entity\Infos;
 
 
 class DefaultController extends Controller
@@ -117,33 +118,26 @@ class DefaultController extends Controller
             $em->flush();
 
             $product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
-            $oldfourni = $em->getRepository('AppBundle:User')->findOneById($product->getIdfournisseur());
+            $oldfourni = $product->getIdfournisseur();
 
             if($product->getPrixminimal() > $prixvente) {
                 $product->setPrixminimal($prixvente);
                 $product->setIdfournisseur($user->getId());
 
-                $em->persist($product);
-                $em->flush();
-
-                if($oldfourni != 0) {
+                if($oldfourni != 0 && $user->getId() != $oldfourni) {
                     $notif = new Infos();
-                    $notif->setIduser($user->getId());
+                    $notif->setIduser($oldfourni);
                     $notif->setIdproduit($product->getId());
-                    $notif->setMessage("test");
+                    $notif->setMessage("Vous n'avez plus le prix le moins cher pour le produit : ".$product->getNom().". Il est desormais vendu pour le prix de ".$prixvente."€");
                     $notif->setEtat("unread");
                     $notif->setCreatedAt($datenotif);
-
+                    // var_dump($notif);exit;
                     $em->persist($notif);
                     $em->flush();
                 }
 
-                $request->getSession()
-                    ->getFlashBag()
-                    ->add('success', 'Votre prix à bien été enregistré !')
-                    ;
-
-                return $this->redirectToRoute('profil', array('iduser' => $user->getId()));
+                $em->persist($product);
+                $em->flush();
             }
 
              $request->getSession()

@@ -93,11 +93,6 @@
                             <a href="{{ path('favoris_show') }}"><span class="glyphicon glyphicon-star"></span> Mes favoris</a>
                         </li>
                     {% endif %}
-                    {% if user.type == "fournisseur" %}
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Faire une demande d'enchère</a>
-                        </li>
-                    {% endif %}
                     <li class="testtttt">
                         <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Se déconnecter</a>
                     </li>

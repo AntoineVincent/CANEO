@@ -93,7 +93,7 @@
 	</div>
 	<div class="col-md-12">
 		{% if favoris != NULL %}
-			<div class="col-md-5 profil-card">
+			<div class="col-md-7 profil-card">
 				{% if user.id == member.id %}
 					<h3>Mes favoris :</h3>
 				{% else %}
@@ -107,7 +107,7 @@
 								<th>Enchere en cours</th>
 							{% endif %}
 							{% if user.type == "fournisseur" %}
-								<th>Prix de vente</th>
+								<th>Meilleur Prix de vente</th>
 								<th>Votre prix de vente</th>
 								<th>Rentrer un prix</th>
 							{% endif %}

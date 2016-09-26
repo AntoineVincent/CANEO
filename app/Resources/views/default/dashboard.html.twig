@@ -70,21 +70,6 @@
     		$('#table').DataTable();
 		} );
 	</script>
-		<script type="text/javascript">
-
-			var currentdate = new Date();
-			var dd = currentdate.getDate();
-			var mm = currentdate.getMonth(); //January is 0!
-			var yyyy = currentdate.getFullYear();
-
-			var datefin = new Date(yyyy, mm, dd+2);
-			var datefin2 = new Date(yyyy, mm, dd+1);
-			var datefin3 = new Date(yyyy, mm, dd+3);
-
-			$('#defaultCountdown').countdown({until: datefin, compact: true, format: 'dHMS'}); 
-			$('#defaultCountdown2').countdown({until: datefin2, compact: true, format: 'dHMS'}); 
-			$('#defaultCountdown3').countdown({until: datefin3, compact: true, format: 'dHMS'}); 
-		</script>
 
 	<div class="col-md-12">
 		<div class="col-md-12">
@@ -103,30 +88,44 @@
 		   			</tr>
 				</thead>
 				<tbody>
-					<tr>
-		       			<th >Produit 1</th>
-		       			<th >1€20</th>
-		       			<th >200</th>
-		       			<th >100</th>
-		       			<th >01h:47min:3s</th>
-		       			<th ><input type="number" name="ench"></th>
-		   			</tr>
-		   			<tr>
-		       			<th >Produit 2</th>
-		       			<th >7€</th>
-		       			<th >100</th>
-		       			<th >0</th>
-		       			<th >03h:32min:31s</th>
-		       			<th ><input type="number" name="ench"></th>
-		   			</tr>
-		   			<tr>
-		       			<th >Produit 3</th>
-		       			<th >4,50€</th>
-		       			<th >60000</th>
-		       			<th >4000</th>
-		       			<th >04h:58min:34s</th>
-		       			<th ><input type="number" name="ench"></th>
-		   			</tr>
+					{% set compteur = 0 %}
+
+					{% if encheresNew is empty %}
+						<tr>
+							<th>Aucun données pour le moment</th>
+						</tr>
+					{% endif %}
+
+					{% for enchere in encheresNew|reverse %}
+						{% if compteur != 3 %}
+							<tr>
+				       			<th class="mytable">{{ enchere.produit }}</th>
+				       			<th class="mytable">{{ enchere.prix }}</th>
+				       			{% if user.type == "fournisseur" or user.type == "admin" %}
+				       				<th class="mytable">{{ enchere.totalCommande }}</th>
+				       			{% endif %}
+		       					{% if user.type == "acheteur" %}
+				       				<th class="mytable">{{ enchere.commandeUser }}</th>
+				       			{% endif %}
+				       			<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
+				       			<th class="mytable" id="{{ enchere.id }}"></th>
+				       			<th class="mytable"><input type="text" name="test" id="input{{ enchere.id }}"></th>
+				   			</tr>
+				   			<script type="text/javascript">
+
+								var currentdate = new Date();
+								var dd = currentdate.getDate();
+								var mm = currentdate.getMonth(); //January is 0!
+								var yyyy = currentdate.getFullYear();
+
+								var datefin = new Date({{ enchere.annee }}, {{ enchere.mois }}, {{ enchere.jour }});
+
+								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS'}); 
+							</script>
+							{% set compteur = compteur + 1 %}
+						{% endif %}
+
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
