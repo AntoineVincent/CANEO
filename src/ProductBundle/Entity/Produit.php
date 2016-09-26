@@ -43,6 +43,13 @@ class Produit
     private $commandemaximal;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="idfournisseur", type="integer")
+     */
+    private $idfournisseur;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="photo", type="string", length=255)
@@ -209,5 +216,28 @@ class Produit
     public function getEtat()
     {
         return $this->etat;
+    }
+
+    /**
+     * Set idfournisseur
+     *
+     * @param integer $idfournisseur
+     * @return Produit
+     */
+    public function setIdfournisseur($idfournisseur)
+    {
+        $this->idfournisseur = $idfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get idfournisseur
+     *
+     * @return integer 
+     */
+    public function getIdfournisseur()
+    {
+        return $this->idfournisseur;
     }
 }

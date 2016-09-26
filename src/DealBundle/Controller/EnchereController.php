@@ -8,6 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Infos;
 use DealBundle\Entity\Encheres;
 use DealBundle\Form\EnchereType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class EnchereController extends Controller
 {
@@ -157,14 +162,19 @@ class EnchereController extends Controller
         $prixMax = $request->request->get('prix');
         $datenotif = $request->request->get('datenotif');
 
+        $com = $prixMax * 0.2;
+        $prixfourni = $prixMax - $com;
+
         if($form->isSubmitted() && $form->isValid()) {
 
             $enchere->setIdproduit($idprod);
             $enchere->setIdfournisseur($idfournisseur);
-            $enchere->setPrix($prixMax);
+            $enchere->setCommission($com);
+            $enchere->setBeneffourni($prixfourni);
 
             $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
             $prodSelected->setEtat('oui');
+            $enchere->setPrix($prodSelected->getPrix());
 
             // recupere la string date;
             // $date = $enchere->getFulldate()->format('d/m/Y');
@@ -238,6 +248,8 @@ class EnchereController extends Controller
         $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
 
         $newPrice = $request->request->get('newprice');
+        $prixfourni = $request->request->get('total');
+        $commission = $request->request->get('commission');
         $datenotif = $request->request->get('datenotif');
 
         if($newPrice != NULL) {
@@ -251,6 +263,8 @@ class EnchereController extends Controller
             }
             else {
                 $enchere->setPrix($newPrice);
+                $enchere->setCommission($com);
+                $enchere->setBeneffourni($prixfourni);
                 $enchere->setIdfournisseur($user->getId());
 
                 $em->persist($enchere);
@@ -297,4 +311,27 @@ class EnchereController extends Controller
             'enchere' => $enchere,
         ));
     }
+
+    public function calculAjaxAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $prix = $this->getRequest()->request->get('newprice');
+
+        $com = $prix * 0.2;
+        $prixfourni = $prix - $com;
+
+        $tabresult [] = array(
+            'com' => $com,
+            'prixfourni' => $prixfourni,
+        );
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $jsonContent = $serializer->serialize($tabresult, 'json');
+
+        $response = new Response($jsonContent);
+        return $response;
+    } 
 }

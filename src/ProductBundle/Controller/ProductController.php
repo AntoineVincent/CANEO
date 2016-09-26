@@ -29,6 +29,7 @@ class ProductController extends Controller
 
             $product->setPhoto($photoName);
             $product->setEtat('non');
+            $product->setIdfournisseur(0);
 
             $em->persist($product);
             $em->flush();

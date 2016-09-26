@@ -43,6 +43,20 @@ class Encheres
     private $prix;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="commission", type="float", nullable=true)
+     */
+    private $commission;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="beneffourni", type="float", nullable=true)
+     */
+    private $beneffourni;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="totalcommande", type="integer", nullable=true)
@@ -270,5 +284,51 @@ class Encheres
     public function getFulldate()
     {
         return $this->fulldate;
+    }
+
+    /**
+     * Set commission
+     *
+     * @param float $commission
+     * @return Encheres
+     */
+    public function setCommission($commission)
+    {
+        $this->commission = $commission;
+
+        return $this;
+    }
+
+    /**
+     * Get commission
+     *
+     * @return float 
+     */
+    public function getCommission()
+    {
+        return $this->commission;
+    }
+
+    /**
+     * Set beneffourni
+     *
+     * @param float $beneffourni
+     * @return Encheres
+     */
+    public function setBeneffourni($beneffourni)
+    {
+        $this->beneffourni = $beneffourni;
+
+        return $this;
+    }
+
+    /**
+     * Get beneffourni
+     *
+     * @return float 
+     */
+    public function getBeneffourni()
+    {
+        return $this->beneffourni;
     }
 }

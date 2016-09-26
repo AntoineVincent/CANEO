@@ -96,4 +96,69 @@ class DefaultController extends Controller
         $response = new Response($jsonContent);
         return $response;
     }
+
+    public function updatePriceFavAction(Request $request, $idfavori)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $prixvente = $request->request->get('newprice');
+        $prixfourni = $request->request->get('total');
+        $datenotif = $request->request->get('datenotif');
+
+        $favori = $em->getRepository('ProductBundle:Favoris')->findOneById($idfavori);
+
+        if($prixvente != NULL) {
+
+            $favori->setPrixvente($prixvente);
+            $favori->setPrixfournisseur($prixfourni);
+
+            $em->persist($favori);
+            $em->flush();
+
+            $product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
+            $oldfourni = $em->getRepository('AppBundle:User')->findOneById($product->getIdfournisseur());
+
+            if($product->getPrixminimal() > $prixvente) {
+                $product->setPrixminimal($prixvente);
+                $product->setIdfournisseur($user->getId());
+
+                $em->persist($product);
+                $em->flush();
+
+                if($oldfourni != 0) {
+                    $notif = new Infos();
+                    $notif->setIduser($user->getId());
+                    $notif->setIdproduit($product->getId());
+                    $notif->setMessage("test");
+                    $notif->setEtat("unread");
+                    $notif->setCreatedAt($datenotif);
+
+                    $em->persist($notif);
+                    $em->flush();
+                }
+
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', 'Votre prix à bien été enregistré !')
+                    ;
+
+                return $this->redirectToRoute('profil', array('iduser' => $user->getId()));
+            }
+
+             $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', 'Votre prix à bien été enregistré !')
+                    ;
+
+            return $this->redirectToRoute('profil', array('iduser' => $user->getId()));
+
+
+        }
+
+        return $this->render('default/fav_update.html.twig', array(
+            'user' =>$user,
+            'favori' => $favori,
+        ));
+    }
 }

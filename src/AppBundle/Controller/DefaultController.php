@@ -30,9 +30,37 @@ class DefaultController extends Controller
             $em->flush();
         }
 
+        $encheres = $em->getRepository('DealBundle:Encheres')->findAll();
+        foreach($encheres as $enchere) {
+            $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
+            $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
+            $commande = $em->getRepository('DealBundle:Commandes')->findOneBy(array(
+                'idenchere' => $enchere->getId(),
+                'idacheteur' => $user->getId(),
+            ));
+            if ($commande == NULL) {
+                $commandeUser = "Pas de commandes";
+            }
+            else {
+                $commandeUser = $commande->getNbredecommande();
+            }
+            $encheresNew [] = array (
+                'id' => $enchere->getId(),
+                'prix' =>  $enchere->getPrix(),
+                'logoFournisseur' => $fournisseur->getLogo(),
+                'produit' => $product->getNom(),
+                'totalCommande' => $enchere->getTotalcommande(),
+                'commandeUser' => $commandeUser,
+                'annee' => $enchere->getFulldate()->format('Y'),
+                'mois' => $enchere->getFulldate()->format('m-1'),
+                'jour' => $enchere->getFulldate()->format('d'),
+            );
+        }
+
         return $this->render('default/dashboard.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'user' => $user,
+            'encheresNew' => $encheresNew,
         ));
     }
 
@@ -56,11 +84,22 @@ class DefaultController extends Controller
             else {
                 $idenchere = "non";
             }
+
+            if($favori->getPrixfournisseur() != NULL) {
+                $prixfourni = $favori->getPrixvente();
+            }
+            else {
+                $prixfourni = "Aucun prix !";
+            }
+
             $tabproduct [] = array(
                 'nom' => $product->getNom(),
                 'enchere' => $enchere,
                 'idenchere' => $idenchere,
                 'id' => $product->getId(),
+                'prixprod' => $product->getPrixminimal(),
+                'prixfourni' => $prixfourni,
+                'idfav' => $favori->getId(),
             );
         }
 

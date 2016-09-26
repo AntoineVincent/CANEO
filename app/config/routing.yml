@@ -60,6 +60,10 @@ enchere_up:
     path:    /enchere/up/{idenchere}
     defaults: {_controller: DealBundle:Enchere:enchereUp}
 
+calcul:
+    path:    /ajax/calcul
+    defaults: {_controller: DealBundle:Enchere:calculAjax}
+
 # ------ Commands Route -------
 commande:
     path:    /command/{idenchere}
@@ -78,3 +82,7 @@ favoris_show:
 favoris_action:
     path:    /ajax/favoris
     defaults: {_controller: ProductBundle:Default:addDeleteFav}
+
+favoris_price:
+    path:    /favoris/update/{idfavori}
+    defaults: {_controller: ProductBundle:Default:updatePriceFav}

@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% if enchere.idfournisseur == user.id %}
-		<h1 class="form-title">Vous êtes déjà le fournisseur de cette vente ! On ne triche pas !</h1>
-	{% else %}
 		<div class="col-md-12">
 			<div class="col-md-12">
-				<h3 class="form-title">Donnez votre prix pour la vente n°{{ enchere.id }}</h3>
+				<h3 class="form-title">Donnez votre prix pour le produit n°{{ favori.idproduit }}</h3>
 			</div>
 			<div class="col-md-12 card-form">
 				<div class="col-md-12">
@@ -20,9 +17,9 @@
 			    </div>
 				<div class="col-md-12">
 					<div class="col-md-12">
-						<p class="form-title">Quel prix voulez vous appliquer ?</p>
+						<p class="form-title">A quelle prix vendez vous ce produit ? ?</p>
 					</div> 
-					<form action="{{ path('enchere_up', { 'idenchere': enchere.id }) }}" method="post">
+					<form action="{{ path('favoris_price', { 'idfavori': favori.id }) }}" method="post">
 						<div class="col-md-12">
 							<div class="col-md-4">
 								<div class="col-md-12">
@@ -50,7 +47,11 @@
 							</div>
 						</div>
 						<div class="col-md-12 infos-compl">
-							<p>RAPPEL : Le prix actuel est de {{ enchere.prix }}€, indiquez une valeur inférieure.</p>
+							{% if favori.prixvente != NULL %}
+								<p>RAPPEL : Le prix actuel est de {{ favori.prixvente }}€ TTC, indiquez votre nouveau prix.</p>
+							{% else %}
+								<p>Vous n'avez pas encore choisi un prix de vente sur ce produit.</p>
+							{% endif %}
 						</div>
 						<div class="col-md-12">
 							<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
@@ -77,6 +78,5 @@
 			    </script>
 			</div>
 		</div>
-	{% endif %}
 
 {% endblock %}

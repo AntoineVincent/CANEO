@@ -11,6 +11,7 @@
 						<th>Nom du Produit</th>
 						<th>Etat</th>
 						<th>Commande Minimal</th>
+						<th>Prix de vente</th>
 						<th>Favoris : </th>
 						<th>Voir Fiche</th>
 					</tr>
@@ -25,6 +26,7 @@
 								<th>Aucune vente en cours</th>
 							{% endif %}
 							<th>{{ product.commandemaximal }}</th>
+							<th>{{ product.prixminimal }}€ TTC</th>
 							<th style="text-align:center;"><span class="glyphicon glyphicon-star"></span></th>
 							<th><a href="{{ path('fiche_product', { 'idproduct': product.id }) }}">Fiche produit</a></th>
 						</tr>

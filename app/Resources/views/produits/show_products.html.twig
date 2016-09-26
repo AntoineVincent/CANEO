@@ -11,10 +11,12 @@
 						<th>Nom du Produit</th>
 						<th>Etat</th>
 						{% if user.type == 'fournisseur' or user.type == 'admin' %}
-							<th>Prix Maximal de Depart</th>
+							<th>Prix de Vente Maximal</th>
 						{% endif %}
 						{% if user.type == 'acheteur' %}
 							<th>Commande Minimal</th>
+						{% endif %}
+						{% if user.type == 'acheteur' or user.type == "fournisseur" %}
 							<th>Favoris : </th>
 						{% endif %}
 						<th>Voir Fiche</th>
@@ -30,10 +32,12 @@
 								<th>Aucune vente en cours</th>
 							{% endif %}
 							{% if user.type == 'fournisseur' or user.type == 'admin' %}
-								<th>ce produit ne peut pas dépasser : {{ product.prixminimal }}€/unité</th>
+								<th>ce produit ne peut pas dépasser {{ product.prixminimal }}€/unité TTC</th>
 							{% endif %}
-							{% if user.type == 'acheteur' %}	
+							{% if user.type == 'acheteur' %}
 								<th>{{ product.commandemaximal }}</th>
+							{% endif %}
+							{% if user.type == 'acheteur' or user.type == "fournisseur" %}	
 								{% if product.favoris == "oui" %}
 									<th style="text-align:center;">
 										<span id="fav{{ product.nom }}" class="glyphicon glyphicon-star"></span>

@@ -10,6 +10,13 @@
 	</div>
 	<div class="col-md-12">
 		<div class="col-md-12 profil-card">
+			{% for label, flashes in app.session.flashbag.all %}
+		        {% for flash in flashes %}
+		            <div class="alert alert-{{ label }}">
+		                {{ flash }}
+		            </div>
+		        {% endfor %}
+		    {% endfor %}
 			<div class="col-md-2">
 				{% if member.logo != null %}
 					<p><img class="logo-user" src="{{ asset('uploads/logo/' ~ member.logo) }}" /></p>
@@ -96,7 +103,14 @@
 					<thead>
 						<tr>
 							<th>Nom</th>
-							<th>Enchere en cours</th>
+							{% if user.type == "acheteur" %}
+								<th>Enchere en cours</th>
+							{% endif %}
+							{% if user.type == "fournisseur" %}
+								<th>Prix de vente</th>
+								<th>Votre prix de vente</th>
+								<th>Rentrer un prix</th>
+							{% endif %}
 							<th>Page produit</th>
 						<tr>
 					</thead>
@@ -104,10 +118,17 @@
 						{% for favori in favoris %}
 							<tr>
 								<th>{{ favori.nom }}</th>
-								{% if favori.idenchere != "non" %}
-									<th>Une vente est en cours <a href="{{ path('fiche_enchere', { 'idenchere': favori.idenchere }) }}"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
-								{% else %}
-									<th>Aucune vente en cours</th>
+								{% if user.type == "acheteur" %}
+									{% if favori.idenchere != "non" %}
+										<th>Une vente est en cours <a href="{{ path('fiche_enchere', { 'idenchere': favori.idenchere }) }}"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
+									{% else %}
+										<th>Aucune vente en cours</th>
+									{% endif %}
+								{% endif %}
+								{% if user.type == "fournisseur" %}
+									<th>{{ favori.prixprod }}</th>
+									<th>{{ favori.prixfourni }}</th>
+									<th><a href="{{ path('favoris_price', { 'idfavori': favori.idfav }) }}">Rentrer un prix</a></th>
 								{% endif %}
 								<th><a href="{{ path('fiche_product', { 'idproduct': favori.id }) }}">Fiche produit</a></th>
 							<tr>

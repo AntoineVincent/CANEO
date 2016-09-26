@@ -43,11 +43,27 @@ class Infos
     private $idenchere;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="idproduit", type="integer", nullable=true)
+     */
+    private $idproduit;
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="createdAt", type="string", length=255, nullable=true)
+     */
+    private $createdAt;
+
 
 
     /**
@@ -128,4 +144,51 @@ class Infos
     {
         return $this->idenchere;
     }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     * @return Infos
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string 
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param string $createdAt
+     * @return Infos
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return string 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
 }
