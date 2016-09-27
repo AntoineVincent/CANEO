@@ -54,6 +54,7 @@ class DefaultController extends Controller
                 'annee' => $enchere->getFulldate()->format('Y'),
                 'mois' => $enchere->getFulldate()->format('m-1'),
                 'jour' => $enchere->getFulldate()->format('d'),
+                'minicom' => $product->getCommandemaximal(),
             );
         }
 

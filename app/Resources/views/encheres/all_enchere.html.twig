@@ -8,12 +8,13 @@
 			<table id="table">
 				<thead>
 					<tr>
-						<th class="mytable">Nom Du Produit</th>
+		       			<th class="mytable">Nom Du Produit</th>
 		       			<th class="mytable">Prix unitaire</th>
 		       			{% if user.type == "fournisseur" or user.type == "admin" %}
 		       				<th class="mytable">Total commande</th>
 		       			{% endif %}
 		       			{% if user.type == "acheteur" %}
+		       				<th>Commande Minimal</th>
 		       				<th class="mytable">Vos Commandes</th>
 		       			{% endif %}
 		       			<th class="mytable">Fournisseur</th>
@@ -21,33 +22,38 @@
 		       			{% if user.type == "acheteur" %}
 		       				<th class="mytable">Passer Commande</th>
 		       			{% endif %}
-		       			<th>Voir la vente</th>
-					</tr>
+		   			</tr>
 				</thead>
 				<tbody>
+					{% set compteur = 0 %}
+
 					{% if tabenchere is empty %}
 						<tr>
 							<th>Aucun données pour le moment</th>
 						</tr>
 					{% endif %}
 
-					{% for enchere in tabenchere %}
+					{% for enchere in tabenchere|reverse %}
+						{% if compteur != 3 %}
 							<tr>
 				       			<th class="mytable">{{ enchere.produit }}</th>
-				       			<th class="mytable">{{ enchere.prix }}</th>
+				       			<th class="mytable">{{ enchere.prix }}€</th>
 				       			{% if user.type == "fournisseur" or user.type == "admin" %}
 				       				<th class="mytable">{{ enchere.totalCommande }}</th>
 				       			{% endif %}
 		       					{% if user.type == "acheteur" %}
-				       				<th class="mytable">{{ enchere.commandeUser }}</th>
+		       						<th>{{ enchere.minicom }}</th>
+				       				<th class="mytable" id="cmduser">{{ enchere.commandeUser }}</th>
 				       			{% endif %}
 				       			<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
 				       			<th class="mytable" id="{{ enchere.id }}"></th>
 				       			{% if user.type == "acheteur" %}
-				       				<th class="mytable"><input type="text" name="test" id="input{{ enchere.id }}"></th>
-				       			{% endif %}
-				       			<input type="hidden" class="state" name="state" id="state" value="{{ enchere.id }}">
-				       			<th><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">Voir <span class="glyphicon glyphicon-zoom-in"></span></a></th>
+					       			<th class="mytable">
+					       				<input type="text" name="nbrecmd" id="input{{ enchere.id }}"><br>
+					       				<p>(Pour valider : appuyer sur entré)</p>
+					       			</th>
+					       		{% endif %}
+				       			<input type="hidden" class="state" name="state" id="state{{ enchere.id }}" value="{{ enchere.id }}">
 				   			</tr>
 				   			<script type="text/javascript">
 
@@ -61,7 +67,7 @@
 								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver, alwaysExpire: true, expiryText: "Vente Terminée"}); 
 
 								function sellOver() { 
-									var state = $('#state').val();
+									var state = $('#state{{ enchere.id }}').val();
 
 								    $.ajax({
 						              type: "POST",
@@ -73,7 +79,25 @@
 						              }
 						            }); 
 								}
+								$('#input{{ enchere.id }}').keydown(function (e){
+								    if(e.keyCode == 13){
+								    	var nbrecmd = $('#input{{ enchere.id }}').val();
+								    	var idenchere = $('#state{{ enchere.id }}').val();
+								    	$.ajax({
+							              type: "POST",
+							              url: "{{ path('command_ajax') }}", 
+							              dataType: "json",
+							              data: {nbrecmd: nbrecmd, idenchere: idenchere},
+							              success : function(response) {
+							              	alert(response);
+							              }
+							            }); 
+								    }
+								})
 							</script>
+							{% set compteur = compteur + 1 %}
+						{% endif %}
+
 					{% endfor %}
 				</tbody>
 			</table>

@@ -48,6 +48,7 @@ class EnchereController extends Controller
                 'annee' => $enchere->getFulldate()->format('Y'),
                 'mois' => $enchere->getFulldate()->format('m-1'),
                 'jour' => $enchere->getFulldate()->format('d'),
+                'minicom' => $product->getCommandemaximal(),
         	);
         }
 
@@ -73,17 +74,17 @@ class EnchereController extends Controller
                     'id' => $com->getIdenchere(),
                     'etat' => "open",
                 ));
-    			array_push($encheres, $enchere);
+                if($enchere != NULL) {
+    			 array_push($encheres, $enchere);
+                }
     		}
     	}
     	elseif ($user->getType() == "fournisseur") {
             $encheres = $em->getRepository('DealBundle:Encheres')->findBy(array(
+                'etat' => "open",
                 'idfournisseur' => $user->getId(),
-                'etat' => 'open',
             ));
     	}
-
-
 
         foreach($encheres as $enchere) {
         	$product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
@@ -108,6 +109,7 @@ class EnchereController extends Controller
                 'annee' => $enchere->getFulldate()->format('Y'),
                 'mois' => $enchere->getFulldate()->format('m-1'),
                 'jour' => $enchere->getFulldate()->format('d'),
+                'minicom' => $product->getCommandemaximal(),
         	);
         }
 
