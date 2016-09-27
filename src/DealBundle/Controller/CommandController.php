@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DealBundle\Entity\Commandes;
+use AppBundle\Entity\Infos;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -28,6 +29,7 @@ class CommandController extends Controller
 	    $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
 
     	$quantite = $request->request->get('quantite');
+    	$datenotif = $request->request->get('datenotif');
 
     	if($user->getType() != "acheteur") {
     		$request->getSession()
@@ -48,6 +50,16 @@ class CommandController extends Controller
 		    			$cmd->setNbredecommande($cmd->getNbredecommande() + $quantite);
 		    			$enchere->setTotalcommande($enchere->getTotalcommande() + $quantite);
 
+		    			$notif = new Infos();
+                        $notif->setIduser($enchere->getIdfournisseur());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Une nouvelle commande de : ".$quantite." pièces à été faite pour la vente n°".$enchere->getId());
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
+
 		    			$em->persist($cmd);
 		    			$em->flush();
 		    			$em->persist($enchere);
@@ -64,6 +76,16 @@ class CommandController extends Controller
 		    			$cmd->setIdenchere($idenchere);
 		    			$cmd->setNbredecommande($quantite);
 		    			$enchere->setTotalcommande($enchere->getTotalcommande() + $quantite);
+
+		    			$notif = new Infos();
+                        $notif->setIduser($enchere->getIdfournisseur());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Une nouvelle commande de : ".$quantite." pièces à été faite pour la vente n°".$enchere->getId());
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
 
 		    			$em->persist($cmd);
 		    			$em->flush();
@@ -95,6 +117,8 @@ class CommandController extends Controller
     	$idenchere = $request->request->get('idenchere');
     	$nbrecmd = $request->request->get('nbrecmd');
 
+    	$datenotif = $request->request->get('datenotif');
+
     	$cmd = $em->getRepository('DealBundle:Commandes')->findOneBy(array(
 	    	'idacheteur' => $user->getId(),
 	    	'idenchere' => $idenchere,
@@ -111,6 +135,16 @@ class CommandController extends Controller
 		    			$cmd->setNbredecommande($cmd->getNbredecommande() + $nbrecmd);
 		    			$enchere->setTotalcommande($enchere->getTotalcommande() + $nbrecmd);
 
+		    			$notif = new Infos();
+                        $notif->setIduser($enchere->getIdfournisseur());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Une nouvelle commande de : ".$nbrecmd." pièces à été faite pour la vente n°".$enchere->getId());
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
+
 		    			$em->persist($cmd);
 		    			$em->flush();
 		    			$em->persist($enchere);
@@ -124,6 +158,16 @@ class CommandController extends Controller
 		    			$cmd->setIdenchere($idenchere);
 		    			$cmd->setNbredecommande($nbrecmd);
 		    			$enchere->setTotalcommande($enchere->getTotalcommande() + $nbrecmd);
+
+		    			$notif = new Infos();
+                        $notif->setIduser($enchere->getIdfournisseur());
+                        $notif->setIdenchere($enchere->getId());
+                        $notif->setMessage("Une nouvelle commande de : ".$nbrecmd." pièces à été faite pour la vente n°".$enchere->getId());
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+
+                        $em->persist($notif);
+                        $em->flush();
 
 		    			$em->persist($cmd);
 		    			$em->flush();

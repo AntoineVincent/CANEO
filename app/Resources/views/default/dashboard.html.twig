@@ -54,6 +54,7 @@
 					       				<p>(Pour valider : appuyer sur entré)</p>
 					       			</th>
 					       		{% endif %}
+					       		<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
 				       			<input type="hidden" class="state" name="state" id="state{{ enchere.id }}" value="{{ enchere.id }}">
 				   			</tr>
 				   			<script type="text/javascript">
@@ -84,11 +85,12 @@
 								    if(e.keyCode == 13){
 								    	var nbrecmd = $('#input{{ enchere.id }}').val();
 								    	var idenchere = $('#state{{ enchere.id }}').val();
+								    	var datenotif = $('#datenotif').val();
 								    	$.ajax({
 							              type: "POST",
 							              url: "{{ path('command_ajax') }}", 
 							              dataType: "json",
-							              data: {nbrecmd: nbrecmd, idenchere: idenchere},
+							              data: {nbrecmd: nbrecmd, idenchere: idenchere, datenotif: datenotif},
 							              success : function(response) {
 							              	alert(response);
 							              }
@@ -163,6 +165,7 @@
 					       				<p>(Pour valider : appuyer sur entré)</p>
 					       			</th>
 					       		{% endif %}
+					       		<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
 				       			<input type="hidden" class="state" name="state" id="state{{ enchere.id }}2" value="{{ enchere.id }}">
 				   			</tr>
 				   			<script type="text/javascript">
@@ -193,11 +196,12 @@
 								    if(e.keyCode == 13){
 								    	var nbrecmd = $('#input{{ enchere.id }}2').val();
 								    	var idenchere = $('#state{{ enchere.id }}2').val();
+								    	var datenotif = $('#datenotif').val();
 								    	$.ajax({
 							              type: "POST",
 							              url: "{{ path('command_ajax') }}", 
 							              dataType: "json",
-							              data: {nbrecmd: nbrecmd, idenchere: idenchere},
+							              data: {nbrecmd: nbrecmd, idenchere: idenchere, datenotif: datenotif},
 							              success : function(response) {
 							              	alert(response);
 							              }

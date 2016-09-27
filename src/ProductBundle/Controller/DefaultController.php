@@ -142,6 +142,23 @@ class DefaultController extends Controller
                     $em->flush();
                 }
 
+                $otherFav = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($product->getId());
+
+                foreach($otherFav as $fav) {
+                    $user = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
+                    if($user->getType() == "acheteur") {
+                        $notif = new Infos();
+                        $notif->setIduser($user->getId());
+                        $notif->setIdproduit($product->getId());
+                        $notif->setMessage("Le prix du produit : ".$product->getNom()." à baissé, il est desormais de ".$prixvente."€ unité");
+                        $notif->setEtat("unread");
+                        $notif->setCreatedAt($datenotif);
+                        // var_dump($notif);exit;
+                        $em->persist($notif);
+                        $em->flush();
+                    }
+                }
+
                 $em->persist($product);
                 $em->flush();
             }
