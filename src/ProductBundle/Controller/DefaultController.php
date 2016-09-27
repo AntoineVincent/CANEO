@@ -153,7 +153,6 @@ class DefaultController extends Controller
                         $notif->setMessage("Le prix du produit : ".$product->getNom()." à baissé, il est desormais de ".$prixvente."€ unité");
                         $notif->setEtat("unread");
                         $notif->setCreatedAt($datenotif);
-                        // var_dump($notif);exit;
                         $em->persist($notif);
                         $em->flush();
                     }

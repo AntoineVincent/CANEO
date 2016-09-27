@@ -20,6 +20,9 @@
 							<th>Favoris : </th>
 						{% endif %}
 						<th>Voir Fiche</th>
+						{% if user.type == "acheteur" %}
+							<th>Lancer vente</th>
+						{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -51,8 +54,17 @@
 								{% endif %}
 							{% endif %}
 							<th><a href="{{ path('fiche_product', { 'idproduct': product.id }) }}">Fiche produit</a></th>
+							{% if product.idenchere == "non" and user.type == "acheteur" %}
+								<th>
+									<a href="{{ path('new_enchere2', { 'idproduct': product.id }) }}">Commander</a>
+								</th>
+							{% else %}
+								<th>Vente en cours</th>
+							{% endif %}
 						</tr>
 						<input type="hidden" name="{{ product.nom }}" value="{{ product.id }}" id="{{ product.nom }}">
+
+
 						<script>
 							var {{ product.nom }} = $("#{{product.nom}}").val();
 							$('#fav{{ product.nom }}empty').click(function(){

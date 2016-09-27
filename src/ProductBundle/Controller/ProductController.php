@@ -105,7 +105,7 @@ class ProductController extends Controller
         ));
 
         $annee = $enchere->getFulldate()->format('Y');
-        $mois = $enchere->getFulldate()->format('m-1');
+        $mois = $enchere->getFulldate()->format('m');
         $jour = $enchere->getFulldate()->format('d');
 
         if($enchere != NULL) {

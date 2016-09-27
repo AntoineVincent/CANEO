@@ -68,6 +68,10 @@ sellOver:
     path:    /ajax/sellOver
     defaults: {_controller: DealBundle:Enchere:sellOver}
 
+new_enchere2:
+    path:    /enchere/new/bycmd/{idproduct}
+    defaults: {_controller: DealBundle:Enchere:newEnchere2}
+
 # ------ Commands Route -------
 commande:
     path:    /command/{idenchere}

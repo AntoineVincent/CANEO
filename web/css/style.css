@@ -1,5 +1,6 @@
 html {
 	background: url('../img/textur00.jpg');
+    background-color: rgba(255,255,255,0.5);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: fixed;
@@ -8,7 +9,7 @@ html {
  body {
     overflow-x: hidden;
     background-color: rgba(255,255,255,0.5);
-	height: 800px;
+	height: 1000px;
     font-family: 'Signika', sans-serif;
  }
 

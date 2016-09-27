@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Infos;
 use DealBundle\Entity\Encheres;
+use DealBundle\Entity\Commandes;
 use DealBundle\Form\EnchereType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Serializer;
@@ -49,7 +50,7 @@ class EnchereController extends Controller
         		'totalCommande' => $enchere->getTotalcommande(),
         		'commandeUser' => $commandeUser,
                 'annee' => $enchere->getFulldate()->format('Y'),
-                'mois' => $enchere->getFulldate()->format('m-1'),
+                'mois' => $enchere->getFulldate()->format('m'),
                 'jour' => $enchere->getFulldate()->format('d'),
                 'minicom' => $product->getCommandemaximal(),
                 'mtnCom' => $mtnCom,
@@ -112,7 +113,7 @@ class EnchereController extends Controller
         		'totalCommande' => $enchere->getTotalcommande(),
         		'commandeUser' => $commandeUser,
                 'annee' => $enchere->getFulldate()->format('Y'),
-                'mois' => $enchere->getFulldate()->format('m-1'),
+                'mois' => $enchere->getFulldate()->format('m'),
                 'jour' => $enchere->getFulldate()->format('d'),
                 'minicom' => $product->getCommandemaximal(),
         	);
@@ -158,7 +159,7 @@ class EnchereController extends Controller
         	'commandeUser' => $commandeUser,
         	'nbreAcheteur' => $nbreAcheteur,
             'annee' => $enchere->getFulldate()->format('Y'),
-            'mois' => $enchere->getFulldate()->format('m-1'),
+            'mois' => $enchere->getFulldate()->format('m'),
             'jour' => $enchere->getFulldate()->format('d'),
         );
 
@@ -394,5 +395,99 @@ class EnchereController extends Controller
 
         $response = new Response($jsonContent);
         return $response;
+    }
+
+    public function newEnchere2Action(Request $request, $idproduct)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $product = $em->getRepository('ProductBundle:Produit')->findOneById($idproduct);
+
+        $cmd = $request->request->get('cmd');
+
+        $datefin = new \Datetime();
+
+        $datenotif = $datefin->format('Y/m/d');
+
+        if($cmd != NULL && $cmd >= $product->getCommandemaximal()) {
+            $product->setEtat("oui");
+
+            $em->persist($product);
+            $em->flush();
+
+            $com = $product->getPrixminimal() * 0.2;
+            $prixfourni = $product->getPrixminimal() - $com;
+
+            $enchere = new Encheres();
+            $enchere->setIdproduit($idproduct);
+            $enchere->setIdfournisseur($product->getIdfournisseur());
+            $enchere->setPrix($product->getPrixminimal());
+            $enchere->setCommission($com);
+            $enchere->setBeneffourni($prixfourni);
+            $enchere->setTotalcommande($cmd);
+            $enchere->setFulldate($datefin);
+            $enchere->setEtat("open");
+            $enchere->setCompteur(1);
+
+            $em->persist($enchere);
+            $em->flush();
+
+            $commande = new Commandes();
+            $commande->setIdenchere($enchere->getId());
+            $commande->setIdacheteur($user->getId());
+            $commande->setNbredecommande($cmd);
+
+            $em->persist($commande);
+            $em->flush();
+
+            $favs = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($idproduct);
+
+            foreach($favs as $fav) {
+                $associateMember = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
+
+                if($associateMember->getType() == "acheteur" && $associateMember->getId() != $user->getId()) {
+                    $notif = new Infos();
+                    $notif->setIduser($associateMember->getId());
+                    $notif->setIdenchere($enchere->getId());
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Le prix de vente unitaire est actuellement de ".$product->getPrixminimal()." vous pouvez acceder à l'enchère ");
+                    $notif->setEtat("unread");
+                    $notif->setCreatedAt($datenotif);
+                    $em->persist($notif);
+                    $em->flush();
+                }
+                elseif($associateMember->getType() == "fournisseur" && $associateMember->getId() == $product->getIdfournisseur()) {
+                    $notif = new Infos();
+                    $notif->setIduser($associateMember->getId());
+                    $notif->setIdenchere($enchere->getId());
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal().". Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère ");
+                    $notif->setEtat("unread");
+                    $notif->setCreatedAt($datenotif);
+                    $em->persist($notif);
+                    $em->flush();
+                }
+                else {
+                    $notif = new Infos();
+                    $notif->setIduser($associateMember->getId());
+                    $notif->setIdenchere($enchere->getId());
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Le prix de vente unitaire est actuellement de ".$product->getPrixminimal().". Une commande de ".$cmd."unitées est déjà passé");
+                    $notif->setEtat("unread");
+                    $notif->setCreatedAt($datenotif);
+                    $em->persist($notif);
+                    $em->flush();
+                }
+            }
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Votre commande à été validé, et la vente a démarré.')
+                ;
+        }
+
+        return $this->render('encheres/new_enchere2.html.twig', array(
+            'idproduct' => $idproduct,
+            'user' => $user,
+            'product' => $product,
+        ));
     }
 }
