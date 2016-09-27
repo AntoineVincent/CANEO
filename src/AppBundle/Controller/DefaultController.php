@@ -30,7 +30,7 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-        $encheres = $em->getRepository('DealBundle:Encheres')->findAll();
+        $encheres = $em->getRepository('DealBundle:Encheres')->findByEtat('open');
         foreach($encheres as $enchere) {
             $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
             $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());

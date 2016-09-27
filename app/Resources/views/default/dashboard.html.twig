@@ -45,6 +45,7 @@
 				       			<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
 				       			<th class="mytable" id="{{ enchere.id }}"></th>
 				       			<th class="mytable"><input type="text" name="test" id="input{{ enchere.id }}"></th>
+				       			<input type="hidden" class="state" name="state" id="state" value="{{ enchere.id }}">
 				   			</tr>
 				   			<script type="text/javascript">
 
@@ -55,7 +56,21 @@
 
 								var datefin = new Date({{ enchere.annee }}, {{ enchere.mois }}, {{ enchere.jour }});
 
-								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS'}); 
+								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver, alwaysExpire: true, expiryText: "Vente Terminée"}); 
+
+								function sellOver() { 
+									var state = $('#state').val();
+
+								    $.ajax({
+						              type: "POST",
+						              url: "{{ path('sellOver') }}", 
+						              dataType: "json",
+						              data: {state : state},
+						              success : function(response) {
+						              	console.log(response);
+						              }
+						            }); 
+								}
 							</script>
 							{% set compteur = compteur + 1 %}
 						{% endif %}
@@ -120,7 +135,11 @@
 
 								var datefin = new Date({{ enchere.annee }}, {{ enchere.mois }}, {{ enchere.jour }});
 
-								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS'}); 
+								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver});
+
+								function sellOver() { 
+								    alert('We have lift off!'); 
+								}
 							</script>
 							{% set compteur = compteur + 1 %}
 						{% endif %}

@@ -24,7 +24,7 @@ class EnchereController extends Controller
 
     	$tabenchere = [];
 
-        $encheres = $em->getRepository('DealBundle:Encheres')->findAll();
+        $encheres = $em->getRepository('DealBundle:Encheres')->findByEtat("open");
         foreach($encheres as $enchere) {
         	$product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
         	$fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
@@ -66,12 +66,19 @@ class EnchereController extends Controller
     	if($user->getType() == "acheteur") {
     		$commandeforSearch = $em->getRepository('DealBundle:Commandes')->findByIdacheteur($user->getId());
     		foreach($commandeforSearch as $com) {
-    			$enchere = $em->getRepository('DealBundle:Encheres')->findOneById($com->getIdenchere());
+                $enchere = $em->getRepository('DealBundle:Encheres')->findOneBy(array(
+                    'id' => $com->getIdenchere(),
+                    'etat' => "open",
+                ));
     			array_push($encheres, $enchere);
     		}
     	}
     	elseif ($user->getType() == "fournisseur") {
     		$encheres = $em->getRepository('DealBundle:Encheres')->findByIdfournisseur($user->getId());
+            $encheres = $em->getRepository('DealBundle:Encheres')->findBy(array(
+                'idfournisseur' => $user->getId(),
+                'etat' => 'open',
+            ));
     	}
 
 
@@ -171,6 +178,7 @@ class EnchereController extends Controller
             $enchere->setIdfournisseur($idfournisseur);
             $enchere->setCommission($com);
             $enchere->setBeneffourni($prixfourni);
+            $enchere->setEtat('open');
 
             $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
             $prodSelected->setEtat('oui');
@@ -333,5 +341,42 @@ class EnchereController extends Controller
 
         $response = new Response($jsonContent);
         return $response;
-    } 
+    }
+
+    public function sellOverAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $idenchere = $request->request->get('state');
+
+        $result = "alreadyClose";
+
+        $enchere = $em->getRepository('DealBundle:Encheres')->findOneById($idenchere);
+
+        if ($enchere->getEtat() == "open") {
+            $enchere->setEtat("close");
+
+            $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
+
+            if($product->getEtat() == "oui") {
+                $product->setEtat("non");
+            }
+
+            $em->persist($enchere);
+            $em->flush();
+            $em->persist($product);
+            $em->flush();
+            
+            $result = "close";
+        }
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $jsonContent = $serializer->serialize($result, 'json');
+
+        $response = new Response($jsonContent);
+        return $response;
+    }
 }

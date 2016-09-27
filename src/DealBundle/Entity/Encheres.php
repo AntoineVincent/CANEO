@@ -91,6 +91,13 @@ class Encheres
      */
     private $fulldate;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", length=255, nullable=true)
+     */
+    private $etat;
+
 
     /**
      * Get id
@@ -330,5 +337,28 @@ class Encheres
     public function getBeneffourni()
     {
         return $this->beneffourni;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     * @return Encheres
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string 
+     */
+    public function getEtat()
+    {
+        return $this->etat;
     }
 }

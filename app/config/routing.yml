@@ -64,6 +64,10 @@ calcul:
     path:    /ajax/calcul
     defaults: {_controller: DealBundle:Enchere:calculAjax}
 
+sellOver:
+    path:    /ajax/sellOver
+    defaults: {_controller: DealBundle:Enchere:sellOver}
+
 # ------ Commands Route -------
 commande:
     path:    /command/{idenchere}
