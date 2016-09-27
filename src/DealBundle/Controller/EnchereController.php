@@ -38,6 +38,9 @@ class EnchereController extends Controller
 	        else {
 	        	$commandeUser = $commande->getNbredecommande();
 	        }
+            $com = $enchere->getPrix() * 0.2;
+            $mtnCom = $enchere->getTotalcommande() * $com;
+
         	$tabenchere [] = array (
         		'id' => $enchere->getId(),
         		'prix' =>  $enchere->getPrix(),
@@ -49,6 +52,8 @@ class EnchereController extends Controller
                 'mois' => $enchere->getFulldate()->format('m-1'),
                 'jour' => $enchere->getFulldate()->format('d'),
                 'minicom' => $product->getCommandemaximal(),
+                'mtnCom' => $mtnCom,
+                'valCom' => $com,
         	);
         }
 

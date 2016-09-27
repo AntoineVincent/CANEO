@@ -17,7 +17,13 @@
 		       				<th>Commande Minimal</th>
 		       				<th class="mytable">Vos Commandes</th>
 		       			{% endif %}
-		       			<th class="mytable">Fournisseur</th>
+		       			{% if user.type != "admin" %}
+		       				<th class="mytable">Fournisseur</th>
+		       			{% endif %}
+		       			{% if user.type == "admin" %}
+		       				<th> Prix unitaire Commission</th>
+		       				<th class="mytable">Montant Commission</th>
+		       			{% endif %}
 		       			<th class="mytable">Temps Restant</th>
 		       			{% if user.type == "acheteur" %}
 		       				<th class="mytable">Passer Commande</th>
@@ -45,7 +51,13 @@
 		       						<th>{{ enchere.minicom }}</th>
 				       				<th class="mytable" id="cmduser">{{ enchere.commandeUser }}</th>
 				       			{% endif %}
-				       			<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
+				       			{% if user.type != "admin" %}
+				       				<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
+				       			{% endif %}
+				       			{% if user.type == "admin" %}
+				       				<th>{{ enchere.valCom }}€/u</th>
+		       						<th class="mytable">{{ enchere.mtnCom }}€</th>
+		       					{% endif %}
 				       			<th class="mytable" id="{{ enchere.id }}"></th>
 				       			{% if user.type == "acheteur" %}
 					       			<th class="mytable">
