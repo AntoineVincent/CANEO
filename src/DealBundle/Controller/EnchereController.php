@@ -45,6 +45,9 @@ class EnchereController extends Controller
         		'produit' => $product->getNom(),
         		'totalCommande' => $enchere->getTotalcommande(),
         		'commandeUser' => $commandeUser,
+                'annee' => $enchere->getFulldate()->format('Y'),
+                'mois' => $enchere->getFulldate()->format('m-1'),
+                'jour' => $enchere->getFulldate()->format('d'),
         	);
         }
 
@@ -74,7 +77,6 @@ class EnchereController extends Controller
     		}
     	}
     	elseif ($user->getType() == "fournisseur") {
-    		$encheres = $em->getRepository('DealBundle:Encheres')->findByIdfournisseur($user->getId());
             $encheres = $em->getRepository('DealBundle:Encheres')->findBy(array(
                 'idfournisseur' => $user->getId(),
                 'etat' => 'open',
@@ -103,6 +105,9 @@ class EnchereController extends Controller
         		'produit' => $product->getNom(),
         		'totalCommande' => $enchere->getTotalcommande(),
         		'commandeUser' => $commandeUser,
+                'annee' => $enchere->getFulldate()->format('Y'),
+                'mois' => $enchere->getFulldate()->format('m-1'),
+                'jour' => $enchere->getFulldate()->format('d'),
         	);
         }
 
@@ -145,6 +150,9 @@ class EnchereController extends Controller
         	'totalCommande' => $enchere->getTotalcommande(),
         	'commandeUser' => $commandeUser,
         	'nbreAcheteur' => $nbreAcheteur,
+            'annee' => $enchere->getFulldate()->format('Y'),
+            'mois' => $enchere->getFulldate()->format('m-1'),
+            'jour' => $enchere->getFulldate()->format('d'),
         );
 
         return $this->render('encheres/fiche_enchere.html.twig', array(
@@ -179,6 +187,7 @@ class EnchereController extends Controller
             $enchere->setCommission($com);
             $enchere->setBeneffourni($prixfourni);
             $enchere->setEtat('open');
+            $enchere->setCompteur(1);
 
             $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
             $prodSelected->setEtat('oui');
@@ -271,7 +280,7 @@ class EnchereController extends Controller
             }
             else {
                 $enchere->setPrix($newPrice);
-                $enchere->setCommission($com);
+                $enchere->setCommission($commission);
                 $enchere->setBeneffourni($prixfourni);
                 $enchere->setIdfournisseur($user->getId());
 

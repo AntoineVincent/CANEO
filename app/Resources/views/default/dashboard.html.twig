@@ -94,12 +94,17 @@
 			<table id="table2" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-		       			<th >Nom Du Produit</th>
-		       			<th >Prix unitaire</th>
-		       			<th >Nombre de commandes Total</th>
-		       			<th >Nombre de commandes Par vous</th>
-		       			<th >Temps Restant</th>
-		       			<th >Passer Commande</th>
+		       			<th class="mytable">Nom Du Produit</th>
+		       			<th class="mytable">Prix unitaire</th>
+		       			{% if user.type == "fournisseur" or user.type == "admin" %}
+		       				<th class="mytable">Total commande</th>
+		       			{% endif %}
+		       			{% if user.type == "acheteur" %}
+		       				<th class="mytable">Vos Commandes</th>
+		       			{% endif %}
+		       			<th class="mytable">Fournisseur</th>
+		       			<th class="mytable">Temps Restant</th>
+		       			<th class="mytable">Passer Commande</th>
 		   			</tr>
 				</thead>
 				<tbody>
@@ -123,7 +128,7 @@
 				       				<th class="mytable">{{ enchere.commandeUser }}</th>
 				       			{% endif %}
 				       			<th class="mytable"><img src="{{ asset('uploads/logo/' ~ enchere.logoFournisseur) }}" class="logo-pict-tab"></th>
-				       			<th class="mytable" id="{{ enchere.id }}"></th>
+				       			<th class="mytable" id="{{ enchere.id }}2"></th>
 				       			<th class="mytable"><input type="text" name="test" id="input{{ enchere.id }}"></th>
 				   			</tr>
 				   			<script type="text/javascript">
@@ -135,7 +140,7 @@
 
 								var datefin = new Date({{ enchere.annee }}, {{ enchere.mois }}, {{ enchere.jour }});
 
-								$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver});
+								$('#{{ enchere.id }}2').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver});
 
 								function sellOver() { 
 								    alert('We have lift off!'); 

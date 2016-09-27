@@ -98,6 +98,13 @@ class Encheres
      */
     private $etat;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="compteur", type="integer", nullable=true)
+     */
+    private $compteur;
+
 
     /**
      * Get id
@@ -360,5 +367,28 @@ class Encheres
     public function getEtat()
     {
         return $this->etat;
+    }
+
+    /**
+     * Set compteur
+     *
+     * @param integer $compteur
+     * @return Encheres
+     */
+    public function setCompteur($compteur)
+    {
+        $this->compteur = $compteur;
+
+        return $this;
+    }
+
+    /**
+     * Get compteur
+     *
+     * @return integer 
+     */
+    public function getCompteur()
+    {
+        return $this->compteur;
     }
 }

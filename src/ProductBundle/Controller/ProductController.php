@@ -66,17 +66,19 @@ class ProductController extends Controller
             }
 
             $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
-            if($enchere != NULL){
+            if($enchere != NULL && $enchere->getEtat() == "open"){
                 $idenchere = $enchere->getId();
+                $prix = $enchere->getPrix();
             }
             else {
                 $idenchere = "non";
+                $prix = $product->getPrixminimal();
             }
 
             $tabproducts[] = array(
                 'id' => $product->getId(),
                 'nom' => $product->getNom(),
-                'prixminimal' => $product->getPrixminimal(),
+                'prixminimal' => $prix,
                 'commandemaximal' => $product->getCommandemaximal(),
                 'favoris' => $favoris,
                 'enchere' => $enchere,
@@ -97,6 +99,14 @@ class ProductController extends Controller
         $product = $em->getRepository('ProductBundle:Produit')->findOneById($idproduct);
 
         $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
+        $enchere = $em->getRepository('DealBundle:Encheres')->findOneBy(array(
+            'idproduit' => $product->getId(),
+            'etat' => 'open',
+        ));
+
+        $annee = $enchere->getFulldate()->format('Y');
+        $mois = $enchere->getFulldate()->format('m-1');
+        $jour = $enchere->getFulldate()->format('d');
 
         if($enchere != NULL) {
             $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
@@ -106,6 +116,9 @@ class ProductController extends Controller
                 'user' => $user,
                 'enchere' => $enchere,
                 'fournisseur' => $fournisseur,
+                'annee' => $annee,
+                'mois' => $mois,
+                'jour' => $jour,
             ));
         }
 

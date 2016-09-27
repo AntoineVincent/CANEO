@@ -98,6 +98,13 @@ class Encheres
      */
     private $etat;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="compteur", type="integer", nullable=true)
+     */
+    private $compteur;
+
 
     /**
      * Get id
@@ -337,5 +344,28 @@ class Encheres
     public function getBeneffourni()
     {
         return $this->beneffourni;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     * @return Encheres
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string 
+     */
+    public function getEtat()
+    {
+        return $this->etat;
     }
 }

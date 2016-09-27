@@ -95,7 +95,11 @@
 		{% if favoris != NULL %}
 			<div class="col-md-7 profil-card">
 				{% if user.id == member.id %}
-					<h3>Mes favoris :</h3>
+					{% if user.type == "acheteur" %}
+						<h3>Mes favoris :</h3>
+					{% elseif user.type == "fournisseur" %}
+						<h3>Les produits que je vend : </h3>
+					{% endif %}
 				{% else %}
 					<h3>Les produits que {{ member.username }} suis :</h3>
 				{% endif %}
@@ -104,7 +108,7 @@
 						<tr>
 							<th>Nom</th>
 							{% if user.type == "acheteur" %}
-								<th>Enchere en cours</th>
+								<th>Vente en cours</th>
 							{% endif %}
 							{% if user.type == "fournisseur" %}
 								<th>Meilleur Prix de vente</th>

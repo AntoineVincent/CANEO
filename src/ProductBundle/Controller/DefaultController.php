@@ -30,17 +30,23 @@ class DefaultController extends Controller
     		$product = $em->getRepository('ProductBundle:Produit')->findOneById($favori->getIdproduit());
 
 	        $enchere = $em->getRepository('DealBundle:Encheres')->findOneByIdproduit($product->getId());
+            $enchere = $em->getRepository('DealBundle:Encheres')->findOneBy(array(
+                'etat' => "open",
+                'idproduit' => $product->getId(),
+            ));
 	        if($enchere != NULL){
 	        	$idenchere = $enchere->getId();
+                $prix = $enchere->getPrix();
 	        }
 	        else {
 	        	$idenchere = "non";
+                $prix = $product->getPrixminimal();
 	        }
 
 	        $tabproducts[] = array(
 	            'id' => $product->getId(),
 	            'nom' => $product->getNom(),
-	            'prixminimal' => $product->getPrixminimal(),
+	            'prixminimal' => $prix,
 	            'commandemaximal' => $product->getCommandemaximal(),
 	            'enchere' => $enchere,
 	            'idenchere' => $idenchere,

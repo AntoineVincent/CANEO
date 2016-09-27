@@ -32,8 +32,8 @@
 					<strong>{{ product.commandemaximal }}</strong> pièces/unités</p>
 				</div>
 				<div class="col-md-12">
-					<p>FOURNISSEUR : Le prix de départ maximum pour ce produit est de 
-					<strong>{{ product.prixminimal }}€</strong></p>
+					<p>FOURNISSEUR : Le prix de départ maximum pour ce produit sera de 
+					<strong>{{ product.prixminimal }}€</strong> lors de la prochaine enchère.</p>
 					<hr>
 				</div>
 			</div>
@@ -53,17 +53,45 @@
 					<hr>
 					{% if user.type == "fournisseur" %}
 						{% if user.username == fournisseur.username %}
-							<p>° Il reste xx j, xx h, xx min et xx s à cette enchère. Vous êtes actuellement le fournisseur pour cette enchère.</p>
+							<p>° Il reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> à cette enchère. Vous êtes actuellement le fournisseur pour cette enchère.</p>
+							<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 						{% else %}
-							<p>° Il vous reste xx j, xx h, xx min et xx s pour baissez le prix et devenir fournisseur de cette vente.</p>
+							<p>° Il vous reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> pour baissez le prix et devenir fournisseur de cette vente.</p>
+							<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 						{% endif %}
 					{% elseif user.type == "acheteur" %}
-						<p>° Et il vous reste xx j, xx h, xx min et xx s pour passez des commandes.</p>
+						<p>° Et il vous reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> pour passez des commandes.</p>
 					{% else %}
 						<p>° Actuellement le fournisseur de cette vente est : {{ fournisseur.username }}</p>
 						<p>° Le nombre de commande total s'élève à {{ enchere.totalcommande }}</p>
-						<p>° Il reste xx j, xx h, xx min et xx s avant la fin de la vente</p>
+						<p>° Il reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> avant la fin de la vente</p>
+						<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 					{% endif %}
+
+					<script type="text/javascript">
+
+						var currentdate = new Date();
+						var dd = currentdate.getDate();
+						var mm = currentdate.getMonth(); //January is 0!
+						var yyyy = currentdate.getFullYear();
+
+						var datefin = new Date({{ annee }}, {{ mois }}, {{ jour }});
+
+						$('#{{ enchere.id }}').countdown({until: datefin, compact: true, format: 'dHMS', onExpiry: sellOver, alwaysExpire: true, expiryText: "Vente Terminée"}); 
+
+						function sellOver() { 
+							var state = $('#state').val();
+							$.ajax({
+						        type: "POST",
+						        url: "{{ path('sellOver') }}", 
+						        dataType: "json",
+						        data: {state : state},
+						        success : function(response) {
+						            console.log(response);
+						        }
+						    }); 
+						}
+					</script>
 				{% endif %}
 			</div>
 		</div>
