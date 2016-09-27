@@ -73,6 +73,10 @@ commande:
     path:    /command/{idenchere}
     defaults: {_controller: DealBundle:Command:newCmd}
 
+command_ajax:
+    path:    /ajax/command
+    defaults: {_controller: DealBundle:Command:newCmdAjax}
+
 # ------ Show Notifications ------
 notifs_show:
     path:    /notifs
