@@ -319,6 +319,18 @@ class EnchereController extends Controller
                             $em->flush();
                     }
                 }
+                $infoFourni = $em->getRepository('AppBundle:User')->findOneById($oldfourni);
+                $message = \Swift_Message::newInstance()
+                        ->setSubject('Test mail title')//objet du mail
+                        ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                        //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                        ->setTo($infoFourni->getEmailCanonical()) //adresse du cabinet qui commande
+                        // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                        ->setCharset('utf-8')
+                        ->setContentType('text/html')
+                        //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
+                        ->setBody("La vente n°".$enchere->getId()." a changé de fournisseur, l'ancien prix de ".$oldprice."€ n'est plus valable, desormais il sera de ".$enchere->getPrix()."€ . Vous pouvez acceder à la vente directement sur le site depuis votre onglet Notifications.");
+                    $this->get('mailer')->send($message); //action d'envoi
 
                 $request->getSession()
                 ->getFlashBag()
@@ -385,6 +397,31 @@ class EnchereController extends Controller
             $em->flush();
             
             $result = "close";
+
+            $fournisseur = $enchere->getIdfournisseur();
+            $allCmd = $em->getRepository('DealBundle:Commandes')->findByIdenchere($enchere->getId());
+            $nbreLivraison = count($em->getRepository('DealBundle:Commandes')->findByIdenchere($enchere->getId()));
+            // FOR FOURNISSEUR
+            $notif = new Infos();
+            $notif->setIduser($fournisseur);
+            $notif->setIdenchere($enchere->getId());
+            $notif->setMessage("La vente n°".$enchere->getId()." est terminé, le prix unitaire final est de ".$enchere->getPrix()."€. Il y à un total de ".$enchere->getTotalcommande()." pour ".$nbreLivraison." points de livraison. Pour recevoir le détail de la vente, veuillez régler la commission auprès du site.");
+            $notif->setEtat("unread");
+            $notif->setCreatedAt($datenotif);
+            $em->persist($notif);
+            $em->flush();
+
+            // FOR ACHETEUR
+            foreach ($allCmd as $userAssociate) {
+                $notif = new Infos();
+                $notif->setIduser($userAssociate->getIdacheteur());
+                $notif->setIdenchere($enchere->getId());
+                $notif->setMessage("La vente n°".$enchere->getId()." est terminé, le prix unitaire final est de ".$enchere->getPrix()."€. vous avez commandé ".$userAssociate->getNbredecommande()." unité du produit. Vous recevrez par mail les détails concernant la livraison et le fournisseur.");
+                $notif->setEtat("unread");
+                $notif->setCreatedAt($datenotif);
+                $em->persist($notif);
+                $em->flush();
+            }
         }
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
