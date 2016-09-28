@@ -54,6 +54,26 @@
 				<div class="col-md-12">
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
+						<input type="hidden" name="datenotif" id="datenotif" value="{{ "now"|date("d/m/Y") }}">
+						<input type="hidden" name="datenew" id="datenew" value="">
+						<input type="hidden" name="dateold" id="dateold" value="">
+						<input type="hidden" name="fulldate" id="fulldate" value="">
+
+						<script type="text/javascript">
+							var currentdate = new Date();
+							var ddnew = currentdate.getDate()+5;
+							var ddold = currentdate.getDate()+15;
+							var ddfin = currentdate.getDate()-9;
+							var mm = currentdate.getMonth(); //January is 0!
+							var yyyy = currentdate.getFullYear();
+							var datenew = new Date(yyyy, mm, ddnew);
+							var dateold = new Date(yyyy, mm, ddold);
+							var fulldate = new Date(yyyy, mm, ddfin);
+
+							$('#datenew').val(datenew);
+							$('#dateold').val(dateold);
+							$('#fulldate').val(fulldate);
+						</script>
 						<input type="submit" name="submit" value="Commander" class="btn btn-primary">
 					</div>
 					<div class="col-md-4"></div>

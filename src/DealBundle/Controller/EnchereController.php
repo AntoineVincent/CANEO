@@ -476,8 +476,6 @@ class EnchereController extends Controller
 
         $cmd = $request->request->get('cmd');
 
-        $datefin = new \Datetime();
-
         $datenotif = $datefin->format('Y/m/d');
 
         if($cmd != NULL && $cmd >= $product->getCommandemaximal()) {
@@ -485,6 +483,13 @@ class EnchereController extends Controller
 
             $em->persist($product);
             $em->flush();
+
+            $datenew = $request->request->get('datenew');
+            $dateNew = new \DateTime($datenew);
+            $dateold = $request->request->get('dateold');
+            $dateOld = new \DateTime($dateold);
+            $fulldate = $request->request->get('fulldate');
+            $fulldate = new \DateTime($fulldate);
 
             $com = $product->getPrixminimal() * 0.2;
             $prixfourni = $product->getPrixminimal() - $com;
@@ -496,7 +501,9 @@ class EnchereController extends Controller
             $enchere->setCommission($com);
             $enchere->setBeneffourni($prixfourni);
             $enchere->setTotalcommande($cmd);
-            $enchere->setFulldate($datefin);
+            $enchere->setDatenew($dateNew);
+            $enchere->setDateold($dateOld);
+            $enchere->setFulldate($fulldate);
             $enchere->setEtat("open");
             $enchere->setCompteur(1);
 
