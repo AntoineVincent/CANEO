@@ -83,6 +83,7 @@ class ProductController extends Controller
                 'favoris' => $favoris,
                 'enchere' => $enchere,
                 'idenchere' => $idenchere,
+                'callback' => $product->getCallname(),
             );
         }
 
@@ -104,9 +105,16 @@ class ProductController extends Controller
             'etat' => 'open',
         ));
 
-        $annee = $enchere->getFulldate()->format('Y');
-        $mois = $enchere->getFulldate()->format('m');
-        $jour = $enchere->getFulldate()->format('d');
+        if($enchere != NULL) {
+            $annee = $enchere->getFulldate()->format('Y');
+            $mois = $enchere->getFulldate()->format('m');
+            $jour = $enchere->getFulldate()->format('d');
+        }
+        else {
+            $annee = "";
+            $mois = "";
+            $jour = "";
+        }
 
         if($enchere != NULL) {
             $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());

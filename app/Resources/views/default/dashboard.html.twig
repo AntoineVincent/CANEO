@@ -29,6 +29,19 @@
 					{% if encheresNew is empty %}
 						<tr>
 							<th>Aucun données pour le moment</th>
+			       			<th></th>
+			       			{% if user.type == "fournisseur" or user.type == "admin" %}
+			       				<th></th>
+			       			{% endif %}
+			       			{% if user.type == "acheteur" %}
+			       				<th></th>
+			       				<th></th>
+			       			{% endif %}
+			       			<th></th>
+			       			<th></th>
+			       			{% if user.type == "acheteur" %}
+			       				<th></th>
+			       			{% endif %}
 						</tr>
 					{% endif %}
 
@@ -132,9 +145,22 @@
 		   			</tr>
 				</thead>
 				<tbody>
-					{% if encheresNew is empty %}
+					{% if encheresOld is empty %}
 						<tr>
 							<th>Aucun données pour le moment</th>
+			       			<th></th>
+			       			{% if user.type == "fournisseur" or user.type == "admin" %}
+			       				<th></th>
+			       			{% endif %}
+			       			{% if user.type == "acheteur" %}
+			       				<th></th>
+			       				<th></th>
+			       			{% endif %}
+			       			<th></th>
+			       			<th></th>
+			       			{% if user.type == "acheteur" %}
+			       				<th></th>
+			       			{% endif %}
 						</tr>
 					{% endif %}
 

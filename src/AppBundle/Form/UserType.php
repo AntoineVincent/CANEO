@@ -87,6 +87,9 @@ class UserType extends AbstractType
             ->add('infos', 'textarea', array(
                 'label' => 'CGV (si nouveau membre est un fournisseur) : ',
                 'attr' => array(
+                    'nullable' => true,
+                ),
+                'attr' => array(
                     'placeholder' => 'Indiquer ici conditions générales de vente.'
                 )
             ))

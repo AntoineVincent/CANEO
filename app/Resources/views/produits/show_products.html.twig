@@ -43,13 +43,13 @@
 							{% if user.type == 'acheteur' or user.type == "fournisseur" %}	
 								{% if product.favoris == "oui" %}
 									<th style="text-align:center;">
-										<span id="fav{{ product.nom }}" class="glyphicon glyphicon-star"></span>
-										<span id="fav{{ product.nom }}empty" class="glyphicon glyphicon-star-empty" style="display:none;"></span>
+										<span id="fav{{ product.callback }}" class="glyphicon glyphicon-star"></span>
+										<span id="fav{{ product.callback }}empty" class="glyphicon glyphicon-star-empty" style="display:none;"></span>
 									</th>
 								{% else %}
 									<th style="text-align:center;">
-										<span id="fav{{ product.nom }}empty" class="glyphicon glyphicon-star-empty"></span>
-										<span id="fav{{ product.nom }}" class="glyphicon glyphicon-star" style="display:none;"></span>
+										<span id="fav{{ product.callback }}empty" class="glyphicon glyphicon-star-empty"></span>
+										<span id="fav{{ product.callback }}" class="glyphicon glyphicon-star" style="display:none;"></span>
 									</th>
 								{% endif %}
 							{% endif %}
@@ -58,37 +58,37 @@
 								<th>
 									<a href="{{ path('new_enchere2', { 'idproduct': product.id }) }}">Commander</a>
 								</th>
-							{% else %}
+							{% elseif user.type == "acheteur" %}
 								<th>Vente en cours</th>
 							{% endif %}
 						</tr>
-						<input type="hidden" name="{{ product.nom }}" value="{{ product.id }}" id="{{ product.nom }}">
+						<input type="hidden" name="{{ product.callback }}" value="{{ product.id }}" id="{{ product.callback }}">
 
 
 						<script>
-							var {{ product.nom }} = $("#{{product.nom}}").val();
-							$('#fav{{ product.nom }}empty').click(function(){
+							var {{ product.callback }} = $("#{{product.callback}}").val();
+							$('#fav{{ product.callback }}empty').click(function(){
 								$.ajax({
 				                    type: "POST",
 				                    url: "{{ path('favoris_action') }}",
 				                    dataType: "json",
 				                    data: {idproduit : '{{ product.id }}' },
 				                    success : function(response) {
-				                    	$("#fav{{ product.nom }}").css('display','block');
-				                    	$("#fav{{ product.nom }}empty").css('display','none');
+				                    	$("#fav{{ product.callback }}").css('display','block');
+				                    	$("#fav{{ product.callback }}empty").css('display','none');
 				                    }
 				                });
 							});
 
-							$('#fav{{ product.nom }}').click(function(){
+							$('#fav{{ product.callback }}').click(function(){
 								$.ajax({
 				                    type: "POST",
 				                    url: "{{ path('favoris_action') }}",
 				                    dataType: "json",
 				                    data: {idproduit : '{{ product.id }}' },
 				                    success : function(response) {
-				                    	$("#fav{{ product.nom }}").css('display','none');
-				                    	$("#fav{{ product.nom }}empty").css('display','block');
+				                    	$("#fav{{ product.callback }}").css('display','none');
+				                    	$("#fav{{ product.callback }}empty").css('display','block');
 				                    }
 				                });
 							});

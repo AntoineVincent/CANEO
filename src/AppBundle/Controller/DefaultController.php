@@ -48,46 +48,52 @@ class DefaultController extends Controller
         }
 
         $encheres = $em->getRepository('DealBundle:Encheres')->findByEtat('open');
-        foreach($encheres as $enchere) {
-            $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
-            $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
-            $commande = $em->getRepository('DealBundle:Commandes')->findOneBy(array(
-                'idenchere' => $enchere->getId(),
-                'idacheteur' => $user->getId(),
-            ));
-            if ($commande == NULL) {
-                $commandeUser = "Pas de commandes";
-            }
-            else {
-                $commandeUser = $commande->getNbredecommande();
-            }
-            if($enchere->getEtatnew() == "new") {
-                $encheresNew [] = array (
-                    'id' => $enchere->getId(),
-                    'prix' =>  $enchere->getPrix(),
-                    'logoFournisseur' => $fournisseur->getLogo(),
-                    'produit' => $product->getNom(),
-                    'totalCommande' => $enchere->getTotalcommande(),
-                    'commandeUser' => $commandeUser,
-                    'annee' => $enchere->getFulldate()->format('Y'),
-                    'mois' => $enchere->getFulldate()->format('m'),
-                    'jour' => $enchere->getFulldate()->format('d'),
-                    'minicom' => $product->getCommandemaximal(),
-                );
-            }
-            elseif ($enchere->getEtatnew() == "old") {
-                $encheresOld [] = array (
-                    'id' => $enchere->getId(),
-                    'prix' =>  $enchere->getPrix(),
-                    'logoFournisseur' => $fournisseur->getLogo(),
-                    'produit' => $product->getNom(),
-                    'totalCommande' => $enchere->getTotalcommande(),
-                    'commandeUser' => $commandeUser,
-                    'annee' => $enchere->getFulldate()->format('Y'),
-                    'mois' => $enchere->getFulldate()->format('m'),
-                    'jour' => $enchere->getFulldate()->format('d'),
-                    'minicom' => $product->getCommandemaximal(),
-                );
+        if($encheres == NULL) {
+            $encheresNew = [];
+            $encheresOld = [];
+        }
+        else {
+            foreach($encheres as $enchere) {
+                $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
+                $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());
+                $commande = $em->getRepository('DealBundle:Commandes')->findOneBy(array(
+                    'idenchere' => $enchere->getId(),
+                    'idacheteur' => $user->getId(),
+                ));
+                if ($commande == NULL) {
+                    $commandeUser = "Pas de commandes";
+                }
+                else {
+                    $commandeUser = $commande->getNbredecommande();
+                }
+                if($enchere->getEtatnew() == "new") {
+                    $encheresNew [] = array (
+                        'id' => $enchere->getId(),
+                        'prix' =>  $enchere->getPrix(),
+                        'logoFournisseur' => $fournisseur->getLogo(),
+                        'produit' => $product->getNom(),
+                        'totalCommande' => $enchere->getTotalcommande(),
+                        'commandeUser' => $commandeUser,
+                        'annee' => $enchere->getFulldate()->format('Y'),
+                        'mois' => $enchere->getFulldate()->format('m'),
+                        'jour' => $enchere->getFulldate()->format('d'),
+                        'minicom' => $product->getCommandemaximal(),
+                    );
+                }
+                elseif ($enchere->getEtatnew() == "old") {
+                    $encheresOld [] = array (
+                        'id' => $enchere->getId(),
+                        'prix' =>  $enchere->getPrix(),
+                        'logoFournisseur' => $fournisseur->getLogo(),
+                        'produit' => $product->getNom(),
+                        'totalCommande' => $enchere->getTotalcommande(),
+                        'commandeUser' => $commandeUser,
+                        'annee' => $enchere->getFulldate()->format('Y'),
+                        'mois' => $enchere->getFulldate()->format('m'),
+                        'jour' => $enchere->getFulldate()->format('d'),
+                        'minicom' => $product->getCommandemaximal(),
+                    );
+                }
             }
         }
 

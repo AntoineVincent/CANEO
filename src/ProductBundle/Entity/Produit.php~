@@ -69,6 +69,13 @@ class Produit
      */
     private $etat;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="callname", type="string", length=255)
+     */
+    private $callname;
+
 
     /**
      * Get id
@@ -216,5 +223,28 @@ class Produit
     public function getEtat()
     {
         return $this->etat;
+    }
+
+    /**
+     * Set idfournisseur
+     *
+     * @param integer $idfournisseur
+     * @return Produit
+     */
+    public function setIdfournisseur($idfournisseur)
+    {
+        $this->idfournisseur = $idfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get idfournisseur
+     *
+     * @return integer 
+     */
+    public function getIdfournisseur()
+    {
+        return $this->idfournisseur;
     }
 }
