@@ -99,11 +99,25 @@ class Encheres
     private $etat;
 
     /**
-     * @var int
+     * @var date
      *
-     * @ORM\Column(name="compteur", type="integer", nullable=true)
+     * @ORM\Column(name="datenew", type="date", nullable=true)
      */
-    private $compteur;
+    private $datenew;
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateold", type="date", nullable=true)
+     */
+    private $dateold;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etatnew", type="string", length=255, nullable=true)
+     */
+    private $etatnew;
 
 
     /**
@@ -367,5 +381,51 @@ class Encheres
     public function getEtat()
     {
         return $this->etat;
+    }
+
+    /**
+     * Set datenew
+     *
+     * @param \DateTime $datenew
+     * @return Encheres
+     */
+    public function setDatenew($datenew)
+    {
+        $this->datenew = $datenew;
+
+        return $this;
+    }
+
+    /**
+     * Get datenew
+     *
+     * @return \DateTime 
+     */
+    public function getDatenew()
+    {
+        return $this->datenew;
+    }
+
+    /**
+     * Set etatnew
+     *
+     * @param string $etatnew
+     * @return Encheres
+     */
+    public function setEtatnew($etatnew)
+    {
+        $this->etatnew = $etatnew;
+
+        return $this;
+    }
+
+    /**
+     * Get etatnew
+     *
+     * @return string 
+     */
+    public function getEtatnew()
+    {
+        return $this->etatnew;
     }
 }

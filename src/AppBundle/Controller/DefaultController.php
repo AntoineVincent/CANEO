@@ -30,6 +30,23 @@ class DefaultController extends Controller
             $em->flush();
         }
 
+        $date = new \DateTime();
+        $datenow = $date->format('Y/m/d');        
+        $encheresVerif = $em->getRepository('DealBundle:Encheres')->findAll();
+        
+        foreach($encheresVerif as $verif) {
+            if($verif->getDatenew()->format('Y/m/d') == $datenow) {
+                $verif->setEtatnew('normal');
+                $em->persist($verif);
+                $em->flush();
+            }
+            elseif($verif->getDateold()->format('Y/m/d') == $datenow) {
+                $verif->setEtatnew('old');
+                $em->persist($verif);
+                $em->flush();
+            }
+        }
+
         $encheres = $em->getRepository('DealBundle:Encheres')->findByEtat('open');
         foreach($encheres as $enchere) {
             $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
@@ -44,24 +61,41 @@ class DefaultController extends Controller
             else {
                 $commandeUser = $commande->getNbredecommande();
             }
-            $encheresNew [] = array (
-                'id' => $enchere->getId(),
-                'prix' =>  $enchere->getPrix(),
-                'logoFournisseur' => $fournisseur->getLogo(),
-                'produit' => $product->getNom(),
-                'totalCommande' => $enchere->getTotalcommande(),
-                'commandeUser' => $commandeUser,
-                'annee' => $enchere->getFulldate()->format('Y'),
-                'mois' => $enchere->getFulldate()->format('m'),
-                'jour' => $enchere->getFulldate()->format('d'),
-                'minicom' => $product->getCommandemaximal(),
-            );
+            if($enchere->getEtatnew() == "new") {
+                $encheresNew [] = array (
+                    'id' => $enchere->getId(),
+                    'prix' =>  $enchere->getPrix(),
+                    'logoFournisseur' => $fournisseur->getLogo(),
+                    'produit' => $product->getNom(),
+                    'totalCommande' => $enchere->getTotalcommande(),
+                    'commandeUser' => $commandeUser,
+                    'annee' => $enchere->getFulldate()->format('Y'),
+                    'mois' => $enchere->getFulldate()->format('m'),
+                    'jour' => $enchere->getFulldate()->format('d'),
+                    'minicom' => $product->getCommandemaximal(),
+                );
+            }
+            elseif ($enchere->getEtatnew() == "old") {
+                $encheresOld [] = array (
+                    'id' => $enchere->getId(),
+                    'prix' =>  $enchere->getPrix(),
+                    'logoFournisseur' => $fournisseur->getLogo(),
+                    'produit' => $product->getNom(),
+                    'totalCommande' => $enchere->getTotalcommande(),
+                    'commandeUser' => $commandeUser,
+                    'annee' => $enchere->getFulldate()->format('Y'),
+                    'mois' => $enchere->getFulldate()->format('m'),
+                    'jour' => $enchere->getFulldate()->format('d'),
+                    'minicom' => $product->getCommandemaximal(),
+                );
+            }
         }
 
         return $this->render('default/dashboard.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'user' => $user,
             'encheresNew' => $encheresNew,
+            'encheresOld' => $encheresOld,
         ));
     }
 

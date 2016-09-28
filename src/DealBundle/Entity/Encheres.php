@@ -99,11 +99,25 @@ class Encheres
     private $etat;
 
     /**
-     * @var int
+     * @var date
      *
-     * @ORM\Column(name="compteur", type="integer", nullable=true)
+     * @ORM\Column(name="datenew", type="date", nullable=true)
      */
-    private $compteur;
+    private $datenew;
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateold", type="date", nullable=true)
+     */
+    private $dateold;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etatnew", type="string", length=255, nullable=true)
+     */
+    private $etatnew;
 
 
     /**
@@ -370,25 +384,71 @@ class Encheres
     }
 
     /**
-     * Set compteur
+     * Set datenew
      *
-     * @param integer $compteur
+     * @param \DateTime $datenew
      * @return Encheres
      */
-    public function setCompteur($compteur)
+    public function setDatenew($datenew)
     {
-        $this->compteur = $compteur;
+        $this->datenew = $datenew;
 
         return $this;
     }
 
     /**
-     * Get compteur
+     * Get datenew
      *
-     * @return integer 
+     * @return \DateTime 
      */
-    public function getCompteur()
+    public function getDatenew()
     {
-        return $this->compteur;
+        return $this->datenew;
+    }
+
+    /**
+     * Set etatnew
+     *
+     * @param string $etatnew
+     * @return Encheres
+     */
+    public function setEtatnew($etatnew)
+    {
+        $this->etatnew = $etatnew;
+
+        return $this;
+    }
+
+    /**
+     * Get etatnew
+     *
+     * @return string 
+     */
+    public function getEtatnew()
+    {
+        return $this->etatnew;
+    }
+
+    /**
+     * Set dateold
+     *
+     * @param \DateTime $dateold
+     * @return Encheres
+     */
+    public function setDateold($dateold)
+    {
+        $this->dateold = $dateold;
+
+        return $this;
+    }
+
+    /**
+     * Get dateold
+     *
+     * @return \DateTime 
+     */
+    public function getDateold()
+    {
+        return $this->dateold;
     }
 }

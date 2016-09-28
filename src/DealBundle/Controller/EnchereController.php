@@ -174,10 +174,6 @@ class EnchereController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $enchere = new Encheres();
-        $form = $this->createForm('DealBundle\Form\EnchereType', $enchere);
-        $form->handleRequest($request);
-
         $produits = $em->getRepository('ProductBundle:Produit')->findByEtat('non');
 
         $idprod = $request->request->get('prod');
@@ -188,18 +184,29 @@ class EnchereController extends Controller
         $com = $prixMax * 0.2;
         $prixfourni = $prixMax - $com;
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if($idprod != NULL) {
+            $datenew = $request->request->get('datenew');
+            $dateNew = new \DateTime($datenew);
+            $dateold = $request->request->get('dateold');
+            $dateOld = new \DateTime($dateold);
+            $fulldate = $request->request->get('fulldate');
+            $fulldate = new \DateTime($fulldate);
+
+            $enchere = new Encheres();
 
             $enchere->setIdproduit($idprod);
             $enchere->setIdfournisseur($idfournisseur);
             $enchere->setCommission($com);
             $enchere->setBeneffourni($prixfourni);
             $enchere->setEtat('open');
-            $enchere->setCompteur(1);
+            $enchere->setDatenew($dateNew);
+            $enchere->setDateold($dateOld);
+            $enchere->setFulldate($fulldate);
+            $enchere->setEtatnew("new");
 
             $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
             $prodSelected->setEtat('oui');
-            $enchere->setPrix($prodSelected->getPrix());
+            $enchere->setPrix($prodSelected->getPrixminimal());
 
             // recupere la string date;
             // $date = $enchere->getFulldate()->format('d/m/Y');
@@ -257,7 +264,6 @@ class EnchereController extends Controller
         return $this->render('encheres/new_enchere.html.twig', array(
             'user' => $user,
             'produits' => $produits,
-            'form' => $form->createView(),
         ));
     }
     public function enchereUpAction(Request $request, $idenchere) 
@@ -524,7 +530,7 @@ class EnchereController extends Controller
                     $notif = new Infos();
                     $notif->setIduser($associateMember->getId());
                     $notif->setIdenchere($enchere->getId());
-                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal().". Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère ");
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal()."€. Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère ");
                     $notif->setEtat("unread");
                     $notif->setCreatedAt($datenotif);
                     $em->persist($notif);
@@ -546,7 +552,7 @@ class EnchereController extends Controller
                     $notif = new Infos();
                     $notif->setIduser($associateMember->getId());
                     $notif->setIdenchere($enchere->getId());
-                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Le prix de vente unitaire est actuellement de ".$product->getPrixminimal().". Une commande de ".$cmd."unitées est déjà passé");
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Le prix de vente unitaire est actuellement de ".$product->getPrixminimal()."€. Une commande de ".$cmd."unitées est déjà passé");
                     $notif->setEtat("unread");
                     $notif->setCreatedAt($datenotif);
                     $em->persist($notif);
