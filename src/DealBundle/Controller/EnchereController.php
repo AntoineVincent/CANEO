@@ -446,7 +446,7 @@ class EnchereController extends Controller
                     ->setCharset('utf-8')
                     ->setContentType('text/html')
                     //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
-                    ->setBody("La vente n°".$enchere->getId()." est terminé, le prix unitaire final est de ".$enchere->getPrix()."€. Il y à un total de ".$enchere->getTotalcommande()." pour ".$nbreLivraison." points de livraison. Pour recevoir le détail de la vente, veuillez régler la commission auprès du site.");
+                    ->setBody("La vente n°".$enchere->getId()." est terminé, le prix unitaire final est de ".$enchere->getPrix()."€. vous avez commandé ".$userAssociate->getNbredecommande()." unité du produit. Le fournisseur de cette vente est ".$infoFourni->getNom()." vos coordonées lui seront transmise dès que possible et vous serez mis en contact. Merci de votre patience et d'utiliser Orthodeal.");
                 $this->get('mailer')->send($message); //action d'envoi
             }
         }
@@ -529,6 +529,18 @@ class EnchereController extends Controller
                     $notif->setCreatedAt($datenotif);
                     $em->persist($notif);
                     $em->flush();
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('Test mail title')//objet du mail
+                        ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                        //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                        ->setTo($associateMember->getEmailCanonical()) //adresse du cabinet qui commande
+                        // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                        ->setCharset('utf-8')
+                        ->setContentType('text/html')
+                        //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
+                        ->setBody("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal().". Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère. Vous pouvez acceder a la vente sur le site directement depuis votre espace.");
+                    $this->get('mailer')->send($message); //action d'envoi
                 }
                 else {
                     $notif = new Infos();
