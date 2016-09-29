@@ -476,8 +476,6 @@ class EnchereController extends Controller
 
         $cmd = $request->request->get('cmd');
 
-        $datenotif = $datefin->format('Y/m/d');
-
         if($cmd != NULL && $cmd >= $product->getCommandemaximal()) {
             $product->setEtat("oui");
 
@@ -505,7 +503,9 @@ class EnchereController extends Controller
             $enchere->setDateold($dateOld);
             $enchere->setFulldate($fulldate);
             $enchere->setEtat("open");
-            $enchere->setCompteur(1);
+            $enchere->setEtatnew('new');
+
+            $datenotif = $fulldate->format('Y/m/d');
 
             $em->persist($enchere);
             $em->flush();

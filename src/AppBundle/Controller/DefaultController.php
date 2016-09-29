@@ -17,6 +17,9 @@ class DefaultController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $encheresNew = [];
+        $encheresOld = [];
         
         $allmembers = $em->getRepository('AppBundle:User')->findAll();
         foreach($allmembers as $member) {
@@ -48,11 +51,7 @@ class DefaultController extends Controller
         }
 
         $encheres = $em->getRepository('DealBundle:Encheres')->findByEtat('open');
-        if($encheres == NULL) {
-            $encheresNew = [];
-            $encheresOld = [];
-        }
-        else {
+        if($encheres != NULL) {
             foreach($encheres as $enchere) {
                 $product = $em->getRepository('ProductBundle:Produit')->findOneById($enchere->getIdproduit());
                 $fournisseur = $em->getRepository('AppBundle:User')->findOneById($enchere->getIdfournisseur());

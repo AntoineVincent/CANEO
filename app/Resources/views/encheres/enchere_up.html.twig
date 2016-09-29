@@ -57,6 +57,12 @@
 							<input type="submit" name="submit" class="btn btn-primary" value="Changer le prix">
 						</div>
 					</form>
+					<div class="col-md-6" style="margin-top:5px; border-top: solid white 1px; padding-top: 5px">
+						<a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}" class="btn btn-primary">Retour à la Fiche Vente</a>
+					</div>
+					<div class="col-md-6" style="margin-top:5px; border-top: solid white 1px; padding-top: 5px">
+						<a href="{{ path('all_enchere') }}" class="btn-primary btn">Retour à la liste des ventes</a>
+					</div>
 				</div>
 				<script>
 			        $('#newprice').keyup(function() {

@@ -14,6 +14,9 @@
 						<th>Prix de vente unitaire</th>
 						<th>Favoris : </th>
 						<th>Voir Fiche</th>
+						{% if user.type == "acheteur" %}
+							<th>Lancer vente</th>
+						{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -29,6 +32,13 @@
 							<th>{{ product.prixminimal }}€ TTC</th>
 							<th style="text-align:center;"><span class="glyphicon glyphicon-star"></span></th>
 							<th><a href="{{ path('fiche_product', { 'idproduct': product.id }) }}">Fiche produit</a></th>
+							{% if product.idenchere == "non" and user.type == "acheteur" %}
+								<th>
+									<a href="{{ path('new_enchere2', { 'idproduct': product.id }) }}">Commander</a>
+								</th>
+							{% elseif user.type == "acheteur" %}
+								<th>Vente en cours</th>
+							{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>

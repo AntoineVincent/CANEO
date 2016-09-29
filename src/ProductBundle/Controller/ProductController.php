@@ -21,15 +21,24 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $photo = $product->getPhoto();
+            if($product->getPhoto() != NULL) {
+                $photo = $product->getPhoto();
 
-            $photoName = md5(uniqid()).'.'.$photo->guessExtension();
-            $photoDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/products';
-            $photo->move($photoDir, $photoName);
+                $photoName = md5(uniqid()).'.'.$photo->guessExtension();
+                $photoDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/products';
+                $photo->move($photoDir, $photoName);
 
-            $product->setPhoto($photoName);
+                $product->setPhoto($photoName);
+            }
             $product->setEtat('non');
             $product->setIdfournisseur(0);
+
+            $len = 12;
+            $words = array_merge(range('a', 'z'));
+            shuffle($words);
+            $uniqId = substr(implode($words), 0, $len);
+
+            $product->setCallname($uniqId);
 
             $em->persist($product);
             $em->flush();

@@ -60,13 +60,15 @@
 							<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 						{% endif %}
 					{% elseif user.type == "acheteur" %}
-						<p>° Et il vous reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> pour passez des commandes.</p>
+						<p>° Il vous reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> pour passez des commandes.</p>
+						<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 					{% else %}
 						<p>° Actuellement le fournisseur de cette vente est : {{ fournisseur.username }}</p>
 						<p>° Le nombre de commande total s'élève à {{ enchere.totalcommande }}</p>
 						<p>° Il reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> avant la fin de la vente</p>
 						<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 					{% endif %}
+					<hr>
 
 					<script type="text/javascript">
 
@@ -93,6 +95,11 @@
 						}
 					</script>
 				{% endif %}
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-4">
+				<a class="btn btn-primary" href="{{ path('show_product') }}">Retour à la Liste des Produits</a>
 			</div>
 		</div>
 	</div>
