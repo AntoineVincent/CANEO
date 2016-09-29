@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Form\UsermType;
 
 class DefaultController extends Controller
 {
@@ -222,6 +223,34 @@ class DefaultController extends Controller
         return $this->render('default/show_notifs.html.twig', array(
             'user' => $user,
             'notifs' => $notifs,
+        ));
+    }
+
+    public function modifUserAction(Request $request, $iduser) 
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $editForm = $this->createForm('AppBundle\Form\UsermType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $infos = $request->request->get('infos');
+            $user->setInfos($infos);
+
+            $em->persist($user);
+            $em->flush();
+
+            $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'Profil modifié avec succès !')
+            ;
+        }
+
+        return $this->render('user/modif_user.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
         ));
     }
 }

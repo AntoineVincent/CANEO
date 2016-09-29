@@ -26,6 +26,10 @@ show_user:
     path:    /user/list
     defaults: {_controller: AppBundle:Default:listUser}
 
+modif_user:
+    path:    /user/modif/{iduser}
+    defaults: {_controller: AppBundle:Default:modifUser}
+
 # ------ Product Route -------
 new_product:
     path:    /product/new

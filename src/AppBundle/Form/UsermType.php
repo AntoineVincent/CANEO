@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
-class UserType extends AbstractType
+class UsermType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -82,31 +82,6 @@ class UserType extends AbstractType
             ->add('mailbis',EmailType::class, array(
                 'required' => false,
                 'label' => 'E-mail secondaire : '
-            ))
-            ->add('infos', 'textarea', array(
-                'label' => 'CGV (si nouveau membre est un fournisseur) : ',
-                'attr' => array(
-                    'nullable' => true,
-                ),
-                'attr' => array(
-                    'placeholder' => 'Indiquer ici conditions générales de vente.'
-                )
-            ))
-            ->add('type', ChoiceType::class, array(
-                'choices' => array(
-                    'fournisseur' => 'fournisseur',
-                    'acheteur' => 'acheteur',
-                ),
-                'label' => 'Type d Utilisateur : ',
-                'placeholder' => 'Selectionner...',
-                'empty_data'  => null
-            ))
-            ->add('logo', FileType::class, array(
-                'label' => 'Logo : ',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Selectionnez un fichier'
-                )
             ));
     }
 

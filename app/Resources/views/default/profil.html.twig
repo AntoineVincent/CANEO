@@ -23,6 +23,7 @@
 				{% else %}	
 					<p><img class="logo-user" src="{{ asset('img/nologo.jpeg') }}" /></p>
 				{% endif %}
+				<a href="{{ path('modif_user', { 'iduser': user.id }) }}" class="btn btn-primary">Modifier le Profil</a>
 			</div>
 			<div class="col-md-4">
 				<div class="col-md-12">

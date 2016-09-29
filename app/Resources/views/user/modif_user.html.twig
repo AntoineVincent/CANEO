@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ user.nom }}{% endblock %}
+
+{% block body %}
+    <div class="col-md-12">
+        <h3 class="form-title">Modifier votre profil :{{ user.nom }} </h3>
+    </div>
+    <div class="col-md-12 card-form">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+            {{ form_start(edit_form) }}
+
+                <div class="col-md-12">
+                    <div class="col-md-6 card-form-member left-card">
+                        <div class="col-md-12">
+                            <h4 class="form-subtitle">Informations Principales : </h4>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.username) }}
+                            {{ form_errors(edit_form.username) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.username) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.plain_password) }}
+                            {{ form_errors(edit_form.plain_password) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.plain_password) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.email) }}
+                            {{ form_errors(edit_form.email) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.email) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.nom) }}
+                            {{ form_errors(edit_form.nom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.nom) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 card-form-member">
+                        <div class="col-md-12">
+                            <h4 class="form-subtitle">Informations Complémentaires : </h4>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.telephone) }}
+                            {{ form_errors(edit_form.telephone) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.telephone) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.mailbis) }}
+                            {{ form_errors(edit_form.mailbis) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.mailbis) }}
+                        </div>
+                        <div class="col-md-6">
+                            {% if user.type == "acheteur" %}
+                                <label>Infos complémentaires</label>
+                            {% elseif user.type == "fournisseur" %}
+                                <label>CGV</label>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <input type="textarea" name="infos">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-6  card-form-member left-card">
+                        <div class="col-md-12">
+                            <h4 class="form-subtitle">Coordonées Livraison : </h4>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.adresselivraison) }}
+                            {{ form_errors(edit_form.adresselivraison) }}
+                        </div>
+                        <div class="col-md-6">              
+                            {{ form_widget(edit_form.adresselivraison) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.cplivraison) }}
+                            {{ form_errors(edit_form.cplivraison) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.cplivraison) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.villelivraison) }}
+                            {{ form_errors(edit_form.villelivraison) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.villelivraison) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 card-form-member">
+                        <div class="col-md-12">
+                            <h4 class="form-subtitle">Coordonées Facturation : </h4>
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.adressefactu) }}
+                            {{ form_errors(edit_form.adressefactu) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.adressefactu) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.cpfactu) }}
+                            {{ form_errors(edit_form.cpfactu) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.cpfactu) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_label(edit_form.villefactu) }}
+                            {{ form_errors(edit_form.villefactu) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_widget(edit_form.villefactu) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <input type="submit" name="submit" value="Modifier le profil" class="btn btn-primary">
+                        </div>
+                        <div class="col-md-12">
+                            <a style="margin-top:5px;" href="{{ path('profil', { 'iduser': user.id }) }}" class="btn btn-primary">Retour au profil</a>
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(edit_form) }}
+    </div>
+{% endblock %}
