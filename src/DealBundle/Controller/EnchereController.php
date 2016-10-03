@@ -406,6 +406,8 @@ class EnchereController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $tabAcheteurs = [];
+
         $idenchere = $request->request->get('state');
 
         $result = "alreadyClose";
@@ -432,6 +434,31 @@ class EnchereController extends Controller
             $infoFourni = $em->getRepository('AppBundle:User')->findOneById($fournisseur);
             $allCmd = $em->getRepository('DealBundle:Commandes')->findByIdenchere($enchere->getId());
             $nbreLivraison = count($em->getRepository('DealBundle:Commandes')->findByIdenchere($enchere->getId()));
+
+            $prixfinal = $enchere->getPrix();
+            $com = $prixfinal * 0.2;
+            $prixfourni = $prix - $com;
+
+            foreach($allCmd as $oneCmd) {
+                $acheteur = $em->getRepository('AppBundle:User')->findOneById($oneCmd->getIdacheteur());
+
+                $tabAcheteurs [] = array(
+                    'nom' => $acheteur->getNom(),
+                    'commandes' => $oneCmd->getNbredecommande(),
+                    'adresseLivr' => $acheteur->getAdresselivraison(),
+                    'cpLivr' => $acheteur->getCplivraison(),
+                    'villeLivr' => $acheteur->getVillelivraison(),
+                    'adresseFactu' => $acheteur->getAdressefactu(),
+                    'cpFactu' => $acheteur->getCpfactu(),
+                    'villeFactu' => $acheteur->getVillefactu(),
+                    'telephone' => $acheteur->getTelephone(),
+                    'email' => $acheteur->getEmail(),
+                );
+
+            }
+
+
+
             // FOR FOURNISSEUR
             $notif = new Infos();
             $notif->setIduser($fournisseur);
@@ -477,6 +504,28 @@ class EnchereController extends Controller
                     ->setContentType('text/html')
                     //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
                     ->setBody("La vente n°".$enchere->getId()." est terminé, le prix unitaire final est de ".$enchere->getPrix()."€. vous avez commandé ".$userAssociate->getNbredecommande()." unité du produit. Le fournisseur de cette vente est ".$infoFourni->getNom()." vos coordonées lui seront transmise dès que possible et vous serez mis en contact. Merci de votre patience et d'utiliser Orthodeal.");
+                $this->get('mailer')->send($message); //action d'envoi
+
+                // FOR NEO3D
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Orthodeal : Vente terminée')//objet du mail
+                    ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                    //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                    ->setTo('scan@neo3d.fr') //adresse du cabinet qui commande
+                    // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                    ->setCharset('utf-8')
+                    ->setContentType('text/html')
+                    ->setBody($this->renderView('mail/mail_neo3d.html.twig', array(
+                        'enchere' => $enchere,
+                        'fournisseur' => $infoFourni,
+                        'produit' => $product,
+                        'nbreLivraison' => $nbreLivraison,
+                        'allCmd' => $allCmd,
+                        'tabAcheteurs' => $tabAcheteurs,
+                        'prixfinal' => $prixfinal,
+                        'com' => $com,
+                        'prixfourni' => $prixfourni,
+                    )));
                 $this->get('mailer')->send($message); //action d'envoi
             }
         }
