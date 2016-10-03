@@ -118,8 +118,23 @@
 		</div>
 	</div>
 	<script>
-		$(document).ready( function () {
-    		$('#table').DataTable();
+		$(document).ready(function() {
+		    $('#table').DataTable( {
+		        "language": {
+		            "lengthMenu": "Montrer _MENU_ résultats par page",
+		            "zeroRecords": "Aucun résultat",
+		            "info": "Page _PAGE_ sur _PAGES_",
+		            "infoEmpty": "Pas de données",
+		            "search":         "Chercher:",
+		            "paginate": {
+				        "first":      "Première",
+				        "last":       "Dernière",
+				        "next":       "Suivante",
+				        "previous":   "Précedente"
+				    },
+		            "infoFiltered": "(filtrer sur un total de _MAX_ lignes)"
+		        }
+		    } );
 		} );
 	</script>
 
@@ -239,8 +254,23 @@
 		</div>
 	</div>
 	<script>
-		$(document).ready( function () {
-    		$('#table2').DataTable();
+		$(document).ready(function() {
+		    $('#table2').DataTable( {
+		        "language": {
+		            "lengthMenu": "Montrer _MENU_ résultats par page",
+		            "zeroRecords": "Aucun résultat",
+		            "info": "Page _PAGE_ sur _PAGES_",
+		            "infoEmpty": "Pas de données",
+		            "search":         "Chercher:",
+		            "paginate": {
+				        "first":      "Première",
+				        "last":       "Dernière",
+				        "next":       "Suivante",
+				        "previous":   "Précedente"
+				    },
+		            "infoFiltered": "(filtrer sur un total de _MAX_ lignes)"
+		        }
+		    } );
 		} );
 	</script>
 {% endblock %}
