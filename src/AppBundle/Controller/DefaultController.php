@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Infos;
 use AppBundle\Form\UserType;
 use AppBundle\Form\UsermType;
 
@@ -44,10 +45,71 @@ class DefaultController extends Controller
                 $em->persist($verif);
                 $em->flush();
             }
+            elseif($verif->getDatemid()->format('Y/m/d') == $datenow) {
+                $userFavs = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($verif->getIdproduit());
+                foreach($userFavs as $fav) {
+                    $member = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
+
+                    if($member->getType() == "acheteur") {
+                        $notif = new Infos();
+                            $notif->setIduser($member->getId());
+                            $notif->setIdenchere($verif->getId());
+                            $notif->setMessage("La vente n°".$verif->getId()." est à la moitié de sa durée. Il vous reste 2 semaine pour passer vos commandes sur le produit.");
+                            $notif->setEtat("unread");
+                            $notif->setCreatedAt($datenow);
+
+                        $em->persist($notif);
+                        $em->flush();
+
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Orthodeal : Milieu de vente')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                            ->setTo($member->getEmailCanonical()) //adresse du cabinet qui commande
+                            // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                            ->setCharset('utf-8')
+                            ->setContentType('text/html')
+                            //contenu du mail
+                            ->setBody("La vente n°".$verif->getId()." est à la moitié de sa durée. Il vous reste 2 semaine pour passer vos commandes sur le produit. Vous pouvez acceder à la vente directement sur votre espace.");
+                             $this->get('mailer')->send($message); //action d'envoi
+
+                    }
+                }
+            }
             elseif($verif->getDateold()->format('Y/m/d') == $datenow) {
                 $verif->setEtatnew('old');
                 $em->persist($verif);
                 $em->flush();
+
+                $userFavs = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($verif->getIdproduit());
+                foreach($userFavs as $fav) {
+                    $member = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
+
+                    if($member->getType() == "fournisseur" && $member->getId() != $verif->getIdfournisseur()) {
+                        $notif = new Infos();
+                            $notif->setIduser($member->getId());
+                            $notif->setIdenchere($verif->getId());
+                            $notif->setMessage("La vente n°".$verif->getId()." est bientot terminé. Il vous reste 1 semaine pour devenir le fournisseur de cette vente. Vous pouvez acceder à la vente ");
+                            $notif->setEtat("unread");
+                            $notif->setCreatedAt($datenow);
+
+                        $em->persist($notif);
+                        $em->flush();
+
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Orthodeal : Enchère bientôt terminée')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                            ->setTo($member->getEmailCanonical()) //adresse du cabinet qui commande
+                            // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                            ->setCharset('utf-8')
+                            ->setContentType('text/html')
+                            //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
+                            ->setBody("La vente n°".$verif->getId()." est bientot terminé. Il vous reste 1 semaine pour devenir le fournisseur de cette vente. Vous pouvez acceder à la vente sur votre espace personnel.");
+                             $this->get('mailer')->send($message); //action d'envoi
+
+                    }
+                }
             }
         }
 

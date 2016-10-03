@@ -187,6 +187,8 @@ class EnchereController extends Controller
         if($idprod != NULL) {
             $datenew = $request->request->get('datenew');
             $dateNew = new \DateTime($datenew);
+            $datemid = $request->request->get('datemid');
+            $dateMid = new \DateTime($datemid);
             $dateold = $request->request->get('dateold');
             $dateOld = new \DateTime($dateold);
             $fulldate = $request->request->get('fulldate');
@@ -200,6 +202,7 @@ class EnchereController extends Controller
             $enchere->setBeneffourni($prixfourni);
             $enchere->setEtat('open');
             $enchere->setDatenew($dateNew);
+            $enchere->setDatemid($dateMid);
             $enchere->setDateold($dateOld);
             $enchere->setFulldate($fulldate);
             $enchere->setEtatnew("new");
@@ -252,6 +255,26 @@ class EnchereController extends Controller
 
                     $em->persist($notif);
                     $em->flush();
+
+                    $verifFav = $em->getRepository('ProductBundle:Favoris')->findBy(array(
+                        'idacheteur' => $oneUser->getId(),
+                        'idproduit' => $idprod,
+                    ));
+
+                    if($verifFav != NULL) {
+
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Orthodeal : Nouvelle vente')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
+                            ->setTo($oneUser->getEmailCanonical()) //adresse du cabinet qui commande
+                            // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
+                            ->setCharset('utf-8')
+                            ->setContentType('text/html')
+                            //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
+                            ->setBody("Une nouvelle vente à démarré pour le produit : ".$prodSelected->getNom().". Vous pouvez y acceder directement depuis votre espace.");
+                        $this->get('mailer')->send($message); //action d'envoi
+                    }
                 }
                 else {
 
@@ -484,6 +507,8 @@ class EnchereController extends Controller
 
             $datenew = $request->request->get('datenew');
             $dateNew = new \DateTime($datenew);
+            $datemid = $request->request->get('datemid');
+            $dateMid = new \DateTime($datemid);
             $dateold = $request->request->get('dateold');
             $dateOld = new \DateTime($dateold);
             $fulldate = $request->request->get('fulldate');
@@ -500,6 +525,7 @@ class EnchereController extends Controller
             $enchere->setBeneffourni($prixfourni);
             $enchere->setTotalcommande($cmd);
             $enchere->setDatenew($dateNew);
+            $enchere->setDatemid($dateMid);
             $enchere->setDateold($dateOld);
             $enchere->setFulldate($fulldate);
             $enchere->setEtat("open");
@@ -537,7 +563,7 @@ class EnchereController extends Controller
                     $notif = new Infos();
                     $notif->setIduser($associateMember->getId());
                     $notif->setIdenchere($enchere->getId());
-                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal()."€. Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère ");
+                    $notif->setMessage("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal()."€. Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à la vente ");
                     $notif->setEtat("unread");
                     $notif->setCreatedAt($datenotif);
                     $em->persist($notif);
@@ -552,7 +578,7 @@ class EnchereController extends Controller
                         ->setCharset('utf-8')
                         ->setContentType('text/html')
                         //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
-                        ->setBody("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal().". Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder à l'enchère. Vous pouvez acceder a la vente sur le site directement depuis votre espace.");
+                        ->setBody("Une vente pour le produit : ".$product->getNom()." viens de commencer. Vous êtes le fournisseur actuel de cette vente, et le prix unitaire est actuellement de ".$product->getPrixminimal()."€ . Une première commande de ".$cmd."pièces est déjà enregistré. Vous pouvez acceder a la vente sur le site directement depuis votre espace.");
                     $this->get('mailer')->send($message); //action d'envoi
                 }
                 else {

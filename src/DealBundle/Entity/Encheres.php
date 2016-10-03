@@ -119,6 +119,13 @@ class Encheres
      */
     private $etatnew;
 
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="datemid", type="date", nullable=true)
+     */
+    private $datemid;
+
 
     /**
      * Get id
@@ -450,5 +457,28 @@ class Encheres
     public function getDateold()
     {
         return $this->dateold;
+    }
+
+    /**
+     * Set datemid
+     *
+     * @param \DateTime $datemid
+     * @return Encheres
+     */
+    public function setDatemid($datemid)
+    {
+        $this->datemid = $datemid;
+
+        return $this;
+    }
+
+    /**
+     * Get datemid
+     *
+     * @return \DateTime 
+     */
+    public function getDatemid()
+    {
+        return $this->datemid;
     }
 }
