@@ -237,6 +237,7 @@ class DefaultController extends Controller
                 $member->setLogo($logoName);
             }
             $member->setEnabled(1);
+            $member->setRoles(array('ROLE_USER'));
 
             $em->persist($member);
             $em->flush();

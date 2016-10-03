@@ -67,10 +67,6 @@ class DefaultController extends Controller
 
     	$idproduit = $this->getRequest()->request->get('idproduit');
 
-    	$verifFav = $em->getRepository('ProductBundle:Favoris')->findOneBy(array(
-    		'idacheteur' => $user->getId(),
-    		'idproduit' => $idproduit,
-    	));
 
     	if($verifFav != NULL) {
     		$em->remove($verifFav);

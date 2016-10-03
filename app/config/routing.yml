@@ -15,19 +15,19 @@ dashboard:
 
 # ------- User Route -------
 profil:
-    path:    /profil/{iduser}
+    path:    /member/profil/{iduser}
     defaults: {_controller: AppBundle:Default:profil}
 
 new_user:
-    path:    /user/new
+    path:    /member/new
     defaults: {_controller: AppBundle:Default:newUser}
 
 show_user:
-    path:    /user/list
+    path:    /member/list
     defaults: {_controller: AppBundle:Default:listUser}
 
 modif_user:
-    path:    /user/modif/{iduser}
+    path:    /member/modif/{iduser}
     defaults: {_controller: AppBundle:Default:modifUser}
 
 # ------ Product Route -------

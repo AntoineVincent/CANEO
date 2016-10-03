@@ -104,6 +104,11 @@ class User extends BaseUser
         // your own logic
     }
 
+    public static function getAllRoles()
+    {
+        return array('ROLE_ADMIN', 'ROLE_USER');
+    }
+
     /**
      * Set type
      *

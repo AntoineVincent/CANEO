@@ -294,6 +294,7 @@ class EnchereController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
 
+
         $enchere = $em->getRepository('DealBundle:Encheres')->findOneById($idenchere);
         $oldfourni = $enchere->getIdfournisseur();
         $oldprice = $enchere->getPrix();
