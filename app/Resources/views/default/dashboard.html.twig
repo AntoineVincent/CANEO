@@ -6,11 +6,11 @@
 			<h3 class="dash-title">Ventes Bientot Terminé</h3>
 		</div>
 		<div class="col-md-12">
-			<table id="table">
+			<table id="table" class="display nowrap" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-		       			<th class="mytable">Nom Du Produit</th>
-		       			<th class="mytable">Prix unitaire</th>
+		       			<th class="mytable"data-priority="1" style="max-width:42px;">Nom Du Produit</th>
+		       			<th class="mytable"data-priority="2">Prix unitaire</th>
 		       			{% if user.type == "fournisseur" or user.type == "admin" %}
 		       				<th class="mytable">Total commande</th>
 		       			{% endif %}
@@ -19,9 +19,9 @@
 		       				<th class="mytable">Vos Commandes</th>
 		       			{% endif %}
 		       			<th class="mytable">Fournisseur</th>
-		       			<th class="mytable">Temps Restant</th>
+		       			<th class="mytable"data-priority="2">Temps Restant</th>
 		       			{% if user.type == "acheteur" %}
-		       				<th class="mytable">Passer Commande</th>
+		       				<th class="mytable"data-priority="1">Passer Commande</th>
 		       			{% endif %}
 		       			<th>Voir la vente</th>
 		   			</tr>
@@ -133,7 +133,8 @@
 				        "previous":   "Précedente"
 				    },
 		            "infoFiltered": "(filtrer sur un total de _MAX_ lignes)"
-		        }
+		        },
+		        responsive: true
 		    } );
 		} );
 	</script>
@@ -146,8 +147,8 @@
 			<table id="table2" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-		       			<th class="mytable">Nom Du Produit</th>
-		       			<th class="mytable">Prix unitaire</th>
+		       			<th class="mytable"data-priority="1" style="max-width:42px;">Nom Du Produit</th>
+		       			<th class="mytable"data-priority="2">Prix unitaire</th>
 		       			{% if user.type == "fournisseur" or user.type == "admin" %}
 		       				<th class="mytable">Total commande</th>
 		       			{% endif %}
@@ -156,9 +157,9 @@
 		       				<th class="mytable">Vos Commandes</th>
 		       			{% endif %}
 		       			<th class="mytable">Fournisseur</th>
-		       			<th class="mytable">Temps Restant</th>
+		       			<th class="mytable"data-priority="2">Temps Restant</th>
 		       			{% if user.type == "acheteur" %}
-		       				<th class="mytable">Passer Commande</th>
+		       				<th class="mytable"data-priority="1">Passer Commande</th>
 		       			{% endif %}
 		       			<th>Voir la vente</th>
 		   			</tr>
@@ -269,7 +270,8 @@
 				        "previous":   "Précedente"
 				    },
 		            "infoFiltered": "(filtrer sur un total de _MAX_ lignes)"
-		        }
+		        },
+		        responsive: true
 		    } );
 		} );
 	</script>

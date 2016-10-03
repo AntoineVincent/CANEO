@@ -24,7 +24,7 @@ html {
 }
 
 #wrapper.toggled {
-    padding-left: 250px;
+    padding-left: 210px;
 }
 
 #sidebar-wrapper {
@@ -43,7 +43,7 @@ html {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 210px;
 }
 
 /* Sidebar Styles */
@@ -51,7 +51,7 @@ html {
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 250px;
+    width: 180px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -96,7 +96,7 @@ html {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 250px;
+        padding-left: 200px;
     }
 
     #wrapper.toggled {
@@ -104,7 +104,7 @@ html {
     }
 
     #sidebar-wrapper {
-        width: 250px;
+        width: 200px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
