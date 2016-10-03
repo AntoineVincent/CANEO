@@ -85,6 +85,7 @@ class UserType extends AbstractType
             ))
             ->add('infos', 'textarea', array(
                 'label' => 'CGV (si nouveau membre est un fournisseur) : ',
+                'required' => false,
                 'attr' => array(
                     'nullable' => true,
                 ),
@@ -105,7 +106,8 @@ class UserType extends AbstractType
                 'label' => 'Logo : ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Selectionnez un fichier'
+                    'placeholder' => 'Selectionnez un fichier',
+                    'nullable' => true,
                 )
             ));
     }

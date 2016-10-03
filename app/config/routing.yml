@@ -45,23 +45,23 @@ fiche_product:
 
 # ------ Encheres Route -------
 all_enchere:
-    path:    /enchere/all
+    path:    /vente/all
     defaults: {_controller: DealBundle:Enchere:allEnchere}
 
 my_enchere:
-    path:    /enchere/user
+    path:    /vente/user
     defaults: {_controller: DealBundle:Enchere:myEnchere}
 
 fiche_enchere:
-    path:    /enchere/fiche/{idenchere}
+    path:    /vente/fiche/{idenchere}
     defaults: {_controller: DealBundle:Enchere:ficheEnchere}
 
 new_enchere:
-    path:    /enchere/new
+    path:    /vente/new
     defaults: {_controller: DealBundle:Enchere:newEnchere}
 
 enchere_up:
-    path:    /enchere/up/{idenchere}
+    path:    /vente/up/{idenchere}
     defaults: {_controller: DealBundle:Enchere:enchereUp}
 
 calcul:
@@ -73,7 +73,7 @@ sellOver:
     defaults: {_controller: DealBundle:Enchere:sellOver}
 
 new_enchere2:
-    path:    /enchere/new/bycmd/{idproduct}
+    path:    /vente/new/bycmd/{idproduct}
     defaults: {_controller: DealBundle:Enchere:newEnchere2}
 
 # ------ Commands Route -------

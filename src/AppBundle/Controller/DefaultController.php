@@ -96,7 +96,7 @@ class DefaultController extends Controller
                         $em->flush();
 
                         $message = \Swift_Message::newInstance()
-                            ->setSubject('Orthodeal : Enchère bientôt terminée')//objet du mail
+                            ->setSubject('Orthodeal : Vente bientôt terminée')//objet du mail
                             ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
                             //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                             ->setTo($member->getEmailCanonical()) //adresse du cabinet qui commande
@@ -227,13 +227,15 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $logo = $member->getLogo();
+            if($member->getLogo() != NULL) {
+                $logo = $member->getLogo();
 
-            $logoName = md5(uniqid()).'.'.$logo->guessExtension();
-            $logoDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/logo';
-            $logo->move($logoDir, $logoName);
+                $logoName = md5(uniqid()).'.'.$logo->guessExtension();
+                $logoDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/logo';
+                $logo->move($logoDir, $logoName);
 
-            $member->setLogo($logoName);
+                $member->setLogo($logoName);
+            }
             $member->setEnabled(1);
 
             $em->persist($member);

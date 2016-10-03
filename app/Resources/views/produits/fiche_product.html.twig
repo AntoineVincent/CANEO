@@ -53,7 +53,7 @@
 					<hr>
 					{% if user.type == "fournisseur" %}
 						{% if user.username == fournisseur.username %}
-							<p>° Il reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> à cette enchère. Vous êtes actuellement le fournisseur pour cette enchère.</p>
+							<p>° Il reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> à cette vente. Vous êtes actuellement le fournisseur pour cette enchère.</p>
 							<p><a href="{{ path('fiche_enchere', { 'idenchere': enchere.id }) }}">° Fiche vente</a></p>
 						{% else %}
 							<p>° Il vous reste <span id="{{ enchere.id }}" style="background-color:transparent;"></span> pour baissez le prix et devenir fournisseur de cette vente.</p>
