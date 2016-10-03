@@ -50,7 +50,7 @@ class DefaultController extends Controller
                 foreach($userFavs as $fav) {
                     $member = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
 
-                    if($member->getType() == "acheteur") {
+                    if($member->getType() == "acheteur" && $verif->getEtatnew() == "normal") {
                         $notif = new Infos();
                             $notif->setIduser($member->getId());
                             $notif->setIdenchere($verif->getId());
@@ -73,19 +73,18 @@ class DefaultController extends Controller
                             ->setBody("La vente n°".$verif->getId()." est à la moitié de sa durée. Il vous reste 2 semaine pour passer vos commandes sur le produit. Vous pouvez acceder à la vente directement sur votre espace.");
                              $this->get('mailer')->send($message); //action d'envoi
 
+                        $verif->setEtatnew('normall');
+                        $em->persist($verif);
+                        $em->flush();
                     }
                 }
             }
             elseif($verif->getDateold()->format('Y/m/d') == $datenow) {
-                $verif->setEtatnew('old');
-                $em->persist($verif);
-                $em->flush();
-
                 $userFavs = $em->getRepository('ProductBundle:Favoris')->findByIdproduit($verif->getIdproduit());
                 foreach($userFavs as $fav) {
                     $member = $em->getRepository('AppBundle:User')->findOneById($fav->getIdacheteur());
 
-                    if($member->getType() == "fournisseur" && $member->getId() != $verif->getIdfournisseur()) {
+                    if($member->getType() == "fournisseur" && $member->getId() != $verif->getIdfournisseur() && $verif->getEtatnew() != 'old') {
                         $notif = new Infos();
                             $notif->setIduser($member->getId());
                             $notif->setIdenchere($verif->getId());
@@ -107,8 +106,11 @@ class DefaultController extends Controller
                             //corps du texte : valeurs à appeler dans la vue mail_cabinet.html.twig
                             ->setBody("La vente n°".$verif->getId()." est bientot terminé. Il vous reste 1 semaine pour devenir le fournisseur de cette vente. Vous pouvez acceder à la vente sur votre espace personnel.");
                              $this->get('mailer')->send($message); //action d'envoi
-
                     }
+
+                    $verif->setEtatnew('old');
+                    $em->persist($verif);
+                    $em->flush();
                 }
             }
         }
