@@ -62,8 +62,8 @@ class DefaultController extends Controller
                         $em->flush();
 
                         $message = \Swift_Message::newInstance()
-                            ->setSubject('Orthodeal : Milieu de vente')//objet du mail
-                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            ->setSubject('CANEO : Milieu de vente')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                             //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                             ->setTo($member->getEmailCanonical()) //adresse du cabinet qui commande
                             // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -96,8 +96,8 @@ class DefaultController extends Controller
                         $em->flush();
 
                         $message = \Swift_Message::newInstance()
-                            ->setSubject('Orthodeal : Vente bientôt terminée')//objet du mail
-                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            ->setSubject('CANEO : Vente bientôt terminée')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                             //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                             ->setTo($member->getEmailCanonical()) //adresse du cabinet qui commande
                             // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande

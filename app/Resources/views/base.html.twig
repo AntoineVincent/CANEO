@@ -2,13 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}OrthoDeal !{% endblock %}</title>
+        <title>{% block title %}CANEO !{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+        <!-- Referencement -->
+        <meta name="keywords" content="MOT CLES DE RECHERCHE" />
+        <meta name="author" content="AnonySmith" />
+        <meta name="description" content="DESCRIPTION SITE" />
+
         <!-- FONT FAMILY -->
         <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet"> 
-         <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
 
         <!-- CSS CALL -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
@@ -39,7 +45,7 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
                         <a href="{{ path('dashboard') }}">
-                            OrthoDeal
+                            CANEO
                         </a>
                     </li>
                     {% if user.type == "fournisseur" or user.type == "acheteur" %}

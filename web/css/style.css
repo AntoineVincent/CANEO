@@ -83,6 +83,12 @@ html {
     height: 65px;
     font-size: 18px;
     line-height: 60px;
+    font-family: 'Audiowide';
+    text-align: center;
+}
+
+.main-logo {
+    font-family:'Audiowide';
 }
 
 .sidebar-nav > .sidebar-brand a {

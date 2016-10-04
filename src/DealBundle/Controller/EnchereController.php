@@ -265,8 +265,8 @@ class EnchereController extends Controller
                     if($verifFav != NULL) {
 
                         $message = \Swift_Message::newInstance()
-                            ->setSubject('Orthodeal : Nouvelle vente')//objet du mail
-                            ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                            ->setSubject('CANEO : Nouvelle vente')//objet du mail
+                            ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                             //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                             ->setTo($oneUser->getEmailCanonical()) //adresse du cabinet qui commande
                             // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -352,8 +352,8 @@ class EnchereController extends Controller
                 }
                 $infoFourni = $em->getRepository('AppBundle:User')->findOneById($oldfourni);
                 $message = \Swift_Message::newInstance()
-                        ->setSubject('Orthodeal : Changement de prix sur Vente')//objet du mail
-                        ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                        ->setSubject('CANEO : Changement de prix sur Vente')//objet du mail
+                        ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                         //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                         ->setTo($infoFourni->getEmailCanonical()) //adresse du cabinet qui commande
                         // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -479,8 +479,8 @@ class EnchereController extends Controller
 
 
             $messagefourni = \Swift_Message::newInstance()
-                ->setSubject('Orthodeal : Vente terminée')//objet du mail
-                ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                ->setSubject('CANEO : Vente terminée')//objet du mail
+                ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                 //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                 ->setTo($infoFourni->getEmailCanonical()) //adresse du cabinet qui commande
                 // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -492,8 +492,8 @@ class EnchereController extends Controller
 
             // FOR NEO3D
                 $messageneo = \Swift_Message::newInstance()
-                    ->setSubject('Orthodeal : Vente terminée')//objet du mail
-                    ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                    ->setSubject('CANEO : Vente terminée')//objet du mail
+                    ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                     //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                     ->setTo('scan@neo3d.fr') //adresse du cabinet qui commande
                     // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -526,8 +526,8 @@ class EnchereController extends Controller
                 $infoUser = $em->getRepository('AppBundle:User')->findOneById($userAssociate->getIdacheteur());
 
                 $message = \Swift_Message::newInstance()
-                    ->setSubject('Orthodeal : Vente terminée')//objet du mail
-                    ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                    ->setSubject('CANEO : Vente terminée')//objet du mail
+                    ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                     //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                     ->setTo($infoUser->getEmailCanonical()) //adresse du cabinet qui commande
                     // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
@@ -629,8 +629,8 @@ class EnchereController extends Controller
                     $em->flush();
 
                     $message = \Swift_Message::newInstance()
-                        ->setSubject('Orthodeal : Nouvelle vente')//objet du mail
-                        ->setFrom(array('anton51200@laposte.net' => 'Orthodeal Website[Do not reply]')) //adresse expéditeur
+                        ->setSubject('CANEO : Nouvelle vente')//objet du mail
+                        ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
                         //->setReadReceiptTo('ninon.pelaez@gmail.com') //accusé de réception
                         ->setTo($associateMember->getEmailCanonical()) //adresse du cabinet qui commande
                         // ->setTo('anton071192@gmail.com') //adresse du cabinet qui commande
