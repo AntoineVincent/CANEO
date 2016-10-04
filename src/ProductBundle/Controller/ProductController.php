@@ -33,6 +33,8 @@ class ProductController extends Controller
             $product->setEtat('non');
             $product->setIdfournisseur(0);
 
+
+            //Create random word like unique ID for make more easy the ajax call in dynamical datatables.
             $len = 12;
             $words = array_merge(range('a', 'z'));
             shuffle($words);
