@@ -23,7 +23,7 @@ Attention, si vous ne possédez pas tous ces pré-requis, ne passez pas à l'ét
 
 2. **Modifiez les droits** du dossier, via le terminal afin d'être sur que vous ayez tous les droits dessus (777).
 ```sh
---> sudo chmod -R 777 orthodeal/
+--> sudo chmod -R 777 CANEO/
 ```
 
 3. **Installez** les dossiers manquants de l'application ("Vendor" et "Bin") avec Composer, en éxécutant la commande :
