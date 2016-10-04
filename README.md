@@ -1,8 +1,3 @@
-orthodeal
-=========
-
-A Symfony project created on September 7, 2016, 4:07 pm.
-
 # CANEO
 
 ### Projet réalisé par [AnonySmith](http://antoinevincent.github.io) !
@@ -31,12 +26,12 @@ Attention, si vous ne possédez pas tous ces pré-requis, ne passez pas à l'ét
 --> sudo chmod -R 777 orthodeal/
 ```
 
-4. **Installez** les dossiers manquants de l'application ("Vendor" et "Bin") avec Composer, en éxécutant la commande :
+3. **Installez** les dossiers manquants de l'application ("Vendor" et "Bin") avec Composer, en éxécutant la commande :
 ```sh
 --> composer update
 ```
 
-5. **Executez** les commandes suivantes après avoir initialiser le parameter.yml :
+4. **Executez** les commandes suivantes après avoir initialiser le parameter.yml :
 ```sh
 --> sudo php app/console doctrine:database:create
 --> sudo php app/console doctrine:schema:update --force
