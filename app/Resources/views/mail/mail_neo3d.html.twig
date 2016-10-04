@@ -6,24 +6,24 @@
         <strong>Prix unitaire final : </strong> {{ enchere.prix }}
     </div>
     <div>
-        Montant Total : <p>{{ enchere.prix * enchere.totalcommande }}</p><br>
-        Commission : <p>{{ com * enchere.totalcommande }}</p><br>
-        Montant net Fournisseur : <p>{{ prixfourni * enchere.totalcommande }}</p><br>
+        <p>Montant Total : {{ enchere.prix * enchere.totalcommande }}</p><br>
+        <p>Commission : {{ com * enchere.totalcommande }}</p><br>
+        <p>Montant net Fournisseur : {{ prixfourni * enchere.totalcommande }}</p><br>
     </div>
     <div>
         <strong>Il y a {{ nbreLivraison }} points de livraison :</strong><br>
     </div>
     <div>
         <h3>Listes des acheteurs</h3>
-        {% for $acheteur in $tabAcheteurs %}
+        {% for acheteur in tabAcheteurs %}
             <h4 style="text-align:center;">Acheteur : </h4>
             <strong>Nom : {{ acheteur.nom }}</strong><br>
             <strong>Email : {{ acheteur.email }}</strong><br>
             <strong>Telephone : {{ acheteur.telephone }}</strong><br>
             <strong>Nombre de commandes : {{ acheteur.commandes }}</strong><br>
-            <strong>Montant Total</strong> : <p>{{ enchere.prix * enchere.acheteur.commandes }}</p><br>
-            <strong>Commission</strong> : <p>{{ com * enchere.acheteur.commandes }}</p><br>
-            <strong>Montant net Fournisseur</strong> : <p>{{ prixfourni * enchere.acheteur.commandes }}</p><br>
+            <strong>Montant Total</strong> : <p>{{ enchere.prix * acheteur.commandes }}</p><br>
+            <strong>Commission</strong> : <p>{{ com * acheteur.commandes }}</p><br>
+            <strong>Montant net Fournisseur</strong> : <p>{{ prixfourni * acheteur.commandes }}</p><br>
             <strong>Adresse de facturation : {{ acheteur.adresseFactu }}</strong><br>
             <strong>Cope postal de facturation : {{ acheteur.cpFactu }}</strong><br>
             <strong>Ville de facturation : {{ acheteur.villeFactu }}</strong><br>

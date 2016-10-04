@@ -118,11 +118,11 @@
 						}); 
 					}
 				</script>
-				{% if user.type == "acheteur" %}
+				{% if user.type == "acheteur" and enchere.etat != "close" %}
 					<div class="col-md-12">
 						<a class="btn btn-primary" href="{{ path('commande', { 'idenchere': enchere.id }) }}">Passez une commandes</a>
 					</div>
-				{% elseif user.type == "fournisseur" %}
+				{% elseif user.type == "fournisseur" and enchere.etat != "close" %}
 				    {% if user.id != enchere.idFournisseur %}
 						<div class="col-md-12">
 							<a class="btn btn-primary" href="{{ path('enchere_up', { 'idenchere': enchere.id }) }}">Faire une meilleur offre</a>
