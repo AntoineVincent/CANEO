@@ -179,11 +179,11 @@ class EnchereController extends Controller
 
         $idprod = $request->request->get('prod');
         $idfournisseur = $request->request->get('fourni');
-        $prixMax = $request->request->get('prix');
+        $prixfourni = $request->request->get('prix');
         $datenotif = $request->request->get('datenotif');
 
-        $com = $prixMax * 0.2;
-        $prixfourni = $prixMax - $com;
+        $com = $prixfourni * 0.2;
+        $prixVente = $prixfourni + $com;
 
         if($idprod != NULL) {
             $datenew = $request->request->get('datenew');
@@ -210,7 +210,7 @@ class EnchereController extends Controller
 
             $prodSelected = $em->getRepository('ProductBundle:Produit')->findOneById($idprod);
             $prodSelected->setEtat('oui');
-            $enchere->setPrix($prodSelected->getPrixminimal());
+            $enchere->setPrix($prixVente);
 
             // recupere la string date;
             // $date = $enchere->getFulldate()->format('d/m/Y');
@@ -386,7 +386,7 @@ class EnchereController extends Controller
         $prix = $this->getRequest()->request->get('newprice');
 
         $com = $prix * 0.2;
-        $prixfourni = $prix - $com;
+        $prixfourni = $prix + $com;
 
         $tabresult [] = array(
             'com' => $com,
@@ -442,7 +442,7 @@ class EnchereController extends Controller
 
             $prixfinal = $enchere->getPrix();
             $com = $prixfinal * 0.2;
-            $prixfourni = $prixfinal - $com;
+            $prixfourni = $prixfinal + $com;
 
             foreach($allCmd as $oneCmd) {
                 $acheteur = $em->getRepository('AppBundle:User')->findOneById($oneCmd->getIdacheteur());
@@ -574,14 +574,14 @@ class EnchereController extends Controller
             $fulldate = new \DateTime($fulldate);
 
             $com = $product->getPrixminimal() * 0.2;
-            $prixfourni = $product->getPrixminimal() - $com;
+            $prixfourni = $product->getPrixminimal() + $com;
 
             $enchere = new Encheres();
             $enchere->setIdproduit($idproduct);
             $enchere->setIdfournisseur($product->getIdfournisseur());
-            $enchere->setPrix($product->getPrixminimal());
+            $enchere->setPrix($prixfourni);
             $enchere->setCommission($com);
-            $enchere->setBeneffourni($prixfourni);
+            $enchere->setBeneffourni($product->getPrixminimal());
             $enchere->setTotalcommande($cmd);
             $enchere->setDatenew($dateNew);
             $enchere->setDatemid($dateMid);
