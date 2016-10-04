@@ -9,6 +9,14 @@
 	{% endif %}
 
 	<div class="col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 pres-div">
+			<h3><strong style="text-decoration:underline;"> Caneo qu'est que c'est ?</strong></h3>
+			<p>Caneo est une centrale d'achat en ligne entre fournisseurs et acheteurs dans le milieu de la prothèse dentaire. Plusieurs fois par mois des produits seront mis en vente pour des durées limités, et seront soustrait au prix le moins cher proposés par les fournisseurs. Interessé ? rejoignez nous en <a href="{{ path('ask_register') }}">faisant une demande</a>.</p>
+		</div>
+	</div>
+
+	<div class="col-md-12">
 		<div class="col-md-4"></div>
 		<form action="{{ path("user_login_check") }}" method="post">
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -43,11 +51,13 @@
 					</div>
 				</div>
 				<div class="col-md-12 logfield">
-					<div class="col-md-4"></div>
-					<div class="col-md-4">
+					<div class="col-md-8">
+						<a href="{{ path('ask_register') }}">Faire une demande d'adhesion</a>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-3">
 						<input type="submit" id="_submit" name="_submit" value="Envoyer" class="btn btn-primary">
 					</div>
-					<div class="col-md-4"></div>
 				</div>
 			</div>
 		</form>

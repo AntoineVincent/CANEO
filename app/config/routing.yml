@@ -30,6 +30,10 @@ modif_user:
     path:    /member/modif/{iduser}
     defaults: {_controller: AppBundle:Default:modifUser}
 
+ask_register:
+    path:    /ask/register
+    defaults: {_controller: AppBundle:Default:askRegister}
+
 # ------ Product Route -------
 new_product:
     path:    /product/new

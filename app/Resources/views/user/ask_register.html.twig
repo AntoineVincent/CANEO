@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="col-md-12">
+			{% for label, flashes in app.session.flashbag.all %}
+		        {% for flash in flashes %}
+		            <div class="alert alert-{{ label }}">
+		                {{ flash }}
+		            </div>
+		        {% endfor %}
+		    {% endfor %}
+		<h4 class="form-title">Veuillez renseigner tout les champs suivant :</h4> 
+	</div>
+	<div class="col-md-1"></div>
+	<form action="{{ path('ask_register') }}" method="post">
+		<div class="col-md-10 card-form">
+			<div class="col-md-12">
+				<h5 class="form-title">Infos principales</h5>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<div class="col-md-6">
+						<label>Type d'Utilisateur : </label>
+					</div>
+					<div class="col-md-6">
+						<select name="type">
+							<option value="fournisseur">fournisseur</option>
+							<option value="acheteur">acheteur</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label>Identifiant : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="identifiant" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Email : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="email" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Mot de passe : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="password" required="required">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="col-md-6">
+						<label>Email secondaire : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="email2">
+					</div>
+					<div class="col-md-6">
+						<label>Nom : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="nom" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Téléphone : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="telephone" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>CGV : </label>
+					</div>
+					<div class="col-md-6">
+						<textarea name="cgv"></textarea>
+						<p>(A remplir si vous êtes un fournisseur)</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<h5 class="form-title">Adresse et localisation : </h5>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<div class="col-md-6">
+						<label>Adresse de facturation : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="adressefactu" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Code Postal de facturation : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="cpfactu" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Ville de facturation : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="villefactu" required="required">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="col-md-6">
+						<label>Adresse de livraison : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="adresselivr" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Code Postal de livraison : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="cplivr" required="required">
+					</div>
+					<div class="col-md-6">
+						<label>Ville de livraison : </label>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="villelivr" required="required">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 marger">
+				<div class="col-md-5"></div>
+				<div class="col-md-4">
+					<input type="submit" name="submit" value="Envoyer demande" class="btn-primary btn">
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+	</form>
+	<div class="col-md-12">
+		<div class="col-md-2"></div>
+		<div class="col-md-5">
+			<a href="{{ path('user_login') }}" class="btn btn-primary">Retour à l'accueil</a>
+		</div>
+	</div>
+
+{% endblock %}

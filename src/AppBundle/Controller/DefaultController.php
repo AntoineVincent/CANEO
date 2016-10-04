@@ -225,6 +225,9 @@ class DefaultController extends Controller
         $form = $this->createForm('AppBundle\Form\UserType', $member);
         $form->handleRequest($request);
 
+        $test = $request->request->get('passformail');
+        // var_dump($test);exit;
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             if($member->getLogo() != NULL) {
@@ -242,9 +245,26 @@ class DefaultController extends Controller
             $em->persist($member);
             $em->flush();
 
+            $message = \Swift_Message::newInstance()
+                ->setSubject('CANEO : Validation d inscription')//objet du mail
+                ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
+                // ->setTo($member->getEmailCanonical())
+                ->setTo($member->getEmailCanonical())
+                // ->setTo('scan@neo3d.fr')
+                ->setCharset('utf-8')
+                ->setContentType('text/html')
+                //corps du texte :
+                ->setBody("Votre inscription a bien été faites, voici vos identifiants :
+                     <br><br> Identifiant : ".$member->getUsername().
+                    "<br> Email : ".$member->getEmailCanonical().
+                    "<br> Mot de Passe : ".$test.
+                    "<br><br> Vous pouvez dès à présent vous connecter sur le site. Merci de votre inscription."
+                );
+            $this->get('mailer')->send($message); //action d'envoi
+
             $request->getSession()
             ->getFlashBag()
-            ->add('success', 'L\'Utilisateur à été créé avec succès !')
+            ->add('success', 'L\'Utilisateur à été créé avec succès ! Un e-mail de confirmation lui a été envoyé.')
             ;
         }
 
@@ -318,6 +338,63 @@ class DefaultController extends Controller
         return $this->render('user/modif_user.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
+        ));
+    }
+
+    public function askRegisterAction(Request $request) 
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $type = $request->request->get('type');
+        $identifiant = $request->request->get('identifiant');
+        $email = $request->request->get('email');
+        $password = $request->request->get('password');
+        $email2 = $request->request->get('email2');
+        $nom = $request->request->get('nom');
+        $cgv = $request->request->get('cgv');
+        $telephone = $request->request->get('telephone');
+        $adressefactu = $request->request->get('adressefactu');
+        $adresselivr = $request->request->get('adresselivr');
+        $cpfactu = $request->request->get('cpfactu');
+        $cplivr = $request->request->get('cplivr');
+        $villefactu = $request->request->get('villefactu');
+        $villelivr = $request->request->get('villelivr');
+
+        if($email != NULL) {
+            $message = \Swift_Message::newInstance()
+                ->setSubject('CANEO : Demande d inscription')//objet du mail
+                ->setFrom(array('anton51200@laposte.net' => 'CANEO Website[Do not reply]')) //adresse expéditeur
+                ->setTo('scan@neo3d.fr')
+                // ->setTo('scan@neo3d.fr')
+                ->setCharset('utf-8')
+                ->setContentType('text/html')
+                //corps du texte :
+                ->setBody("Une nouvelle demande d'inscription à été faite :
+                     <br><br> type : ".$type.
+                    "<br> identifiant : ".$identifiant.
+                    "<br> email : ".$email.
+                    "<br> password : ".$password.
+                    "<br> email2 : ".$email2.
+                    "<br> nom : ".$nom.
+                    "<br> cgv : ".$cgv.
+                    "<br> telephone : ".$telephone.
+                    "<br> adressefactu : ".$adressefactu.
+                    "<br> cpfactu : ".$cpfactu.
+                    "<br> villefactu : ".$villefactu.
+                    "<br> adresselivr : ".$adresselivr.
+                    "<br> cplivr : ".$cplivr.
+                    "<br> villelivr : ".$villelivr
+                );
+            $this->get('mailer')->send($message); //action d'envoi
+
+            $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'INFORMATION : Votre demande d\'inscription a bien été prise en compte, Un e-mail de confirmation vous sera envoyé lorsque votre inscription aura été prise en compte  !')
+            ;
+        }
+
+        return $this->render('user/ask_register.html.twig', array(
+
         ));
     }
 }
